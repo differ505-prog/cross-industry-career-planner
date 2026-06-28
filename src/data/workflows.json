@@ -1,0 +1,242 @@
+{
+  "food-prep": [
+    {
+      "id": "food-stage-1",
+      "title": "定位與研究",
+      "summary": "建立品牌方向與開店基本盤。",
+      "milestone": "確認客群、商圈與菜單主軸",
+      "tasks": [
+        {
+          "id": "food-task-1",
+          "title": "市場與商圈調查",
+          "description": "蒐集目標客群消費習慣、競品價格帶與人流時段，篩選適合的商圈。",
+          "deliverable": "商圈分析表與競品整理報告",
+          "notes": ["鎖定 3 個潛在商圈", "記錄租金、坪數與尖離峰變化"],
+          "eta": "3-5 天",
+          "priority": "high"
+        },
+        {
+          "id": "food-task-2",
+          "title": "品牌定位與品項草案",
+          "description": "定義主打產品、品牌語氣與客單價，讓後續視覺與空間設計有明確基礎。",
+          "deliverable": "品牌定位簡報與菜單初稿",
+          "notes": ["列出明星商品", "設定客單價與差異化賣點"],
+          "eta": "2-4 天",
+          "priority": "high"
+        }
+      ]
+    },
+    {
+      "id": "food-stage-2",
+      "title": "空間與法規",
+      "summary": "把理想營運模式落到可執行的店面規劃。",
+      "milestone": "完成店面配置與合規清單",
+      "tasks": [
+        {
+          "id": "food-task-3",
+          "title": "平面配置與動線規劃",
+          "description": "確認吧台、廚房、出餐與座位配置，避免工作流程互相干擾。",
+          "deliverable": "店面平面圖與動線示意",
+          "notes": ["預留外送取餐區", "檢查冷藏與洗滌動線"],
+          "eta": "4-6 天",
+          "priority": "medium"
+        },
+        {
+          "id": "food-task-4",
+          "title": "證照與設備盤點",
+          "description": "整理營業登記、消防、衛生與主要設備採購需求。",
+          "deliverable": "法規檢核表與設備採購清單",
+          "notes": ["優先處理衛生與消防項目", "確認設備交期"],
+          "eta": "5-7 天",
+          "priority": "high"
+        }
+      ]
+    },
+    {
+      "id": "food-stage-3",
+      "title": "試營運與優化",
+      "summary": "透過小規模驗證修正營運細節。",
+      "milestone": "完成試營運檢討與正式開店準備",
+      "tasks": [
+        {
+          "id": "food-task-5",
+          "title": "試營運腳本與分工",
+          "description": "設計試營運時段、促銷方案、現場分工與回饋蒐集表。",
+          "deliverable": "試營運 SOP 與班表",
+          "notes": ["安排朋友客群測試", "記錄尖峰時段瓶頸"],
+          "eta": "2-3 天",
+          "priority": "medium"
+        },
+        {
+          "id": "food-task-6",
+          "title": "調整菜單與正式開店清單",
+          "description": "依試營運結果調整價格、品項與服務流程，整理正式營運前最後確認事項。",
+          "deliverable": "修正版菜單與開店前檢核表",
+          "notes": ["刪除低轉化品項", "確認員工培訓完成"],
+          "eta": "2-4 天",
+          "priority": "high"
+        }
+      ]
+    }
+  ],
+  "interior-fitout": [
+    {
+      "id": "fit-stage-1",
+      "title": "需求釐清",
+      "summary": "將空間需求與預算目標具體化。",
+      "milestone": "完成業主需求訪談與現場丈量",
+      "tasks": [
+        {
+          "id": "fit-task-1",
+          "title": "業主訪談與需求整理",
+          "description": "確認生活習慣、收納需求、風格偏好與關鍵痛點，建立提案方向。",
+          "deliverable": "需求訪談紀錄與風格板",
+          "notes": ["定義必做與可調整項目", "確認預算範圍"],
+          "eta": "1-2 天",
+          "priority": "high"
+        },
+        {
+          "id": "fit-task-2",
+          "title": "現場丈量與條件盤點",
+          "description": "丈量空間尺寸、記錄梁柱、水電、開窗位置與現況限制。",
+          "deliverable": "現況圖與尺寸標註稿",
+          "notes": ["拍攝細節照片", "標示管線與插座位置"],
+          "eta": "1 天",
+          "priority": "high"
+        }
+      ]
+    },
+    {
+      "id": "fit-stage-2",
+      "title": "提案與估價",
+      "summary": "將設計概念轉化為施工與採購基礎。",
+      "milestone": "確認配置方案與報價版本",
+      "tasks": [
+        {
+          "id": "fit-task-3",
+          "title": "系統櫃配置與材質提案",
+          "description": "整合機能、比例與材質，建立兼具美感與收納效率的方案。",
+          "deliverable": "配置圖、立面圖與材質板",
+          "notes": ["標記五金與門片開啟方向", "列出可替代材質"],
+          "eta": "4-6 天",
+          "priority": "medium"
+        },
+        {
+          "id": "fit-task-4",
+          "title": "拆項估價與工程排程",
+          "description": "把木作、系統櫃、油漆、燈具與清潔等費用拆分，避免預算失焦。",
+          "deliverable": "報價單與初版工期表",
+          "notes": ["標記追加項風險", "同步材料交期"],
+          "eta": "2-3 天",
+          "priority": "high"
+        }
+      ]
+    },
+    {
+      "id": "fit-stage-3",
+      "title": "施工與交付",
+      "summary": "追蹤現場進度並完成最終驗收。",
+      "milestone": "完成交屋驗收與保固說明",
+      "tasks": [
+        {
+          "id": "fit-task-5",
+          "title": "工班協調與現場巡檢",
+          "description": "依工期安排巡場，確認尺寸落地、安裝順序與各工種銜接。",
+          "deliverable": "現場巡檢紀錄與修正清單",
+          "notes": ["每週回報進度", "交叉確認插座與櫃體衝突"],
+          "eta": "施工期間每週",
+          "priority": "medium"
+        },
+        {
+          "id": "fit-task-6",
+          "title": "驗收、清潔與保固交接",
+          "description": "盤點收邊、門片、五金與表面品質，交付保固與維護說明。",
+          "deliverable": "驗收表與保固文件",
+          "notes": ["逐櫃測試五金", "拍照存檔交付前後狀態"],
+          "eta": "1-2 天",
+          "priority": "high"
+        }
+      ]
+    }
+  ],
+  "space-organization": [
+    {
+      "id": "org-stage-1",
+      "title": "前期盤點",
+      "summary": "理解空間、物品與生活節奏。",
+      "milestone": "完成現況分析與分類策略",
+      "tasks": [
+        {
+          "id": "org-task-1",
+          "title": "客戶訪談與空間觀察",
+          "description": "了解家庭成員、日常動線與收納痛點，找出優先改善區。",
+          "deliverable": "需求訪談摘要與問題地圖",
+          "notes": ["標出高頻使用區", "記錄情緒壓力來源"],
+          "eta": "0.5-1 天",
+          "priority": "high"
+        },
+        {
+          "id": "org-task-2",
+          "title": "物品清點與分類原則",
+          "description": "盤點物品數量、使用頻率與保存必要性，建立分類規則。",
+          "deliverable": "分類清單與淘汰原則表",
+          "notes": ["建立保留、捐贈、丟棄三類", "辨識重複囤積品"],
+          "eta": "1-2 天",
+          "priority": "medium"
+        }
+      ]
+    },
+    {
+      "id": "org-stage-2",
+      "title": "配置與執行",
+      "summary": "把整理策略落到實際空間與容器中。",
+      "milestone": "完成主要區域的系統化收納",
+      "tasks": [
+        {
+          "id": "org-task-3",
+          "title": "收納分區與容器配置",
+          "description": "依使用情境規劃層架、抽屜與標籤，避免收納後難以維持。",
+          "deliverable": "分區配置圖與容器採購清單",
+          "notes": ["優先改善玄關、廚房、衣櫃", "標示同類物品固定位置"],
+          "eta": "1-3 天",
+          "priority": "high"
+        },
+        {
+          "id": "org-task-4",
+          "title": "現場整理與動線修正",
+          "description": "依分類結果實際整理上架，並調整拿取順序與收納深度。",
+          "deliverable": "完成後空間照片與維持建議",
+          "notes": ["高頻物品放在易拿位置", "避免深層堆疊"],
+          "eta": "1-2 天",
+          "priority": "medium"
+        }
+      ]
+    },
+    {
+      "id": "org-stage-3",
+      "title": "維持與回訪",
+      "summary": "建立使用後的維護習慣與檢查節奏。",
+      "milestone": "完成回訪建議與維護 SOP",
+      "tasks": [
+        {
+          "id": "org-task-5",
+          "title": "建立維持規則",
+          "description": "用簡單可重複的規則取代一次性整理，讓空間能長期維持整齊。",
+          "deliverable": "家庭收納 SOP 卡",
+          "notes": ["設定每週 15 分鐘重置習慣", "為每位成員分配責任區"],
+          "eta": "0.5 天",
+          "priority": "low"
+        },
+        {
+          "id": "org-task-6",
+          "title": "一週後回訪優化",
+          "description": "檢查實際使用狀況，微調分類與標籤，補上新的整理盲點。",
+          "deliverable": "回訪紀錄與二次優化建議",
+          "notes": ["記錄維持失敗點", "評估是否需要增補收納容器"],
+          "eta": "0.5-1 天",
+          "priority": "medium"
+        }
+      ]
+    }
+  ]
+}

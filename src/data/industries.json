@@ -1,0 +1,59 @@
+[
+  {
+    "id": "food-prep",
+    "name": "餐飲業籌備",
+    "shortLabel": "餐飲",
+    "theme": "terracotta",
+    "icon": "FC",
+    "overview": "從商圈分析、品牌定位到試營運，整理出一條可執行的開店步驟線。",
+    "objective": "在有限預算與時程內，有條理地完成開店前置作業與營運準備。",
+    "resourceLinks": [
+      {
+        "label": "Gemini 參考 1",
+        "url": "https://share.gemini.google/hQWSxwa0lf8A"
+      },
+      {
+        "label": "Gemini 參考 2",
+        "url": "https://share.gemini.google/KVO2Arry56HI"
+      }
+    ]
+  },
+  {
+    "id": "interior-fitout",
+    "name": "系統櫃與室內裝修",
+    "shortLabel": "裝修",
+    "theme": "dusty",
+    "icon": "IF",
+    "overview": "整合丈量、提案、估價、工序協調與交付驗收的專案節點。",
+    "objective": "讓設計、施工與業主溝通同步，降低返工與時程失控風險。",
+    "resourceLinks": [
+      {
+        "label": "Gemini 參考 1",
+        "url": "https://share.gemini.google/hQWSxwa0lf8A"
+      },
+      {
+        "label": "Gemini 參考 2",
+        "url": "https://share.gemini.google/KVO2Arry56HI"
+      }
+    ]
+  },
+  {
+    "id": "space-organization",
+    "name": "空間收納整理專案",
+    "shortLabel": "收納",
+    "theme": "sage",
+    "icon": "SO",
+    "overview": "從客戶訪談、現況盤點到分類配置，建立可持續維護的整理流程。",
+    "objective": "把凌亂空間轉化為可使用、可維護且具生活感的系統化環境。",
+    "resourceLinks": [
+      {
+        "label": "Gemini 參考 1",
+        "url": "https://share.gemini.google/hQWSxwa0lf8A"
+      },
+      {
+        "label": "Gemini 參考 2",
+        "url": "https://share.gemini.google/KVO2Arry56HI"
+      }
+    ]
+  }
+]
