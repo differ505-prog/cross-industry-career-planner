@@ -101,10 +101,31 @@ function collectItems(items: ChecklistItem[]): ChecklistItem[] {
   return items.flatMap((item) => [item, ...(item.children ? collectItems(item.children) : [])]);
 }
 
-function statusLabel(status: ItemStatus, checked: boolean) {
-  if (checked) return "已完成";
-  if (status === "recurring") return "日常作業";
-  return "待辦事項";
+function buildStats(items: ChecklistItem[], completedTasks: Record<string, boolean>) {
+  const oneTimeItems = items.filter((item) => item.status !== "recurring");
+  const recurringItems = items.filter((item) => item.status === "recurring");
+  const oneTimeDone = oneTimeItems.filter((item) => completedTasks[item.id]).length;
+  const recurringDone = recurringItems.filter((item) => completedTasks[item.id]).length;
+
+  return {
+    oneTimeTotal: oneTimeItems.length,
+    oneTimeDone,
+    oneTimeRate: percentage(oneTimeDone, oneTimeItems.length),
+    recurringTotal: recurringItems.length,
+    recurringDone,
+  };
+}
+
+function typeLabel(status: ItemStatus) {
+  return status === "recurring" ? "重複型任務" : "一次性任務";
+}
+
+function cycleLabel(status: ItemStatus, checked: boolean) {
+  if (status === "recurring") {
+    return checked ? "本輪已執行" : "待執行";
+  }
+
+  return checked ? "已完成" : "未完成";
 }
 
 function buildDefaultCompletionMap() {
@@ -153,20 +174,25 @@ export function CareerPlannerApp() {
 
   const stats = useMemo(() => {
     const allItems = selectedWorkflow.sections.flatMap((section) => collectItems(section.items));
-    const total = allItems.length;
-    const done = allItems.filter((item) => completedTasks[item.id]).length;
-    return { total, done, rate: percentage(done, total) };
+    return buildStats(allItems, completedTasks);
   }, [completedTasks, selectedWorkflow.sections]);
 
   const projectProgress = useMemo(() => {
     return Object.fromEntries(
       industries.map((industry) => {
         const allItems = workflows[industry.id].sections.flatMap((section) => collectItems(section.items));
-        const total = allItems.length;
-        const done = allItems.filter((item) => completedTasks[item.id]).length;
-        return [industry.id, percentage(done, total)];
+        return [industry.id, buildStats(allItems, completedTasks)];
       })
-    ) as Record<string, number>;
+    ) as Record<
+      string,
+      {
+        oneTimeTotal: number;
+        oneTimeDone: number;
+        oneTimeRate: number;
+        recurringTotal: number;
+        recurringDone: number;
+      }
+    >;
   }, [completedTasks]);
 
   const toggleTask = (taskId: string) => {
@@ -191,7 +217,7 @@ export function CareerPlannerApp() {
               {industries.map((industry) => {
                 const theme = themeStyles[industry.theme];
                 const isActive = selectedIndustry.id === industry.id;
-                const progress = projectProgress[industry.id] ?? 0;
+                const progress = projectProgress[industry.id];
 
                 return (
                   <button
@@ -209,14 +235,18 @@ export function CareerPlannerApp() {
                       <span className={["rounded-full px-3 py-1 text-xs font-medium", theme.chip].join(" ")}>
                         {industry.shortLabel}
                       </span>
-                      <span className="text-sm font-medium text-stone-500">{progress}%</span>
+                      <span className="text-sm font-medium text-stone-500">{progress.oneTimeRate}%</span>
                     </div>
                     <p className="mt-3 text-base font-medium text-ink">{industry.name}</p>
                     <p className="mt-2 text-sm leading-6 text-stone-600">{industry.overview}</p>
+                    <div className="mt-3 flex items-center justify-between text-xs text-stone-500">
+                      <span>一次性 {progress.oneTimeDone}/{progress.oneTimeTotal}</span>
+                      <span>重複型 {progress.recurringDone}/{progress.recurringTotal}</span>
+                    </div>
                     <div className="mt-4 h-2 rounded-full bg-white/80">
                       <div
                         className={["h-2 rounded-full bg-gradient-to-r transition-all duration-500", theme.progress].join(" ")}
-                        style={{ width: `${progress}%` }}
+                        style={{ width: `${progress.oneTimeRate}%` }}
                       />
                     </div>
                   </button>
@@ -294,19 +324,32 @@ export function CareerPlannerApp() {
                   <p className="text-xs uppercase tracking-[0.28em] text-stone-400">互動進度</p>
                   <div className="mt-4 flex items-end justify-between gap-4">
                     <div>
-                      <p className="text-4xl font-semibold tracking-tight text-ink">{stats.rate}%</p>
-                      <p className="mt-2 text-sm text-stone-600">依目前勾選狀態計算</p>
+                      <p className="text-4xl font-semibold tracking-tight text-ink">{stats.oneTimeRate}%</p>
+                      <p className="mt-2 text-sm text-stone-600">一次性任務完成率</p>
                     </div>
                     <div className={["rounded-full px-3 py-1 text-xs font-medium", selectedTheme.chip].join(" ")}>
-                      {stats.done}/{stats.total} 已完成
+                      一次性 {stats.oneTimeDone}/{stats.oneTimeTotal}
                     </div>
                   </div>
 
                   <div className="mt-6 h-3 rounded-full bg-[#efe7dd]">
                     <div
                       className={["h-3 rounded-full bg-gradient-to-r transition-all duration-500", selectedTheme.progress].join(" ")}
-                      style={{ width: `${stats.rate}%` }}
+                      style={{ width: `${stats.oneTimeRate}%` }}
                     />
+                  </div>
+
+                  <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
+                    <div className="rounded-2xl bg-[#f6f1e9] p-4 text-stone-600">
+                      <p className="text-xs uppercase tracking-[0.24em] text-stone-400">一次性任務</p>
+                      <p className="mt-2 text-2xl font-semibold text-ink">{stats.oneTimeDone}</p>
+                      <p className="mt-1 text-xs text-stone-500">共 {stats.oneTimeTotal} 項</p>
+                    </div>
+                    <div className="rounded-2xl border border-dashed border-stone-300 bg-white/70 p-4 text-stone-600">
+                      <p className="text-xs uppercase tracking-[0.24em] text-stone-400">重複型任務</p>
+                      <p className="mt-2 text-2xl font-semibold text-ink">{stats.recurringDone}</p>
+                      <p className="mt-1 text-xs text-stone-500">本輪已執行 / 共 {stats.recurringTotal} 項</p>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -357,9 +400,7 @@ export function CareerPlannerApp() {
 
 function countSection(section: WorkflowSection, completedTasks: Record<string, boolean>) {
   const allItems = collectItems(section.items);
-  const total = allItems.length;
-  const done = allItems.filter((item) => completedTasks[item.id]).length;
-  return { total, done, rate: percentage(done, total) };
+  return buildStats(allItems, completedTasks);
 }
 
 function SectionCard({
@@ -402,15 +443,18 @@ function SectionCard({
 
           <div className="min-w-[170px] rounded-2xl bg-[#f6f0e8] p-4">
             <div className="flex items-center justify-between text-sm text-stone-600">
-              <span>階段進度</span>
-              <span>{sectionStats.rate}%</span>
+              <span>一次性進度</span>
+              <span>{sectionStats.oneTimeRate}%</span>
             </div>
             <div className="mt-3 h-2 rounded-full bg-white/90">
               <div
                 className={["h-2 rounded-full bg-gradient-to-r transition-all duration-500", theme.progress].join(" ")}
-                style={{ width: `${sectionStats.rate}%` }}
+                style={{ width: `${sectionStats.oneTimeRate}%` }}
               />
             </div>
+            <p className="mt-3 text-xs text-stone-500">
+              重複型本輪已執行 {sectionStats.recurringDone}/{sectionStats.recurringTotal}
+            </p>
           </div>
         </div>
 
@@ -447,31 +491,62 @@ function ChecklistRow({
   const hasChildren = Boolean(item.children?.length);
   const [open, setOpen] = useState(depth === 0 && hasChildren);
   const checked = Boolean(completedTasks[item.id]);
+  const isRecurring = item.status === "recurring";
 
   return (
     <div className={depth > 0 ? "ml-4 border-l border-stone-200/80 pl-4 sm:ml-6" : ""}>
       <div
         className={[
           "overflow-hidden rounded-[20px] border transition duration-300",
-          checked ? `${theme.soft} ${theme.border}` : "border-stone-200/80 bg-white",
+          isRecurring
+            ? checked
+              ? `${theme.soft} ${theme.border} border-dashed`
+              : "border-dashed border-stone-300 bg-[#faf7f2]"
+            : checked
+              ? `${theme.soft} ${theme.border}`
+              : "border-stone-200/80 bg-white",
         ].join(" ")}
       >
         <div className="flex items-start gap-4 px-4 py-4 sm:px-5">
-          <input
-            type="checkbox"
-            checked={checked}
-            onChange={() => onToggleTask(item.id)}
-            className="mt-0.5 h-5 w-5 cursor-pointer rounded border-stone-300 text-stone-700 focus:ring-stone-400"
-            aria-label={`完成 ${item.title}`}
-          />
+          {isRecurring ? (
+            <button
+              type="button"
+              onClick={() => onToggleTask(item.id)}
+              className={[
+                "mt-0.5 inline-flex min-w-[88px] items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium transition",
+                checked
+                  ? `${theme.soft} ${theme.text} border ${theme.border}`
+                  : "border border-dashed border-stone-300 bg-white text-stone-600 hover:bg-stone-50",
+              ].join(" ")}
+              aria-label={`${checked ? "取消本輪執行" : "標記本輪已執行"} ${item.title}`}
+            >
+              {checked ? "本輪已執行" : "標記執行"}
+            </button>
+          ) : (
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={() => onToggleTask(item.id)}
+              className="mt-0.5 h-5 w-5 cursor-pointer rounded border-stone-300 text-stone-700 focus:ring-stone-400"
+              aria-label={`完成 ${item.title}`}
+            />
+          )}
 
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
-              <p className={["text-base font-medium", checked ? "text-stone-500 line-through" : "text-ink"].join(" ")}>
+              <p
+                className={[
+                  "text-base font-medium",
+                  isRecurring ? (checked ? "text-ink" : "text-ink") : checked ? "text-stone-500 line-through" : "text-ink",
+                ].join(" ")}
+              >
                 {item.title}
               </p>
               <span className="rounded-full bg-white/85 px-2.5 py-1 text-xs text-stone-500">
-                {statusLabel(item.status, checked)}
+                {typeLabel(item.status)}
+              </span>
+              <span className="rounded-full bg-white/85 px-2.5 py-1 text-xs text-stone-500">
+                {cycleLabel(item.status, checked)}
               </span>
             </div>
           </div>
