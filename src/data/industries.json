@@ -1,58 +1,41 @@
 [
   {
-    "id": "food-prep",
-    "name": "餐飲業籌備",
-    "shortLabel": "餐飲",
-    "theme": "terracotta",
-    "icon": "FC",
-    "overview": "從商圈分析、品牌定位到試營運，整理出一條可執行的開店步驟線。",
-    "objective": "在有限預算與時程內，有條理地完成開店前置作業與營運準備。",
-    "resourceLinks": [
-      {
-        "label": "Gemini 參考 1",
-        "url": "https://share.gemini.google/hQWSxwa0lf8A"
-      },
-      {
-        "label": "Gemini 參考 2",
-        "url": "https://share.gemini.google/KVO2Arry56HI"
-      }
-    ]
-  },
-  {
-    "id": "interior-fitout",
-    "name": "系統櫃與室內裝修",
-    "shortLabel": "裝修",
+    "id": "qingxi-design",
+    "name": "青曦設計 (Qingxi Design) 創業起步檢核表",
+    "shortLabel": "青曦設計",
     "theme": "dusty",
-    "icon": "IF",
-    "overview": "整合丈量、提案、估價、工序協調與交付驗收的專案節點。",
-    "objective": "讓設計、施工與業主溝通同步，降低返工與時程失控風險。",
+    "overview": "當前進度：80% (40 / 50 項)。品牌狀態：網域已啟用 (www.qingxidesign.tw)、官網 AI 翻新作品已上線、報價工作台已部署、Google 商家已完善、降阻力收網表單已上線。",
+    "details": [
+      "當前戰略階段：游擊接案期（免發票承攬）",
+      "戰略最高指導原則：【壓力測試 Stress Test】拿下首個陌生業主前，堅決零親友介紹、零買粉，純靠「專業內容 + 官網資產」與市場實力對決。"
+    ],
+    "legend": [
+      "[x] = 已完成 (基礎已打穩)",
+      "[ ] 待辦事項 = 單次任務 / 里程碑建置",
+      "[ ] 日常作業 = 重複性任務 / 需持續執行培養信任"
+    ],
     "resourceLinks": [
       {
-        "label": "Gemini 參考 1",
-        "url": "https://share.gemini.google/hQWSxwa0lf8A"
-      },
-      {
-        "label": "Gemini 參考 2",
-        "url": "https://share.gemini.google/KVO2Arry56HI"
+        "label": "來源資料",
+        "url": "https://share.gemini.google/pRCYWotfOKW8"
       }
     ]
   },
   {
-    "id": "space-organization",
-    "name": "空間收納整理專案",
-    "shortLabel": "收納",
-    "theme": "sage",
-    "icon": "SO",
-    "overview": "從客戶訪談、現況盤點到分類配置，建立可持續維護的整理流程。",
-    "objective": "把凌亂空間轉化為可使用、可維護且具生活感的系統化環境。",
+    "id": "arrive-studio",
+    "name": "Vibe Coder 實戰生存與獲利藍圖 (行動拆解版)",
+    "shortLabel": "築時數位",
+    "theme": "terracotta",
+    "overview": "這是一份為「築時數位」量身打造的行動清單。我們已將大目標拆解為可執行的子任務，並加入了主動獲客的戰略與頻率。每完成一項就毫不猶豫地打個勾。",
+    "details": [
+      "里程碑一狀態：完美達標中，你的店面已經具備 10/10 的頂級質感。",
+      "目標：用模組化接案與微型系統訂閱，逐步覆蓋基本生活開銷。"
+    ],
+    "legend": [],
     "resourceLinks": [
       {
-        "label": "Gemini 參考 1",
-        "url": "https://share.gemini.google/hQWSxwa0lf8A"
-      },
-      {
-        "label": "Gemini 參考 2",
-        "url": "https://share.gemini.google/KVO2Arry56HI"
+        "label": "來源資料",
+        "url": "https://share.gemini.google/gxQwdLBfjwJ2"
       }
     ]
   }

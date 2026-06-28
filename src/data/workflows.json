@@ -1,242 +1,594 @@
 {
-  "food-prep": [
-    {
-      "id": "food-stage-1",
-      "title": "定位與研究",
-      "summary": "建立品牌方向與開店基本盤。",
-      "milestone": "確認客群、商圈與菜單主軸",
-      "tasks": [
-        {
-          "id": "food-task-1",
-          "title": "市場與商圈調查",
-          "description": "蒐集目標客群消費習慣、競品價格帶與人流時段，篩選適合的商圈。",
-          "deliverable": "商圈分析表與競品整理報告",
-          "notes": ["鎖定 3 個潛在商圈", "記錄租金、坪數與尖離峰變化"],
-          "eta": "3-5 天",
-          "priority": "high"
-        },
-        {
-          "id": "food-task-2",
-          "title": "品牌定位與品項草案",
-          "description": "定義主打產品、品牌語氣與客單價，讓後續視覺與空間設計有明確基礎。",
-          "deliverable": "品牌定位簡報與菜單初稿",
-          "notes": ["列出明星商品", "設定客單價與差異化賣點"],
-          "eta": "2-4 天",
-          "priority": "high"
-        }
-      ]
-    },
-    {
-      "id": "food-stage-2",
-      "title": "空間與法規",
-      "summary": "把理想營運模式落到可執行的店面規劃。",
-      "milestone": "完成店面配置與合規清單",
-      "tasks": [
-        {
-          "id": "food-task-3",
-          "title": "平面配置與動線規劃",
-          "description": "確認吧台、廚房、出餐與座位配置，避免工作流程互相干擾。",
-          "deliverable": "店面平面圖與動線示意",
-          "notes": ["預留外送取餐區", "檢查冷藏與洗滌動線"],
-          "eta": "4-6 天",
-          "priority": "medium"
-        },
-        {
-          "id": "food-task-4",
-          "title": "證照與設備盤點",
-          "description": "整理營業登記、消防、衛生與主要設備採購需求。",
-          "deliverable": "法規檢核表與設備採購清單",
-          "notes": ["優先處理衛生與消防項目", "確認設備交期"],
-          "eta": "5-7 天",
-          "priority": "high"
-        }
-      ]
-    },
-    {
-      "id": "food-stage-3",
-      "title": "試營運與優化",
-      "summary": "透過小規模驗證修正營運細節。",
-      "milestone": "完成試營運檢討與正式開店準備",
-      "tasks": [
-        {
-          "id": "food-task-5",
-          "title": "試營運腳本與分工",
-          "description": "設計試營運時段、促銷方案、現場分工與回饋蒐集表。",
-          "deliverable": "試營運 SOP 與班表",
-          "notes": ["安排朋友客群測試", "記錄尖峰時段瓶頸"],
-          "eta": "2-3 天",
-          "priority": "medium"
-        },
-        {
-          "id": "food-task-6",
-          "title": "調整菜單與正式開店清單",
-          "description": "依試營運結果調整價格、品項與服務流程，整理正式營運前最後確認事項。",
-          "deliverable": "修正版菜單與開店前檢核表",
-          "notes": ["刪除低轉化品項", "確認員工培訓完成"],
-          "eta": "2-4 天",
-          "priority": "high"
-        }
-      ]
-    }
-  ],
-  "interior-fitout": [
-    {
-      "id": "fit-stage-1",
-      "title": "需求釐清",
-      "summary": "將空間需求與預算目標具體化。",
-      "milestone": "完成業主需求訪談與現場丈量",
-      "tasks": [
-        {
-          "id": "fit-task-1",
-          "title": "業主訪談與需求整理",
-          "description": "確認生活習慣、收納需求、風格偏好與關鍵痛點，建立提案方向。",
-          "deliverable": "需求訪談紀錄與風格板",
-          "notes": ["定義必做與可調整項目", "確認預算範圍"],
-          "eta": "1-2 天",
-          "priority": "high"
-        },
-        {
-          "id": "fit-task-2",
-          "title": "現場丈量與條件盤點",
-          "description": "丈量空間尺寸、記錄梁柱、水電、開窗位置與現況限制。",
-          "deliverable": "現況圖與尺寸標註稿",
-          "notes": ["拍攝細節照片", "標示管線與插座位置"],
-          "eta": "1 天",
-          "priority": "high"
-        }
-      ]
-    },
-    {
-      "id": "fit-stage-2",
-      "title": "提案與估價",
-      "summary": "將設計概念轉化為施工與採購基礎。",
-      "milestone": "確認配置方案與報價版本",
-      "tasks": [
-        {
-          "id": "fit-task-3",
-          "title": "系統櫃配置與材質提案",
-          "description": "整合機能、比例與材質，建立兼具美感與收納效率的方案。",
-          "deliverable": "配置圖、立面圖與材質板",
-          "notes": ["標記五金與門片開啟方向", "列出可替代材質"],
-          "eta": "4-6 天",
-          "priority": "medium"
-        },
-        {
-          "id": "fit-task-4",
-          "title": "拆項估價與工程排程",
-          "description": "把木作、系統櫃、油漆、燈具與清潔等費用拆分，避免預算失焦。",
-          "deliverable": "報價單與初版工期表",
-          "notes": ["標記追加項風險", "同步材料交期"],
-          "eta": "2-3 天",
-          "priority": "high"
-        }
-      ]
-    },
-    {
-      "id": "fit-stage-3",
-      "title": "施工與交付",
-      "summary": "追蹤現場進度並完成最終驗收。",
-      "milestone": "完成交屋驗收與保固說明",
-      "tasks": [
-        {
-          "id": "fit-task-5",
-          "title": "工班協調與現場巡檢",
-          "description": "依工期安排巡場，確認尺寸落地、安裝順序與各工種銜接。",
-          "deliverable": "現場巡檢紀錄與修正清單",
-          "notes": ["每週回報進度", "交叉確認插座與櫃體衝突"],
-          "eta": "施工期間每週",
-          "priority": "medium"
-        },
-        {
-          "id": "fit-task-6",
-          "title": "驗收、清潔與保固交接",
-          "description": "盤點收邊、門片、五金與表面品質，交付保固與維護說明。",
-          "deliverable": "驗收表與保固文件",
-          "notes": ["逐櫃測試五金", "拍照存檔交付前後狀態"],
-          "eta": "1-2 天",
-          "priority": "high"
-        }
-      ]
-    }
-  ],
-  "space-organization": [
-    {
-      "id": "org-stage-1",
-      "title": "前期盤點",
-      "summary": "理解空間、物品與生活節奏。",
-      "milestone": "完成現況分析與分類策略",
-      "tasks": [
-        {
-          "id": "org-task-1",
-          "title": "客戶訪談與空間觀察",
-          "description": "了解家庭成員、日常動線與收納痛點，找出優先改善區。",
-          "deliverable": "需求訪談摘要與問題地圖",
-          "notes": ["標出高頻使用區", "記錄情緒壓力來源"],
-          "eta": "0.5-1 天",
-          "priority": "high"
-        },
-        {
-          "id": "org-task-2",
-          "title": "物品清點與分類原則",
-          "description": "盤點物品數量、使用頻率與保存必要性，建立分類規則。",
-          "deliverable": "分類清單與淘汰原則表",
-          "notes": ["建立保留、捐贈、丟棄三類", "辨識重複囤積品"],
-          "eta": "1-2 天",
-          "priority": "medium"
-        }
-      ]
-    },
-    {
-      "id": "org-stage-2",
-      "title": "配置與執行",
-      "summary": "把整理策略落到實際空間與容器中。",
-      "milestone": "完成主要區域的系統化收納",
-      "tasks": [
-        {
-          "id": "org-task-3",
-          "title": "收納分區與容器配置",
-          "description": "依使用情境規劃層架、抽屜與標籤，避免收納後難以維持。",
-          "deliverable": "分區配置圖與容器採購清單",
-          "notes": ["優先改善玄關、廚房、衣櫃", "標示同類物品固定位置"],
-          "eta": "1-3 天",
-          "priority": "high"
-        },
-        {
-          "id": "org-task-4",
-          "title": "現場整理與動線修正",
-          "description": "依分類結果實際整理上架，並調整拿取順序與收納深度。",
-          "deliverable": "完成後空間照片與維持建議",
-          "notes": ["高頻物品放在易拿位置", "避免深層堆疊"],
-          "eta": "1-2 天",
-          "priority": "medium"
-        }
-      ]
-    },
-    {
-      "id": "org-stage-3",
-      "title": "維持與回訪",
-      "summary": "建立使用後的維護習慣與檢查節奏。",
-      "milestone": "完成回訪建議與維護 SOP",
-      "tasks": [
-        {
-          "id": "org-task-5",
-          "title": "建立維持規則",
-          "description": "用簡單可重複的規則取代一次性整理，讓空間能長期維持整齊。",
-          "deliverable": "家庭收納 SOP 卡",
-          "notes": ["設定每週 15 分鐘重置習慣", "為每位成員分配責任區"],
-          "eta": "0.5 天",
-          "priority": "low"
-        },
-        {
-          "id": "org-task-6",
-          "title": "一週後回訪優化",
-          "description": "檢查實際使用狀況，微調分類與標籤，補上新的整理盲點。",
-          "deliverable": "回訪紀錄與二次優化建議",
-          "notes": ["記錄維持失敗點", "評估是否需要增補收納容器"],
-          "eta": "0.5-1 天",
-          "priority": "medium"
-        }
-      ]
-    }
-  ]
+  "qingxi-design": {
+    "sections": [
+      {
+        "id": "qingxi-1",
+        "title": "階段一：核心定位與基礎準備 (完成度：100%)",
+        "items": [
+          {
+            "id": "qingxi-1-1",
+            "title": "確定公司名稱 (青曦設計 Qingxi Design)",
+            "status": "done"
+          },
+          {
+            "id": "qingxi-1-2",
+            "title": "設計品牌 Logo",
+            "status": "done"
+          },
+          {
+            "id": "qingxi-1-3",
+            "title": "準備個人名片",
+            "status": "done"
+          },
+          {
+            "id": "qingxi-1-4",
+            "title": "建立品牌 Email (differ505@gmail.com)",
+            "status": "done"
+          },
+          {
+            "id": "qingxi-1-5",
+            "title": "整理過往作品集 (AI 翻新舊作：泳令人與商空已完成)",
+            "status": "done"
+          }
+        ]
+      },
+      {
+        "id": "qingxi-2",
+        "title": "階段二：數位資產與官網建置 & 首案衝刺 (當前主戰場)",
+        "items": [
+          {
+            "id": "qingxi-2-1",
+            "title": "註冊官方網域 (qingxidesign.tw 於 PChome 購買)",
+            "status": "done"
+          },
+          {
+            "id": "qingxi-2-2",
+            "title": "官網版面設計與 Vercel 部署",
+            "status": "done"
+          },
+          {
+            "id": "qingxi-2-3",
+            "title": "新增「室內設計」作品集板塊",
+            "status": "done"
+          },
+          {
+            "id": "qingxi-2-4",
+            "title": "撰寫「智能家居 (Smart Home)」情境式文案並上線",
+            "status": "done"
+          },
+          {
+            "id": "qingxi-2-5",
+            "title": "網站上線測試與除錯",
+            "status": "done"
+          },
+          {
+            "id": "qingxi-2-6",
+            "title": "【首案衝刺任務包】(目標：拿下第一筆合約，賺取行政預備金)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "qingxi-2-6-1",
+                "title": "任務 1：開發官網「裝修初步估價器」與內部報價工作台 (quote-studio)",
+                "status": "done"
+              },
+              {
+                "id": "qingxi-2-6-2",
+                "title": "任務 2：執行「半自動化」名單跟進 (高轉換率打法)",
+                "status": "done"
+              },
+              {
+                "id": "qingxi-2-6-3",
+                "title": "任務 3：製作「無公司版」報價單與合約 (文書防禦)",
+                "status": "done"
+              },
+              {
+                "id": "qingxi-2-6-4",
+                "title": "任務 4：建立 Google 商家檔案 (在地化 SEO 吸客)",
+                "status": "done"
+              },
+              {
+                "id": "qingxi-2-6-5",
+                "title": "任務 5：精準潛入在地社團與群組 (主場優勢：3 個 FB + 2 個 LINE)",
+                "status": "done"
+              },
+              {
+                "id": "qingxi-2-6-6",
+                "title": "任務 6：社群誘餌式回覆與微型分發 (COPE 戰略在地化) (頻率：每週 1-3 次)",
+                "status": "recurring",
+                "children": [
+                  {
+                    "id": "qingxi-2-6-6-1",
+                    "title": "行動 1【被動釣魚】：看到在地社團有人發問，給予專業建議並附上「官網文章」或「估價器」連結。",
+                    "status": "recurring"
+                  },
+                  {
+                    "id": "qingxi-2-6-6-2",
+                    "title": "行動 2【主動分發】：將「出書文章」利用 LLM 處理後進行高 ROI 投放。(完成標準：發布並存活 24H)",
+                    "status": "recurring",
+                    "children": [
+                      {
+                        "id": "qingxi-2-6-6-2-a",
+                        "title": "步驟 A：利用 LLM 生圖並完成「官網文章」上稿。",
+                        "status": "pending"
+                      },
+                      {
+                        "id": "qingxi-2-6-6-2-b",
+                        "title": "步驟 B：同步複製發布至「Google 商家最新動態」(長效 SEO 防禦)。",
+                        "status": "pending"
+                      },
+                      {
+                        "id": "qingxi-2-6-6-2-c",
+                        "title": "步驟 C：改寫短版串文發佈至「Threads」(需原生上傳 3 張照片創造滑動紅利)。",
+                        "status": "pending"
+                      },
+                      {
+                        "id": "qingxi-2-6-6-2-d",
+                        "title": "戰略備註：FB 粉專、IG 等定位為「靜態櫥窗」，排定 6-9 篇最棒的作品圖置頂即可，停止日常同步耗損。",
+                        "status": "done"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "qingxi-2-6-7",
+                "title": "任務 7：主動獵殺 (頻率：每日早晚巡邏 1 次)",
+                "status": "recurring",
+                "children": [
+                  {
+                    "id": "qingxi-2-6-7-1",
+                    "title": "鎖定明確尋找設計/統包貼文，套用「估價器免修改模版」，直接在留言區貼上官網試算網址，實現最高效收網。",
+                    "status": "recurring"
+                  }
+                ]
+              },
+              {
+                "id": "qingxi-2-6-8",
+                "title": "任務 8：官網收網機制建置 (降阻力表單)",
+                "status": "done",
+                "children": [
+                  {
+                    "id": "qingxi-2-6-8-1",
+                    "title": "建置無圖片上傳的「免費格局健檢」純文字表單。",
+                    "status": "done"
+                  },
+                  {
+                    "id": "qingxi-2-6-8-2",
+                    "title": "設定成功送出後，跳出引導加入 LINE 傳送平面圖的按鈕。",
+                    "status": "done"
+                  }
+                ]
+              },
+              {
+                "id": "qingxi-2-6-9",
+                "title": "任務 9：實體展間亮點建置 (拍攝素材與迎客準備)",
+                "status": "pending",
+                "children": [
+                  {
+                    "id": "qingxi-2-6-9-1",
+                    "title": "開始建置「財位水草魚缸」(需 3-4 週養水期)",
+                    "status": "pending"
+                  },
+                  {
+                    "id": "qingxi-2-6-9-2",
+                    "title": "整理「隱藏式神桌」，配置 HA 煙霧感測，並拍攝展示短影音",
+                    "status": "pending"
+                  }
+                ]
+              },
+              {
+                "id": "qingxi-2-6-10",
+                "title": "任務 10：品牌 Logo AI 視覺優化與全平台替換",
+                "status": "done"
+              },
+              {
+                "id": "qingxi-2-6-11",
+                "title": "任務 11：維護「潛在客戶名單 (CRM) 與財務追蹤表」(每週末結算)",
+                "status": "recurring"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "qingxi-3",
+        "title": "階段三：公司設立與法規防護 (啟動條件：累積淨利達 6-8 萬或客戶要求開發票)",
+        "items": [
+          {
+            "id": "qingxi-3-1",
+            "title": "評估登記地點 (已確認汐止自宅為「住二」，不宜登記裝修業)",
+            "status": "done"
+          },
+          {
+            "id": "qingxi-3-2",
+            "title": "尋找並簽約商務中心「借址登記」(建議鎖定：南港區、汐止區)",
+            "status": "pending"
+          },
+          {
+            "id": "qingxi-3-3",
+            "title": "決定公司資本額與名稱預查",
+            "status": "pending"
+          },
+          {
+            "id": "qingxi-3-4",
+            "title": "辦理「公司設立登記」與「稅籍登記」等相關行政手續",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": "qingxi-4",
+        "title": "階段四：專業資格與特許登記 (室內裝修業專屬)",
+        "items": [
+          {
+            "id": "qingxi-4-1",
+            "title": "加入當地「室內設計裝修商業同業公會」",
+            "status": "pending"
+          },
+          {
+            "id": "qingxi-4-2",
+            "title": "向內政部營建署申請「室內裝修業登記證」",
+            "status": "pending"
+          },
+          {
+            "id": "qingxi-4-3",
+            "title": "【長期護城河】考取「建築物室內設計乙級」證照",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": "qingxi-5",
+        "title": "階段五：營運準備與工具導入",
+        "items": [
+          {
+            "id": "qingxi-5-1",
+            "title": "開立公司正式銀行帳戶",
+            "status": "pending"
+          },
+          {
+            "id": "qingxi-5-2",
+            "title": "建立「青曦標準提案 SOP」：將「基礎陽宅風水評估 / 化解方案 / 樹狀工程解剖圖」列為標配亮點，保留至簽約階段或面對面提案時展現，用於支撐報價價值。",
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": "qingxi-6",
+        "title": "階段六：行銷推廣與接案 (結合社群戰略與網站企劃)",
+        "items": [
+          {
+            "id": "qingxi-6-1",
+            "title": "官網新增「青曦標準 SOP」獨立頁面 (前端吸客武器)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "qingxi-6-1-1",
+                "title": "上半部製作「合作流程圖」，簡單說明從估價到完工的 5 大步驟。",
+                "status": "pending"
+              },
+              {
+                "id": "qingxi-6-1-2",
+                "title": "下半部公開「公版老屋翻新甘特圖」，展示排程邏輯與不拖延的專業形象。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "qingxi-6-2",
+            "title": "官網建置「裝修專欄 / 選材筆記」區塊 (長效 SEO 護城河)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "qingxi-6-2-1",
+                "title": "以部落格文章形式，撰寫「裝修材料品牌推薦」與「避坑指南」，於文末串接估價器連結。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "qingxi-6-3",
+            "title": "持續擴充專屬優質工班與建材商名冊 (營業秘密，絕不公開)",
+            "status": "recurring",
+            "children": [
+              {
+                "id": "qingxi-6-3-1",
+                "title": "建立「低阻力廠商合作申請表單」(僅要求基本聯絡與網址)，於廠商廣告文下方被動空投收集名單。",
+                "status": "pending"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "qingxi-7",
+        "title": "階段七：科技賦能與自動化營運 (Vibe Coding 實戰)",
+        "items": [
+          {
+            "id": "qingxi-7-1",
+            "title": "內部自動化報價系統 (quote-studio 上線)",
+            "status": "done"
+          },
+          {
+            "id": "qingxi-7-2",
+            "title": "業主前台專案里程碑系統 (啟動條件：簽下並完成首案全室裝修後)",
+            "status": "pending"
+          },
+          {
+            "id": "qingxi-7-3",
+            "title": "長期品牌權威建立：寫書 / 出版計畫",
+            "status": "recurring"
+          }
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "id": "qingxi-faq-1",
+        "question": "Q1：我現在還沒有公司，要怎麼跟業主簽約才合法又有保障？",
+        "answer": "A：以個人名義簽訂工程承攬合約是完全合法的。合約上請使用本人真實姓名與身分證字號，並明確註明本報價為未稅價，乙方為個人承攬，故不開立統一發票，僅提供個人勞務報酬單或收據。只要你在官網展現出高度專業，如甘特圖、樹狀圖，加上合約付款條件設定清楚，例如 30/30/30/10 階段收款，多數住宅翻新的業主都能接受。",
+        "status": "info"
+      },
+      {
+        "id": "qingxi-faq-2",
+        "question": "Q2：如果業主堅持一定要開發票怎麼辦？",
+        "answer": "A：你有三個策略。第一，借牌或靠行，找可信任的工程行或設計公司借開發票，並事先把 8% 到 10% 的相關費用加進報價。第二，如果案子利潤夠厚，可以直接啟動公司設立流程，並和業主說明發票會在工程尾款時一併開立。第三，如果利潤太薄且業主過度強硬，就直接放生，避免初期承擔不必要的稅務與借牌風險。",
+        "status": "info"
+      },
+      {
+        "id": "qingxi-faq-3",
+        "question": "Q3：以個人身分接案，年底會不會被國稅局查稅？",
+        "answer": "A：只要收入匯入個人帳戶，這筆錢就屬於個人綜合所得。若金額龐大，建議妥善保留發包給水電、泥作師傅的匯款紀錄與材料購買發票等成本證明。未來若遇到查核，可以舉證收入扣除成本後的實際淨利，而不是將總工程款全部視為所得。更根本的解法，仍是當月淨利穩定達到 6 萬以上時，盡快走入公司設立階段。",
+        "status": "info"
+      },
+      {
+        "id": "qingxi-faq-4",
+        "question": "Q4：遇到客人拿著別人的報價單來殺價，我沒有公司品牌護體怎麼辦？",
+        "answer": "A：這時候就是你的私有武器發揮作用的時候。不要在價格上硬碰硬，請拿出準備好的青曦標準提案 SOP 與樹狀工程解剖圖。告訴業主，你的報價包含隱蔽工程的管理與材質把關，若別人的報價單沒有把這 30 個細節列清楚，省下的錢可能會變成日後的修繕費。用資訊落差與管理價值來降維打擊傳統工班。",
+        "status": "info"
+      }
+    ]
+  },
+  "arrive-studio": {
+    "sections": [
+      {
+        "id": "arrive-1",
+        "title": "里程碑一：數位武裝與店面開張 (第 1 - 2 週)",
+        "summary": "狀態：完美達標中，你的店面已經具備 10/10 的頂級質感。",
+        "items": [
+          {
+            "id": "arrive-1-1",
+            "title": "設定核心開發環境與 IDE",
+            "status": "done"
+          },
+          {
+            "id": "arrive-1-2",
+            "title": "生成專屬官方網站 (雜誌藝廊風)",
+            "status": "done"
+          },
+          {
+            "id": "arrive-1-3",
+            "title": "部署與上線 (Vercel 部署完成)",
+            "status": "done"
+          },
+          {
+            "id": "arrive-1-4",
+            "title": "建立專業聯絡管道與防護網",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-1-4-1",
+                "title": "註冊專業信箱 (hello.arrivestudio@gmail.com 或專屬網域信箱)。",
+                "status": "pending"
+              },
+              {
+                "id": "arrive-1-4-2",
+                "title": "申請 LINE 官方帳號 (LINE OA)，並設定基本營業時間與自動回覆，切開公私領域。",
+                "status": "pending"
+              },
+              {
+                "id": "arrive-1-4-3",
+                "title": "串接 Landing Page 上的 Formspree 表單。",
+                "status": "pending"
+              },
+              {
+                "id": "arrive-1-4-4",
+                "title": "利用 AI 擬定「保護自己的接案合約」（包含修改次數限制、分期收款防禦條款）。",
+                "status": "pending"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "arrive-2",
+        "title": "里程碑二：降維打擊與主動獲客 (第 3 - 8 週)",
+        "summary": "目標：鎖定「高視覺需求、低數位能力」的實體生意，賺取第一桶金。",
+        "items": [
+          {
+            "id": "arrive-2-1",
+            "title": "建立狩獵名單 (鎖定完全無官網，或只有陽春舊網站的店家)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-2-1-1",
+                "title": "尋找 10 間依賴 IG 訂房但無官網的「獨立高端民宿 / 豪華露營區」。",
+                "status": "pending"
+              },
+              {
+                "id": "arrive-2-1-2",
+                "title": "尋找 10 間只靠 Facebook 或 IG 接案的「室內設計 / 軟裝佈置工作室」。",
+                "status": "pending"
+              },
+              {
+                "id": "arrive-2-1-3",
+                "title": "尋找 10 間只用 Google 表單預約的「高客單價預約制餐飲 / 私廚」。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "arrive-2-2",
+            "title": "執行「POC 視覺誘餌」開發法 (每週循環任務)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-2-2-1",
+                "title": "每週 2 次：挑選名單，用 AI 花 15 分鐘幫他們生成一張「品牌專屬雜誌風」網頁 Mockup。",
+                "status": "pending"
+              },
+              {
+                "id": "arrive-2-2-2",
+                "title": "每週 5 次：透過 Instagram DM 或 Threads 發送具備溫度、不帶壓迫感的破冰訊息與 Mockup。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "arrive-2-3",
+            "title": "建立轉換收口 (Closing) 橋樑",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-2-3-1",
+                "title": "準備 15 分鐘線上風格諮詢 (Discovery Call) 的對話腳本與報價單。",
+                "status": "pending"
+              },
+              {
+                "id": "arrive-2-3-2",
+                "title": "邀約對 Mockup 有興趣的潛在客戶進行 15 分鐘短通話，用專業對話釐清痛點並推進成交。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "arrive-2-4",
+            "title": "完成第一筆 9,900 或 29,900 交易",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-2-4-1",
+                "title": "用 AI 快速產出正式提案與嚴格的 SOW (工作說明書)。",
+                "status": "pending"
+              },
+              {
+                "id": "arrive-2-4-2",
+                "title": "簽約並收取至少 40% 頭期款。",
+                "status": "pending"
+              },
+              {
+                "id": "arrive-2-4-3",
+                "title": "以 3-5 天的極快速度交付首版，震撼客戶。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "arrive-2-5",
+            "title": "自建專屬 CRM 系統 (防範高生產力拖延症)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-2-5-1",
+                "title": "【條件解鎖】在成功簽下並完成「前兩名客戶」的專案後，再花週末用 Next.js + Supabase 開發「築時數位專屬客戶後台」，將此系統作為你 29,900 方案的終極火力展示。",
+                "status": "pending"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "arrive-3",
+        "title": "里程碑三：提煉共通需求，轉向 SaaS 或模組化 (第 9 - 16 週)",
+        "summary": "目標：將接案中發現的重複痛點，打包成可以快速複製的產品。",
+        "items": [
+          {
+            "id": "arrive-3-1",
+            "title": "提煉「產業專屬模組」",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-3-1-1",
+                "title": "封裝共用功能（例如：絕美房型展示區塊、作品過濾器）為專屬 Boilerplate。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "arrive-3-2",
+            "title": "尋找微型 SaaS 的痛點 (Niche)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-3-2-1",
+                "title": "深聊找出客戶「市面上找不到好用工具」的痛點（例如：極簡版配件盤點系統）。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "arrive-3-3",
+            "title": "開發與驗證 MVP (最小可行性產品)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-3-3-1",
+                "title": "花一個週末開發單一痛點 Web App。",
+                "status": "pending"
+              },
+              {
+                "id": "arrive-3-3-2",
+                "title": "免費提供給舊客戶試用，獲取回饋，後續導入輕量訂閱制。",
+                "status": "pending"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "arrive-4",
+        "title": "里程碑四：達到「拉麵營利」與被動現金流 (第 17 - 24 週)",
+        "summary": "目標：用「模組化接案 + 微型系統訂閱」覆蓋基本生活開銷。",
+        "items": [
+          {
+            "id": "arrive-4-1",
+            "title": "提高客單價，拒絕低效專案",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-4-1-1",
+                "title": "調升起步方案價格（例如從 9,900 升至 14,900）。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "arrive-4-2",
+            "title": "建立維護費 (MRR) 循環",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-4-2-1",
+                "title": "為先前的接案客戶提供「年度主機與輕量維護合約」。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "arrive-4-3",
+            "title": "正式宣告全職或自由工作者狀態",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-4-3-1",
+                "title": "成功掌握 Vibe Coding 商業變現的終極奧義！",
+                "status": "pending"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "faq": []
+  }
 }
