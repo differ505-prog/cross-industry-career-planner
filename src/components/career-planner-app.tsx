@@ -50,6 +50,7 @@ interface WorkflowProject {
 }
 
 type WorkflowMap = Record<string, WorkflowProject>;
+type CopyState = "idle" | "success" | "error";
 
 const industries = industriesData as Industry[];
 const workflows = workflowsData as WorkflowMap;
@@ -144,9 +145,107 @@ function buildDefaultCompletionMap() {
 
 const defaultCompletionMap = buildDefaultCompletionMap();
 
+function itemStateLabel(item: ChecklistItem, completedTasks: Record<string, boolean>) {
+  const checked = Boolean(completedTasks[item.id]);
+  return item.status === "recurring"
+    ? checked
+      ? "本輪已執行"
+      : "待執行"
+    : checked
+      ? "已完成"
+      : "未完成";
+}
+
+function itemTypeLabel(item: ChecklistItem) {
+  return item.status === "recurring" ? "重複型任務" : "一次性任務";
+}
+
+function formatChecklistItems(items: ChecklistItem[], completedTasks: Record<string, boolean>, depth = 0): string[] {
+  return items.flatMap((item) => {
+    const prefix = `${"  ".repeat(depth)}-`;
+    const lines = [
+      `${prefix} ${item.title}`,
+      `${"  ".repeat(depth + 1)}類型：${itemTypeLabel(item)}`,
+      `${"  ".repeat(depth + 1)}狀態：${itemStateLabel(item, completedTasks)}`,
+    ];
+
+    if (item.children?.length) {
+      lines.push(...formatChecklistItems(item.children, completedTasks, depth + 1));
+    }
+
+    return lines;
+  });
+}
+
+function buildReviewPrompt({
+  industry,
+  workflow,
+  completedTasks,
+  stats,
+}: {
+  industry: Industry;
+  workflow: WorkflowProject;
+  completedTasks: Record<string, boolean>;
+  stats: ReturnType<typeof buildStats>;
+}) {
+  const lines = [
+    "請你扮演高階顧問 / 高階 LLM 審核者，針對以下檢核表做全面覆核。",
+    "",
+    "請完成以下任務：",
+    "1. 先給這份檢核表一個綜合評分，滿分 10 分，可出現小數點一位。",
+    "2. 說明評分理由，至少涵蓋：完整性、可執行性、商業可行性、優先順序、風險控制。",
+    "3. 點出目前檢核表的盲點、缺漏、重複或順序不合理之處。",
+    "4. 提出具體優化建議，並依高優先、中優先、低優先排序。",
+    "5. 如果你認為有些項目應該改成一次性任務、重複型任務，或反過來，也請直接指出。",
+    "6. 最後輸出一版「建議調整後的檢核表架構摘要」。",
+    "",
+    "請用繁體中文回答，內容務必務實、直接、可執行。",
+    "",
+    `檢核表名稱：${industry.name}`,
+    `概述：${industry.overview}`,
+    "",
+    "補充說明：",
+    ...(industry.details.length > 0 ? industry.details.map((detail) => `- ${detail}`) : ["- 無"]),
+    "",
+    "圖例：",
+    ...(industry.legend.length > 0 ? industry.legend.map((line) => `- ${line}`) : ["- 無"]),
+    "",
+    "來源連結：",
+    ...(industry.resourceLinks.length > 0
+      ? industry.resourceLinks.map((link) => `- ${link.label}：${link.url}`)
+      : ["- 無"]),
+    "",
+    "目前進度摘要：",
+    `- 一次性任務完成率：${stats.oneTimeRate}% (${stats.oneTimeDone}/${stats.oneTimeTotal})`,
+    `- 重複型任務本輪已執行：${stats.recurringDone}/${stats.recurringTotal}`,
+    "",
+    "完整檢核表內容：",
+  ];
+
+  workflow.sections.forEach((section, index) => {
+    lines.push("");
+    lines.push(`階段 ${index + 1}：${section.title}`);
+    if (section.summary) {
+      lines.push(`摘要：${section.summary}`);
+    }
+    lines.push(...formatChecklistItems(section.items, completedTasks));
+  });
+
+  if (workflow.faq.length > 0) {
+    lines.push("", "FAQ：");
+    workflow.faq.forEach((faq, index) => {
+      lines.push(`${index + 1}. ${faq.question}`);
+      lines.push(`   ${faq.answer}`);
+    });
+  }
+
+  return lines.join("\n");
+}
+
 export function CareerPlannerApp() {
   const [selectedIndustryId, setSelectedIndustryId] = useState(industries[0]?.id ?? "");
   const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>(defaultCompletionMap);
+  const [copyState, setCopyState] = useState<CopyState>("idle");
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
@@ -200,6 +299,37 @@ export function CareerPlannerApp() {
       ...current,
       [taskId]: !current[taskId],
     }));
+  };
+
+  const handleCopyForReview = async () => {
+    const reviewPrompt = buildReviewPrompt({
+      industry: selectedIndustry,
+      workflow: selectedWorkflow,
+      completedTasks,
+      stats,
+    });
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(reviewPrompt);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = reviewPrompt;
+        textarea.setAttribute("readonly", "");
+        textarea.style.position = "absolute";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+
+      setCopyState("success");
+      window.setTimeout(() => setCopyState("idle"), 2200);
+    } catch {
+      setCopyState("error");
+      window.setTimeout(() => setCopyState("idle"), 2200);
+    }
   };
 
   return (
@@ -317,7 +447,28 @@ export function CareerPlannerApp() {
                         {link.label}
                       </a>
                     ))}
+                    <button
+                      type="button"
+                      onClick={handleCopyForReview}
+                      className={[
+                        "rounded-full px-4 py-2 text-sm transition",
+                        copyState === "success"
+                          ? `${selectedTheme.soft} ${selectedTheme.text} border ${selectedTheme.border}`
+                          : copyState === "error"
+                            ? "border border-red-200 bg-red-50 text-red-600"
+                            : "border border-stone-200 bg-white/80 text-stone-700 hover:-translate-y-0.5 hover:border-stone-300 hover:bg-white",
+                      ].join(" ")}
+                    >
+                      {copyState === "success"
+                        ? "已複製覆核內容"
+                        : copyState === "error"
+                          ? "複製失敗，請重試"
+                          : "一鍵複製給高階 LLM 覆核"}
+                    </button>
                   </div>
+                  <p className="mt-3 text-xs leading-6 text-stone-500">
+                    複製內容會包含目前整張檢核表、勾選狀態、FAQ，以及「滿分 10 分綜合評分與優化建議」提示詞。
+                  </p>
                 </div>
 
                 <div className="rounded-[28px] border border-white/80 bg-white/72 p-6 shadow-soft backdrop-blur-md">
