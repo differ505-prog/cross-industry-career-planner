@@ -640,6 +640,8 @@ function ChecklistRow({
   theme: (typeof themeStyles)[ThemeName];
 }) {
   const hasChildren = Boolean(item.children?.length);
+  const childCount = item.children?.length ?? 0;
+  const childLabel = depth === 0 ? `含 ${childCount} 項子任務` : `含 ${childCount} 項子步驟`;
   const [open, setOpen] = useState(depth === 0 && hasChildren);
   const checked = Boolean(completedTasks[item.id]);
   const isRecurring = item.status === "recurring";
@@ -699,6 +701,11 @@ function ChecklistRow({
               <span className="rounded-full bg-white/85 px-2.5 py-1 text-xs text-stone-500">
                 {cycleLabel(item.status, checked)}
               </span>
+              {hasChildren ? (
+                <span className="rounded-full border border-stone-200 bg-stone-50/90 px-2.5 py-1 text-xs text-stone-500">
+                  {childLabel}
+                </span>
+              ) : null}
             </div>
           </div>
 
@@ -706,10 +713,14 @@ function ChecklistRow({
             <button
               type="button"
               onClick={() => setOpen((current) => !current)}
-              className={["pt-0.5 text-lg leading-none", theme.text].join(" ")}
+              className={[
+                "inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white/80 px-3 py-1.5 text-xs font-medium text-stone-600 transition hover:bg-white",
+                theme.text,
+              ].join(" ")}
               aria-label={open ? "收合子任務" : "展開子任務"}
             >
-              {open ? "−" : "+"}
+              <span>{open ? "收合" : "展開"}</span>
+              <span className="text-sm leading-none">{open ? "−" : "+"}</span>
             </button>
           ) : null}
         </div>
