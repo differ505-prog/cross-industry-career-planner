@@ -177,6 +177,40 @@ function formatChecklistItems(items: ChecklistItem[], completedTasks: Record<str
   });
 }
 
+function groupChecklistItemsByState(
+  items: ChecklistItem[],
+  completedTasks: Record<string, boolean>,
+  depth = 0
+): {
+  completed: string[];
+  incomplete: string[];
+} {
+  return items.reduce(
+    (groups, item) => {
+      const prefix = `${"  ".repeat(depth)}-`;
+      const line = `${prefix} ${item.title}（${itemTypeLabel(item)}｜${itemStateLabel(item, completedTasks)}）`;
+
+      if (completedTasks[item.id]) {
+        groups.completed.push(line);
+      } else {
+        groups.incomplete.push(line);
+      }
+
+      if (item.children?.length) {
+        const childGroups = groupChecklistItemsByState(item.children, completedTasks, depth + 1);
+        groups.completed.push(...childGroups.completed);
+        groups.incomplete.push(...childGroups.incomplete);
+      }
+
+      return groups;
+    },
+    {
+      completed: [] as string[],
+      incomplete: [] as string[],
+    }
+  );
+}
+
 function buildReviewPrompt({
   industry,
   workflow,
@@ -188,8 +222,25 @@ function buildReviewPrompt({
   completedTasks: Record<string, boolean>;
   stats: ReturnType<typeof buildStats>;
 }) {
+  const completedSummary: string[] = [];
+  const incompleteSummary: string[] = [];
+
+  workflow.sections.forEach((section, index) => {
+    const sectionLabel = `階段 ${index + 1}：${section.title}`;
+    const groupedItems = groupChecklistItemsByState(section.items, completedTasks);
+
+    if (groupedItems.completed.length > 0) {
+      completedSummary.push(sectionLabel, ...groupedItems.completed);
+    }
+
+    if (groupedItems.incomplete.length > 0) {
+      incompleteSummary.push(sectionLabel, ...groupedItems.incomplete);
+    }
+  });
+
   const lines = [
     "請你扮演高階顧問 / 高階 LLM 審核者，針對以下檢核表做全面覆核。",
+    "請先把「目前已完成任務」視為既有成果與現況基線，除非你判斷方向明顯錯誤，否則不要要求全面重做；若需調整，請優先用「微調、補強、重排、驗證」的角度提出建議。",
     "",
     "請完成以下任務：",
     "1. 先給這份檢核表一個綜合評分，滿分 10 分，可出現小數點一位。",
@@ -197,9 +248,21 @@ function buildReviewPrompt({
     "3. 點出目前檢核表的盲點、缺漏、重複或順序不合理之處。",
     "4. 提出具體優化建議，並依高優先、中優先、低優先排序。",
     "5. 如果你認為有些項目應該改成一次性任務、重複型任務，或反過來，也請直接指出。",
-    "6. 最後輸出一版「建議調整後的檢核表架構摘要」。",
+    "6. 請把你的建議轉化成可直接貼給 IDE 執行的提示詞，而不只是評論。",
+    "7. 每一組 IDE 提示詞都要清楚包含：目標、上下文、具體修改、驗收標準。",
     "",
     "請用繁體中文回答，內容務必務實、直接、可執行。",
+    "請嚴格使用以下輸出結構：",
+    "【綜合評分】",
+    "- 先輸出 1 行總分與一句總評。",
+    "【關鍵判斷】",
+    "- 用 3 至 5 點說明你對這份檢核表的核心判斷。",
+    "【風險與盲點】",
+    "- 用高 / 中 / 低優先級整理問題。",
+    "【給 IDE 的提示詞】",
+    "- 至少提供 3 組提示詞，依高優先、中優先、低優先排序。",
+    "- 每組提示詞都必須是可直接貼給 IDE 的完整指令，不要寫成摘要。",
+    "- 若你認為某些已完成任務仍需調整，請在提示詞中明確標示為「微調 / 補強 / 驗證」，不要寫成從零重做。",
     "",
     `檢核表名稱：${industry.name}`,
     `概述：${industry.overview}`,
@@ -218,6 +281,12 @@ function buildReviewPrompt({
     "目前進度摘要：",
     `- 一次性任務完成率：${stats.oneTimeRate}% (${stats.oneTimeDone}/${stats.oneTimeTotal})`,
     `- 重複型任務本輪已執行：${stats.recurringDone}/${stats.recurringTotal}`,
+    "",
+    "目前已完成任務摘要：",
+    ...(completedSummary.length > 0 ? completedSummary : ["- 無"]),
+    "",
+    "目前待補強 / 待執行任務摘要：",
+    ...(incompleteSummary.length > 0 ? incompleteSummary : ["- 無"]),
     "",
     "完整檢核表內容：",
   ];
@@ -467,7 +536,7 @@ export function CareerPlannerApp() {
                     </button>
                   </div>
                   <p className="mt-3 text-xs leading-6 text-stone-500">
-                    複製內容會包含目前整張檢核表、勾選狀態、FAQ，以及「滿分 10 分綜合評分與優化建議」提示詞。
+                    複製內容會包含目前整張檢核表、已完成與待補強摘要、FAQ，以及要求高階 LLM 回傳「可直接貼給 IDE」的提示詞。
                   </p>
                 </div>
 
