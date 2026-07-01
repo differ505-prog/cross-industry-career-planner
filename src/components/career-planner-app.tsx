@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import industriesData from "@/data/industries.json";
 import workflowsData from "@/data/workflows.json";
 
@@ -51,6 +51,10 @@ interface WorkflowProject {
 
 type WorkflowMap = Record<string, WorkflowProject>;
 type CopyState = "idle" | "success" | "error";
+type CompletionState = {
+  checked: boolean;
+  partiallyChecked: boolean;
+};
 
 const industries = industriesData as Industry[];
 const workflows = workflowsData as WorkflowMap;
@@ -102,11 +106,33 @@ function collectItems(items: ChecklistItem[]): ChecklistItem[] {
   return items.flatMap((item) => [item, ...(item.children ? collectItems(item.children) : [])]);
 }
 
+function collectTaskIds(item: ChecklistItem): string[] {
+  return [item.id, ...(item.children ? item.children.flatMap((child) => collectTaskIds(child)) : [])];
+}
+
+function getItemCompletionState(item: ChecklistItem, completedTasks: Record<string, boolean>): CompletionState {
+  if (!item.children?.length) {
+    return {
+      checked: Boolean(completedTasks[item.id]),
+      partiallyChecked: false,
+    };
+  }
+
+  const childStates: CompletionState[] = item.children.map((child) => getItemCompletionState(child, completedTasks));
+  const checked = childStates.every((state) => state.checked);
+  const partiallyChecked = !checked && childStates.some((state) => state.checked || state.partiallyChecked);
+
+  return {
+    checked,
+    partiallyChecked,
+  };
+}
+
 function buildStats(items: ChecklistItem[], completedTasks: Record<string, boolean>) {
   const oneTimeItems = items.filter((item) => item.status !== "recurring");
   const recurringItems = items.filter((item) => item.status === "recurring");
-  const oneTimeDone = oneTimeItems.filter((item) => completedTasks[item.id]).length;
-  const recurringDone = recurringItems.filter((item) => completedTasks[item.id]).length;
+  const oneTimeDone = oneTimeItems.filter((item) => getItemCompletionState(item, completedTasks).checked).length;
+  const recurringDone = recurringItems.filter((item) => getItemCompletionState(item, completedTasks).checked).length;
 
   return {
     oneTimeTotal: oneTimeItems.length,
@@ -146,7 +172,7 @@ function buildDefaultCompletionMap() {
 const defaultCompletionMap = buildDefaultCompletionMap();
 
 function itemStateLabel(item: ChecklistItem, completedTasks: Record<string, boolean>) {
-  const checked = Boolean(completedTasks[item.id]);
+  const checked = getItemCompletionState(item, completedTasks).checked;
   return item.status === "recurring"
     ? checked
       ? "本輪已執行"
@@ -190,7 +216,7 @@ function groupChecklistItemsByState(
       const prefix = `${"  ".repeat(depth)}-`;
       const line = `${prefix} ${item.title}（${itemTypeLabel(item)}｜${itemStateLabel(item, completedTasks)}）`;
 
-      if (completedTasks[item.id]) {
+      if (getItemCompletionState(item, completedTasks).checked) {
         groups.completed.push(line);
       } else {
         groups.incomplete.push(line);
@@ -400,11 +426,17 @@ export function CareerPlannerApp() {
     >;
   }, [completedTasks]);
 
-  const toggleTask = (taskId: string) => {
-    setCompletedTasks((current) => ({
-      ...current,
-      [taskId]: !current[taskId],
-    }));
+  const toggleTask = (item: ChecklistItem) => {
+    setCompletedTasks((current) => {
+      const nextChecked = !getItemCompletionState(item, current).checked;
+      const nextState = { ...current };
+
+      collectTaskIds(item).forEach((taskId) => {
+        nextState[taskId] = nextChecked;
+      });
+
+      return nextState;
+    });
   };
 
   const handleCopyForReview = async () => {
@@ -670,7 +702,7 @@ function SectionCard({
   index: number;
   section: WorkflowSection;
   completedTasks: Record<string, boolean>;
-  onToggleTask: (taskId: string) => void;
+  onToggleTask: (item: ChecklistItem) => void;
   theme: (typeof themeStyles)[ThemeName];
 }) {
   const sectionStats = useMemo(() => countSection(section, completedTasks), [completedTasks, section]);
@@ -742,15 +774,21 @@ function ChecklistRow({
   item: ChecklistItem;
   depth: number;
   completedTasks: Record<string, boolean>;
-  onToggleTask: (taskId: string) => void;
+  onToggleTask: (item: ChecklistItem) => void;
   theme: (typeof themeStyles)[ThemeName];
 }) {
   const hasChildren = Boolean(item.children?.length);
   const childCount = item.children?.length ?? 0;
   const childLabel = depth === 0 ? `含 ${childCount} 項子任務` : `含 ${childCount} 項子步驟`;
   const [open, setOpen] = useState(depth === 0 && hasChildren);
-  const checked = Boolean(completedTasks[item.id]);
+  const checkboxRef = useRef<HTMLInputElement>(null);
+  const { checked, partiallyChecked } = getItemCompletionState(item, completedTasks);
   const isRecurring = item.status === "recurring";
+
+  useEffect(() => {
+    if (!checkboxRef.current) return;
+    checkboxRef.current.indeterminate = partiallyChecked;
+  }, [partiallyChecked]);
 
   return (
     <div className={depth > 0 ? "ml-4 border-l border-stone-200/80 pl-4 sm:ml-6" : ""}>
@@ -759,10 +797,10 @@ function ChecklistRow({
           "overflow-hidden rounded-[20px] border transition duration-300",
           isRecurring
             ? checked
-              ? `${theme.soft} ${theme.border} border-dashed`
+              ? `${theme.soft} ${theme.border} border-dashed opacity-80`
               : "border-dashed border-stone-300 bg-[#faf7f2]"
             : checked
-              ? `${theme.soft} ${theme.border}`
+              ? `${theme.soft} ${theme.border} opacity-70`
               : "border-stone-200/80 bg-white",
         ].join(" ")}
       >
@@ -770,7 +808,7 @@ function ChecklistRow({
           {isRecurring ? (
             <button
               type="button"
-              onClick={() => onToggleTask(item.id)}
+              onClick={() => onToggleTask(item)}
               className={[
                 "mt-0.5 inline-flex min-w-[88px] items-center justify-center rounded-full px-3 py-1.5 text-xs font-medium transition",
                 checked
@@ -783,9 +821,10 @@ function ChecklistRow({
             </button>
           ) : (
             <input
+              ref={checkboxRef}
               type="checkbox"
               checked={checked}
-              onChange={() => onToggleTask(item.id)}
+              onChange={() => onToggleTask(item)}
               className="mt-0.5 h-5 w-5 cursor-pointer rounded border-stone-300 text-stone-700 focus:ring-stone-400"
               aria-label={`完成 ${item.title}`}
             />
@@ -796,7 +835,13 @@ function ChecklistRow({
               <p
                 className={[
                   "text-base font-medium",
-                  isRecurring ? (checked ? "text-ink" : "text-ink") : checked ? "text-stone-500 line-through" : "text-ink",
+                  isRecurring
+                    ? checked
+                      ? "text-stone-600"
+                      : "text-ink"
+                    : checked
+                      ? "text-stone-500 line-through"
+                      : "text-ink",
                 ].join(" ")}
               >
                 {item.title}
