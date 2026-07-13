@@ -9,3 +9,7 @@ pnpm-debug.log*
 .DS_Store
 .env*
 .vercel
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+tsconfig.tsbuildinfo

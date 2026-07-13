@@ -245,6 +245,84 @@ function groupChecklistItemsByState(
   );
 }
 
+function buildPortfolioReviewPrompt({
+  industries,
+  workflows,
+  completedTasks,
+  projectProgress,
+}: {
+  industries: Industry[];
+  workflows: WorkflowMap;
+  completedTasks: Record<string, boolean>;
+  projectProgress: Record<string, { oneTimeTotal: number; oneTimeDone: number; oneTimeRate: number; recurringTotal: number; recurringDone: number }>;
+}) {
+  const lines: string[] = [
+    "請你扮演高階總顧問 / CSO，針對以下「跨產業事業組合」做宏觀覆核。",
+    "每個產業都有獨立的檢核表、戰略角色與節奏，請把它們當成一個投資組合來檢視：哪些是主要收入引擎、哪些是長線孵化、哪些應暫緩。",
+    "",
+    "請完成以下任務：",
+    "1. 對每個產業單獨給一段「成熟度評語」（≤ 60 字），告訴我現在是「孵化期 / 衝刺期 / 收割期 / 暫緩期」哪一個。",
+    "2. 指出 1~2 個最強的「跨產業槓桿點」：在某產業完成的某項任務，可如何復用到另一產業（例如：青曦的「報價 SOP」可遷移到築時；VanBase 的內容基建可助攻 OmniSonic 行銷）。",
+    "3. 指出 1~2 個最大的「組合風險」：哪些任務同時進行會有資源衝突，或哪兩個產業最好不要同時衝刺。",
+    "4. 給出「本季唯一最重要的下一步」三選一，告訴我該全部火力集中在哪一個產業。",
+    "5. 請用繁體中文回答，務必務實、可執行；嚴禁代替我執行任務（不要寫文案、不要寫程式）。",
+    "",
+    "整體進度矩陣：",
+  ];
+
+  industries.forEach((industry) => {
+    const progress = projectProgress[industry.id];
+    const recurringNote =
+      progress.recurringTotal > 0
+        ? `、重複本輪 ${progress.recurringDone}/${progress.recurringTotal}`
+        : "";
+    lines.push(
+      `- ${industry.name}（${industry.shortLabel}｜${industry.theme}）：一次性 ${progress.oneTimeDone}/${progress.oneTimeTotal}（${progress.oneTimeRate}%）${recurringNote}`
+    );
+  });
+
+  lines.push("", "各產業明細：");
+
+  industries.forEach((industry) => {
+    const project = workflows[industry.id];
+    if (!project) return;
+    const progress = projectProgress[industry.id];
+    const allItems = project.sections.flatMap((section) => collectItems(section.items));
+    const grouped = groupChecklistItemsByState(allItems, completedTasks);
+
+    lines.push("");
+    lines.push(`### ${industry.name}（${industry.shortLabel}）`);
+    lines.push(`- 主題：${industry.theme}`);
+    lines.push(`- 概述：${industry.overview}`);
+    if (industry.details.length > 0) {
+      lines.push("- 補充說明：");
+      industry.details.forEach((d) => lines.push(`  - ${d}`));
+    }
+    lines.push(`- 一次完成率：${progress.oneTimeRate}%（${progress.oneTimeDone}/${progress.oneTimeTotal}）`);
+    if (progress.recurringTotal > 0) {
+      lines.push(`- 重複本輪：${progress.recurringDone}/${progress.recurringTotal}`);
+    }
+    lines.push("");
+    lines.push("已完成任務：");
+    if (grouped.completed.length > 0) {
+      grouped.completed.forEach((line) => lines.push(`  ${line}`));
+    } else {
+      lines.push("  - 無");
+    }
+    lines.push("待補強任務（節錄前 8 項）：");
+    if (grouped.incomplete.length === 0) {
+      lines.push("  - 無");
+    } else {
+      grouped.incomplete.slice(0, 8).forEach((line) => lines.push(`  ${line}`));
+      if (grouped.incomplete.length > 8) {
+        lines.push(`  - …另有 ${grouped.incomplete.length - 8} 項省略`);
+      }
+    }
+  });
+
+  return lines.join("\n");
+}
+
 function buildReviewPrompt({
   industry,
   workflow,
@@ -386,6 +464,7 @@ export function CareerPlannerApp() {
   const [selectedIndustryId, setSelectedIndustryId] = useState(industries[0]?.id ?? "");
   const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>(defaultCompletionMap);
   const [copyState, setCopyState] = useState<CopyState>("idle");
+  const [portfolioCopyState, setPortfolioCopyState] = useState<CopyState>("idle");
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
@@ -447,20 +526,13 @@ export function CareerPlannerApp() {
     });
   };
 
-  const handleCopyForReview = async () => {
-    const reviewPrompt = buildReviewPrompt({
-      industry: selectedIndustry,
-      workflow: selectedWorkflow,
-      completedTasks,
-      stats,
-    });
-
+  const writeToClipboard = async (text: string, setState: (state: CopyState) => void) => {
     try {
       if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(reviewPrompt);
+        await navigator.clipboard.writeText(text);
       } else {
         const textarea = document.createElement("textarea");
-        textarea.value = reviewPrompt;
+        textarea.value = text;
         textarea.setAttribute("readonly", "");
         textarea.style.position = "absolute";
         textarea.style.left = "-9999px";
@@ -469,13 +541,32 @@ export function CareerPlannerApp() {
         document.execCommand("copy");
         document.body.removeChild(textarea);
       }
-
-      setCopyState("success");
-      window.setTimeout(() => setCopyState("idle"), 2200);
+      setState("success");
+      window.setTimeout(() => setState("idle"), 2400);
     } catch {
-      setCopyState("error");
-      window.setTimeout(() => setCopyState("idle"), 2200);
+      setState("error");
+      window.setTimeout(() => setState("idle"), 2400);
     }
+  };
+
+  const handleCopyForReview = () => {
+    const reviewPrompt = buildReviewPrompt({
+      industry: selectedIndustry,
+      workflow: selectedWorkflow,
+      completedTasks,
+      stats,
+    });
+    void writeToClipboard(reviewPrompt, setCopyState);
+  };
+
+  const handleCopyPortfolio = () => {
+    const portfolioPrompt = buildPortfolioReviewPrompt({
+      industries,
+      workflows,
+      completedTasks,
+      projectProgress,
+    });
+    void writeToClipboard(portfolioPrompt, setPortfolioCopyState);
   };
 
   return (
@@ -648,6 +739,36 @@ export function CareerPlannerApp() {
                       <p className="mt-1 text-xs text-stone-500">本輪已執行 / 共 {stats.recurringTotal} 項</p>
                     </div>
                   </div>
+                </div>
+              </section>
+
+              <section className="rounded-[28px] border border-white/80 bg-white/72 p-6 shadow-soft backdrop-blur-md sm:p-7">
+                <div className="flex flex-wrap items-start justify-between gap-4">
+                  <div className="space-y-2">
+                    <p className="text-xs uppercase tracking-[0.28em] text-stone-400">全站 CSO 打包</p>
+                    <h3 className="text-2xl font-semibold tracking-tight text-ink">把四個產業一起送審</h3>
+                    <p className="max-w-xl text-sm leading-7 text-stone-600">
+                      適用於想要做「跨產業策略覆核」或「本季火力集中決策」的情境——按鈕會把四個產業的進度矩陣、各自的待辦節錄，彙整成可貼到任何外部 LLM 的 markdown。
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleCopyPortfolio}
+                    className={[
+                      "shrink-0 rounded-full px-4 py-2 text-sm transition",
+                      portfolioCopyState === "success"
+                        ? "border border-stone-300 bg-[#ece5dc] text-ink"
+                        : portfolioCopyState === "error"
+                          ? "border border-red-200 bg-red-50 text-red-600"
+                          : "border border-ink/15 bg-ink text-[#fbf8f3] hover:-translate-y-0.5 hover:bg-stone-700",
+                    ].join(" ")}
+                  >
+                    {portfolioCopyState === "success"
+                      ? "已複製全站摘要"
+                      : portfolioCopyState === "error"
+                        ? "複製失敗，請重試"
+                        : "一鍵打包給 CSO"}
+                  </button>
                 </div>
               </section>
 
