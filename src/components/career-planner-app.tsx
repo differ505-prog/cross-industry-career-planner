@@ -651,6 +651,13 @@ export function CareerPlannerApp() {
                 </div>
               </section>
 
+              <IndustryMaturityPanel
+                industries={industries}
+                projectProgress={projectProgress}
+                selectedIndustryId={selectedIndustry.id}
+                onSelect={setSelectedIndustryId}
+              />
+
               <section className="rounded-[28px] border border-white/80 bg-white/68 p-6 shadow-soft backdrop-blur-md sm:p-7">
                 <div>
                   <p className="text-xs uppercase tracking-[0.28em] text-stone-400">內容</p>
@@ -910,5 +917,159 @@ function ChecklistRow({
         </AnimatePresence>
       </div>
     </div>
+  );
+}
+
+function ProgressRing({
+  size = 64,
+  strokeWidth = 6,
+  rate,
+  colorClass,
+  trackClass,
+  label,
+  onClick,
+}: {
+  size?: number;
+  strokeWidth?: number;
+  rate: number;
+  colorClass: string;
+  trackClass: string;
+  label: string;
+  onClick?: () => void;
+}) {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const clamped = Math.max(0, Math.min(100, rate));
+  const dashOffset = circumference * (1 - clamped / 100);
+
+  const interactiveProps = onClick
+    ? {
+        role: "button" as const,
+        tabIndex: 0,
+        onClick,
+        onKeyDown: (event: React.KeyboardEvent<SVGSVGElement>) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            onClick();
+          }
+        },
+      }
+    : {};
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        className={onClick ? "cursor-pointer transition-transform hover:scale-105" : ""}
+        aria-label={`${label} 完成率 ${clamped}%`}
+        {...interactiveProps}
+      >
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          strokeWidth={strokeWidth}
+          className={trackClass}
+        />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+          strokeDasharray={circumference}
+          strokeDashoffset={dashOffset}
+          className={colorClass}
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        />
+        <text
+          x="50%"
+          y="50%"
+          dominantBaseline="central"
+          textAnchor="middle"
+          className="fill-ink font-semibold"
+          style={{ fontSize: size * 0.28 }}
+        >
+          {clamped}%
+        </text>
+      </svg>
+      <span className="text-xs text-stone-600">{label}</span>
+    </div>
+  );
+}
+
+function IndustryMaturityPanel({
+  industries,
+  projectProgress,
+  selectedIndustryId,
+  onSelect,
+}: {
+  industries: Industry[];
+  projectProgress: Record<
+    string,
+    {
+      oneTimeTotal: number;
+      oneTimeDone: number;
+      oneTimeRate: number;
+      recurringTotal: number;
+      recurringDone: number;
+    }
+  >;
+  selectedIndustryId: string;
+  onSelect: (id: string) => void;
+}) {
+  const themeSolidClass: Record<ThemeName, string> = {
+    sage: "stroke-sage-500",
+    dusty: "stroke-dusty-500",
+    terracotta: "stroke-terracotta-500",
+    slate: "stroke-slate-500",
+  };
+  const themeTextClass: Record<ThemeName, string> = {
+    sage: "text-sage-600",
+    dusty: "text-dusty-600",
+    terracotta: "text-terracotta-600",
+    slate: "text-slate-600",
+  };
+
+  return (
+    <section className="rounded-[28px] border border-white/80 bg-white/68 p-6 shadow-soft backdrop-blur-md sm:p-7">
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <div>
+          <p className="text-xs uppercase tracking-[0.28em] text-stone-400">全站儀表板</p>
+          <h3 className="mt-2 text-2xl font-semibold tracking-tight text-ink">四產業成熟度環</h3>
+        </div>
+        <p className="text-xs text-stone-500">點擊任一環切換檢核表</p>
+      </div>
+      <div className="mt-6 grid grid-cols-2 gap-5 sm:grid-cols-4">
+        {industries.map((industry) => {
+          const progress = projectProgress[industry.id];
+          const isActive = industry.id === selectedIndustryId;
+          return (
+            <div
+              key={industry.id}
+              className={[
+                "flex flex-col items-center gap-2 rounded-2xl px-2 py-3 transition",
+                isActive ? "bg-[#f6f1e9]" : "",
+              ].join(" ")}
+            >
+              <ProgressRing
+                rate={progress.oneTimeRate}
+                colorClass={themeSolidClass[industry.theme]}
+                trackClass="stroke-stone-200"
+                label={industry.shortLabel}
+                onClick={() => onSelect(industry.id)}
+              />
+              <span className={["text-[11px] font-medium", themeTextClass[industry.theme]].join(" ")}>
+                {progress.oneTimeDone}/{progress.oneTimeTotal}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }
