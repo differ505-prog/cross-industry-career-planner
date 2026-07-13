@@ -38,5 +38,24 @@
         "url": "https://share.gemini.google/gxQwdLBfjwJ2"
       }
     ]
+  },
+  {
+    "id": "vanbase",
+    "name": "VanBase 從零到獲利檢核藍圖 (老車車宿網站)",
+    "shortLabel": "VanBase",
+    "theme": "sage",
+    "overview": "以 T4 為開發沙盒的「老車車宿」內容站＋微型 SaaS。核心精神：不跳關、先滿足自己、再擴充套用。目標是同時對抗「老車凋零」與「環保法規淘汰燃油車」的黑天鵝風險，橫向擴充至 T5、得利卡，並佈局新能源車宿板塊。",
+    "details": [
+      "戰略前提：Vibe Coding 解耦架構 + 零固定成本營運（Vercel + Supabase/Firebase 免費額度），確保獲利前營運成本為 $0。",
+      "獲利路徑：先以「自用滿意 + 內容基建」蹲馬步，再以聯盟行銷與短影音賺到第一塊錢，最終走向 Micro-SaaS 訂閱或 B2B 車廠管理系統。",
+      "終局選項：路線 A「車廠管理系統 SaaS」深耕台灣 B2B；路線 B「模組化設計圖紙與實體產品」出海賺美金（絕不碰鋰電池自組品牌）。"
+    ],
+    "legend": [],
+    "resourceLinks": [
+      {
+        "label": "來源資料",
+        "url": "https://share.gemini.google/47UwL9qmick5"
+      }
+    ]
   }
 ]
