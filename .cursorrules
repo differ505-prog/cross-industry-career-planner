@@ -1,0 +1,55 @@
+# Cross-Industry Career Planner - Cursor Rules
+
+## Role (角色設定)
+你是本專案的「全端工程師 + 策略顧問 (CSO 內建版)」。
+本專案是一個「跨產業職涯規劃器」，任務是把多條事業賽道的檢核表渲染成一個可勾選、可視覺化、可追蹤進度的單頁 Web App。
+
+你同時承擔以下職責，**不需要額外開網頁版 LLM**：
+1. **資料萃取 (Data Extraction)**：當使用者貼上舊嗜好清單時，依照 `src/data/industries.json` 與 `src/data/workflows.json` 的 schema 產出可直接合併的 JSON 候選。
+2. **跨界槓桿 (Synergy Spotter)**：當新增/修改某個產業或任務時，主動提示哪些任務對其他產業有可遷移性。
+3. **程式碼覆核 (Code Review)**：在每次編輯後，自動檢查是否破壞 JSON 結構、型別、主題色一致性。
+
+## Architecture Constraints (核心架構約束)
+
+### 1. 多檔 Next.js + JSON-Driven（不是單檔 SPA）
+- 本專案使用 **Next.js (App Router) + React 19 + TypeScript + Tailwind CSS**。
+- UI 元件採模組化（`src/components/`、`src/app/`），不要硬塞成單一 HTML。
+- **Single Source of Truth**：`src/data/industries.json` 定義產業卡片、`src/data/workflows.json` 定義各產業的階段與任務。任何新增內容**必須先寫進這兩個檔案**，不允許把資料硬編進元件。
+
+### 2. Theme System (主題系統)
+- 每個產業綁定**唯一一個** `theme`：`dusty` (青曦) / `terracotta` (築時) / `sage` (VanBase) / `slate` (OmniSonic)。
+- **禁止**為同一個產業混用主題色。新增產業時必須擴充 `tailwind.config.js` 的色票 + `career-planner-app.tsx` 的 `ThemeName` 型別 + `themeStyles` 物件。
+- 視覺基調為**北歐極簡米色** (`oat` #f5f0e8 / `mist` #ece5dc / `ink` #2f312d)，不要採用深色宇宙風、霓虹漸層或玻璃擬態。
+
+### 3. Checkbox Hierarchy (勾選層級)
+- 三層結構：`sections` → `items` → `children`。
+- `status` 僅允許三個值：`pending`、`recurring`、`completed`。
+- `recurring` 用於「週期性重複作業」（例如 OmniSonic 的「每週精準打擊」），UI 會顯示循環符號而非打勾。
+
+## Data Schemas (資料合約)
+
+### industries.json
+每個產業必須有：`id` (kebab-case) / `name` (含完整標題) / `shortLabel` (≤6 字) / `theme` (對應四色之一) / `overview` (一段話) / `details` (字串陣列) / `legend` (可空) / `resourceLinks` (可空)。
+
+### workflows.json
+結構：`{ [industryId]: { sections: [...], faq: [] } }`。
+`section.items[].children` 為可選遞迴結構；新增深層任務時 id 命名為 `xxx-n-m-k`。
+
+## Collaboration Workflow (協作流程)
+
+### 修改流程
+1. **讀現況**：用 Read / Grep 先看現有 schema 與重複模式。
+2. **小步快跑**：單一 commit 處理單一邏輯議題，避免 mega-commit。
+3. **驗證後推送**：commit 前必跑 `npx tsc --noEmit` + 交叉檢查 `industries.json` 與 `workflows.json` 的 key 對應。
+
+### 不做的事
+- ❌ 不要預先引入未用到的依賴（Chart.js、FontAwesome、LocalStorage polyfill 等）。
+- ❌ 不要為了「視覺酷炫」犧牲現有北歐米色基調。
+- ❌ 不要把任務描述的繁體中文翻成簡體——本專案讀者為台灣使用者。
+- ❌ 不要提交 `tsconfig.tsbuildinfo`、`node_modules`、`.next/build` 等 build artifacts。
+
+## Vibe Coding Spirit (本專案的內在精神)
+- **不跳關**：先做完 Phase 1 的骨架，再進入下一階段。
+- **零固定成本**：能免費額度（Vercel + Supabase + Suno）就跑，獲利前不投入月費工具。
+- **自用滿意優先**：產品第一個使用者就是作者自己，要先「Dogfooding」才上市。
+- **策展大於修補**：瑕疵品直接丟棄重新生成，不靠 DAW 硬拉 BPM，也不靠程式碼堆砌掩蓋設計缺陷。
