@@ -57,5 +57,24 @@
         "url": "https://share.gemini.google/47UwL9qmick5"
       }
     ]
+  },
+  {
+    "id": "omnisonic",
+    "name": "OmniSonic 開發與商業化實戰檢核表 (v2.0)",
+    "shortLabel": "OmniSonic",
+    "theme": "slate",
+    "overview": "以 Web Audio API 為核心的四頻道情境音樂產品。從技術驗證、合法曲庫生產，到 B2B 商業落地與「每週精準打擊」的釋出策略，最終邁向規模化願景。",
+    "details": [
+      "核心差異化：自製合法商用曲庫（拒絕淘寶代儲），主打「PRO-Free 零版權蟑螂困擾」。",
+      "品管鐵律：「策展大於修補」——不靠 DAW 硬拉 BPM，瑕疵品直接重生成。",
+      "營運節奏：每季生成 20~25 首新歌，每週精準釋出 1 首（流量最高頻道優先）。"
+    ],
+    "legend": [],
+    "resourceLinks": [
+      {
+        "label": "來源資料",
+        "url": "https://share.gemini.google/0dPl1ATp9of5"
+      }
+    ]
   }
 ]

@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import industriesData from "@/data/industries.json";
 import workflowsData from "@/data/workflows.json";
 
-type ThemeName = "sage" | "dusty" | "terracotta";
+type ThemeName = "sage" | "dusty" | "terracotta" | "slate";
 type ItemStatus = "done" | "pending" | "recurring";
 
 interface ResourceLink {
@@ -94,6 +94,14 @@ const themeStyles: Record<
     progress: "from-terracotta-300 to-terracotta-500",
     solid: "bg-terracotta-500",
     text: "text-terracotta-600",
+  },
+  slate: {
+    chip: "bg-slate-100 text-slate-600",
+    soft: "bg-slate-50",
+    border: "border-slate-200",
+    progress: "from-slate-300 to-slate-500",
+    solid: "bg-slate-500",
+    text: "text-slate-600",
   },
 };
 

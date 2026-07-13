@@ -1062,5 +1062,324 @@
       }
     ],
     "faq": []
+  },
+  "omnisonic": {
+    "sections": [
+      {
+        "id": "omnisonic-1",
+        "title": "Phase 1：核心技術驗證 (骨架與管線)",
+        "summary": "📍 目前階段目標：確立 Web Audio API 播放邏輯，確保四頻道切換與接歌順暢。",
+        "items": [
+          {
+            "id": "omnisonic-1-1",
+            "title": "建立四頻道 UI 骨架",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-1-1-1",
+                "title": "深度心流 (85 BPM)",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-1-1-2",
+                "title": "都會心流 (105 BPM)",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-1-1-3",
+                "title": "快閃 DJ (120 BPM)",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-1-1-4",
+                "title": "超慢跑 (180 BPM)",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "omnisonic-1-2",
+            "title": "實作極簡接歌邏輯 (Volume Crossfade)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-1-2-1",
+                "title": "不做節拍同步 (Beat-sync)，採用 2.5 ~ 4 秒的音量淡入淡出，降低效能負擔。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "omnisonic-1-3",
+            "title": "配置「極端壓力測試」歌單 (QA Playlist)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-1-3-1",
+                "title": "每個頻道只放 2 首假資料（共 8 首），嚴格測試 A/B 歌曲無限循環與跨頻道切換。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-1-3-2",
+                "title": "嚴格命名格式：TEST_85_deep_01.mp3。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "omnisonic-1-4",
+            "title": "配置「開發者自用」歌單 (Dogfooding Playlist)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-1-4-1",
+                "title": "放入多首你個人喜歡的免費 Suno 歌曲，陪你寫 Code，順便測試長時間播放的記憶體穩定度。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-1-4-2",
+                "title": "嚴格命名格式：DUMMY_FAV_105_01.mp3。",
+                "status": "pending"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "omnisonic-2",
+        "title": "Phase 2：商轉前內容生產與品管 (血肉填充)",
+        "summary": "目標：建立首批 60 首合法、高品質的商用初始曲庫（每頻道 15 首）。",
+        "items": [
+          {
+            "id": "omnisonic-2-1",
+            "title": "嚴格遵守版權守則",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-2-1-1",
+                "title": "絕對拒絕淘寶代儲/共享帳號。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-2-1-2",
+                "title": "使用本人信用卡購買官方 Suno Pro ($10/月)，確保 B2B 商業授權無懈可擊。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "omnisonic-2-2",
+            "title": "執行「批次製造」衝刺",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-2-2-1",
+                "title": "在訂閱的一個月內，利用週末集中生成並下載歌曲。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "omnisonic-2-3",
+            "title": "遵守「策展大於修補」原則 (No Time-stretching)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-2-3-1",
+                "title": "絕不使用 DAW 軟體硬拉 BPM。瑕疵品直接丟棄重新生成。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "omnisonic-2-4",
+            "title": "極簡離線處理",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-2-4-1",
+                "title": "僅使用軟體或腳本進行「頭尾靜音裁切 (Trimming)」。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-2-4-2",
+                "title": "加上 0.5 秒微小淡入淡出，防止接歌爆音。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "omnisonic-2-5",
+            "title": "實作「自製 Tap BPM 品管分發中心」",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-2-5-1",
+                "title": "頭尾抽測防呆：聽開頭與 2 分鐘處，若 BPM 飄移落差 > 2，直接淘汰。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-2-5-2",
+                "title": "±5 BPM 彈性收容法則：不強求絕對數值，只要 Vibe 對了即收編。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-2-5-3",
+                "title": "80~90 歸入 85 BPM（深度心流）。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-2-5-4",
+                "title": "100~110 歸入 105 BPM（都會心流）。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-2-5-5",
+                "title": "115~125 歸入 120 BPM（快閃 DJ）。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-2-5-6",
+                "title": "175~185 歸入 180 BPM（超慢跑）。",
+                "status": "pending"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "omnisonic-3",
+        "title": "Phase 3：B2B 商業模式與行銷素材準備",
+        "summary": "目標：包裝「免公播費」的防護盾價值，準備向快閃店/實體店家推銷。",
+        "items": [
+          {
+            "id": "omnisonic-3-1",
+            "title": "撰寫 B2B 落地頁文案",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-3-1-1",
+                "title": "強調「PRO-Free 零版權蟑螂困擾」。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-3-1-2",
+                "title": "強調「專注力氛圍」。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-3-1-3",
+                "title": "強調「精品策展」。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "omnisonic-3-2",
+            "title": "準備 SaaS 訂閱金流串接",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-3-2-1",
+                "title": "Stripe / 綠界金流整合。",
+                "status": "pending"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "omnisonic-4",
+        "title": "Phase 4：上線前夕大換血",
+        "summary": "目標：替換假資料，確保付費機制與 B2B 授權文件到位。",
+        "items": [
+          {
+            "id": "omnisonic-4-1",
+            "title": "全面大換血死線",
+            "status": "pending",
+            "children": [
+              {
+                "id": "omnisonic-4-1-1",
+                "title": "上線前，徹底清除資料庫與 S3 內所有 TEST_ 與 DUMMY_ 命名的無版權/免費測試軌。",
+                "status": "pending"
+              },
+              {
+                "id": "omnisonic-4-1-2",
+                "title": "將 Phase 2 生成的 60 首正式商用 mp3 上傳並更新資料庫。",
+                "status": "pending"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "omnisonic-5",
+        "title": "Phase 5：商業營運與釋出策略 (Drip Release)",
+        "summary": "目標：以最低開發成本，維持最高的用戶期待感與訂閱價值。",
+        "items": [
+          {
+            "id": "omnisonic-5-1",
+            "title": "產線節奏",
+            "status": "recurring",
+            "children": [
+              {
+                "id": "omnisonic-5-1-1",
+                "title": "依然維持「季更」成本，每三個月集中生成 20~25 首新歌備用。",
+                "status": "recurring"
+              }
+            ]
+          },
+          {
+            "id": "omnisonic-5-2",
+            "title": "釋出節奏",
+            "status": "recurring",
+            "children": [
+              {
+                "id": "omnisonic-5-2-1",
+                "title": "採用「每週精準打擊 (Weekly Precision Drop)」。",
+                "status": "recurring"
+              },
+              {
+                "id": "omnisonic-5-2-2",
+                "title": "數據導向分配：每週日檢視後台數據，挑選流量最高的頻道，釋出 1 首新歌。",
+                "status": "recurring"
+              }
+            ]
+          },
+          {
+            "id": "omnisonic-5-3",
+            "title": "UI 視覺回饋",
+            "status": "recurring",
+            "children": [
+              {
+                "id": "omnisonic-5-3-1",
+                "title": "在當週更新的頻道加上 ✨ New 標籤，創造行銷接觸點。",
+                "status": "recurring"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "omnisonic-6",
+        "title": "Phase 6：未來擴充願望清單 (規模化後再做)",
+        "summary": "目標：當產品達到 PMF (Product-Market Fit) 並有穩定現金流後才考慮的進階功能。",
+        "items": [
+          {
+            "id": "omnisonic-6-1",
+            "title": "官方 API 釋出後的後台全自動化生成工作流",
+            "status": "pending",
+            "children": []
+          },
+          {
+            "id": "omnisonic-6-2",
+            "title": "網域離線快取 / 車載 CarPlay 支援",
+            "status": "pending",
+            "children": []
+          }
+        ]
+      }
+    ],
+    "faq": []
   }
 }
