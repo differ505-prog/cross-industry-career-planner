@@ -14,7 +14,11 @@
 ### 1. 多檔 Next.js + JSON-Driven（不是單檔 SPA）
 - 本專案使用 **Next.js (App Router) + React 19 + TypeScript + Tailwind CSS**。
 - UI 元件採模組化（`src/components/`、`src/app/`），不要硬塞成單一 HTML。
-- **Single Source of Truth**：`src/data/industries.json` 定義產業卡片、`src/data/workflows.json` 定義各產業的階段與任務。任何新增內容**必須先寫進這兩個檔案**，不允許把資料硬編進元件。
+- **Single Source of Truth**：
+  - `src/data/industries.json` 定義產業卡片
+  - `src/data/workflows.json` 定義各產業的階段與任務
+  - `src/data/skills.json` 定義跨產業共用技能（Vibe Coding 跨域資產）
+  - 任何新增內容**必須先寫進這三個檔案**，不允許把資料硬編進元件。
 
 ### 2. Theme System (主題系統)
 - 每個產業綁定**唯一一個** `theme`：`dusty` (青曦) / `terracotta` (築時) / `sage` (VanBase) / `slate` (OmniSonic)。
@@ -42,6 +46,13 @@
 2. **小步快跑**：單一 commit 處理單一邏輯議題，避免 mega-commit。
 3. **驗證後推送**：commit 前必跑 `npx tsc --noEmit` + 交叉檢查 `industries.json` 與 `workflows.json` 的 key 對應。
 
+### 技能操作 SOP (skills.json)
+- 新發現的跨產業能力 → 立即回填 `skills.json` 對應欄位（`sourceTaskIds`、`appliesToIndustryIds`）。
+- 成熟度語意：`seed` (知道但未動) / `practicing` (開始做) / `verified` (在 ≥1 個產業已交付) / `expert` (在 ≥2 個產業都可交付)。
+- `category` 僅允許 `operations | communication | content | tech | design`。
+- 覆核 prompt 自動依成熟度排序，並對「目前聚焦產業」額外附「已有技能槓桿」段。
+- 不要替任務硬掛 `skillId`：寧可暫缺，待該技能真的在 2 個以上產業被驗收後再掛。
+
 ### 不做的事
 - ❌ 不要預先引入未用到的依賴（Chart.js、FontAwesome、LocalStorage polyfill 等）。
 - ❌ 不要為了「視覺酷炫」犧牲現有北歐米色基調。
@@ -53,3 +64,41 @@
 - **零固定成本**：能免費額度（Vercel + Supabase + Suno）就跑，獲利前不投入月費工具。
 - **自用滿意優先**：產品第一個使用者就是作者自己，要先「Dogfooding」才上市。
 - **策展大於修補**：瑕疵品直接丟棄重新生成，不靠 DAW 硬拉 BPM，也不靠程式碼堆砌掩蓋設計缺陷。
+
+## UI / 互動慣例 (Interaction Conventions)
+
+### 給使用者選項時的標示規則
+當你用 `AskQuestion` 工具列出選項給使用者做決定時，**不要把推薦選項寫在前面文章裡**。必須改成把推薦選項直接標示在選項本身旁邊（**文字後綴 + 圖示**同時出現）。
+
+#### 標準格式
+- 文字後綴：(推薦) / (Recommended)
+- 圖示前綴：`⭐` 或 `★`（任一即可，但**必須有圖示**）
+- 兩個一起出現：例如 `⭐ X (推薦)`
+
+#### 範例
+- ❌ 錯誤範例（推薦寫在文章中、無圖示）：
+  「我建議選 X。X 是最好的，因為⋯⋯ A. X / B. Y / C. Z」
+- ❌ 半對（只有文字沒有圖示）：
+  「你想做哪個？A. X (推薦) / B. Y / C. Z」
+- ✅ 正確範例（圖示 + 文字後綴並列）：
+  「你想做哪個？
+  A. ⭐ X (推薦)
+  B. Y
+  C. Z」
+
+#### 規則總結
+1. **文字 + 圖示缺一不可**。只寫 (推薦) 容易在選項列表裡被眼睛跳過；只寫圖示使用者可能不解其意。
+2. 圖示永遠在選項 label 最前面（不是中間、不是結尾）。
+3. 多個推薦時（allow_multiple + 推薦多個）每個都要標。
+4. 圖示選用統一用 ⭐ 與 ★ 兩種之一，**不要混用**：同一次提問只能用同一個符號。
+
+理由：使用者的注意力在選項卡片上，文章段落容易被略過；純文字 (推薦) 也容易在長 label 中被吞掉。**圖示是視覺錨點、文字是語意備援**，兩者並行才能確保推薦被看見。
+
+### Git 推送策略
+- **使用者要求「一起 push」時**：本輪所有變更（不限 commit 數）都做完後再一次推送，中間不要主動 push。
+- **使用者要求「推送」或「現在 push」時**：每個 commit 結束後立即推送。
+- 推送前必須驗證：`npx tsc --noEmit` 零錯誤、`git status` 乾淨（無 untracked build artifacts）。
+
+### 文件位置
+- 設計決策、不寫程式的文化規範、未來待辦放 `/docs/` 子目錄。
+- README 只放「入口級資訊」：技術棧、產業概覽、本地啟動、Push 前 SOP。

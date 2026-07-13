@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 import industriesData from "@/data/industries.json";
 import workflowsData from "@/data/workflows.json";
+import skillsData from "@/data/skills.json";
 
 type ThemeName = "sage" | "dusty" | "terracotta" | "slate";
 type ItemStatus = "done" | "pending" | "recurring";
@@ -51,6 +52,19 @@ interface WorkflowProject {
 
 type WorkflowMap = Record<string, WorkflowProject>;
 type CopyState = "idle" | "success" | "error";
+
+type SkillMaturity = "seed" | "practicing" | "verified" | "expert";
+type SkillCategory = "operations" | "communication" | "content" | "tech" | "design";
+
+interface Skill {
+  id: string;
+  name: string;
+  category: SkillCategory;
+  maturity: SkillMaturity;
+  oneLiner: string;
+  sourceTaskIds: string[];
+  appliesToIndustryIds: string[];
+}
 type CompletionState = {
   checked: boolean;
   partiallyChecked: boolean;
@@ -58,6 +72,21 @@ type CompletionState = {
 
 const industries = industriesData as Industry[];
 const workflows = workflowsData as WorkflowMap;
+const skills = skillsData.skills as Skill[];
+
+const MATURITY_RANK: Record<SkillMaturity, number> = {
+  seed: 0,
+  practicing: 1,
+  verified: 2,
+  expert: 3,
+};
+
+const MATURITY_LABEL: Record<SkillMaturity, string> = {
+  seed: "種子",
+  practicing: "練習中",
+  verified: "已驗收",
+  expert: "複產業專家",
+};
 const STORAGE_KEY = "cross-industry-career-planner-progress-v3";
 
 const themeStyles: Record<
@@ -250,11 +279,15 @@ function buildPortfolioReviewPrompt({
   workflows,
   completedTasks,
   projectProgress,
+  allSkills,
+  focusIndustryId,
 }: {
   industries: Industry[];
   workflows: WorkflowMap;
   completedTasks: Record<string, boolean>;
   projectProgress: Record<string, { oneTimeTotal: number; oneTimeDone: number; oneTimeRate: number; recurringTotal: number; recurringDone: number }>;
+  allSkills: Skill[];
+  focusIndustryId?: string;
 }) {
   const lines: string[] = [
     "請你扮演高階總顧問 / CSO，針對以下「跨產業事業組合」做宏觀覆核。",
@@ -282,6 +315,64 @@ function buildPortfolioReviewPrompt({
   });
 
   lines.push("", "各產業明細：");
+
+  // 跨產業技能積累區段 (Vibe Coding 跨域資產盤點)
+  if (allSkills.length > 0) {
+    const sortedSkills = [...allSkills].sort(
+      (a, b) => MATURITY_RANK[b.maturity] - MATURITY_RANK[a.maturity]
+    );
+    const expertOrVerified = sortedSkills.filter(
+      (s) => s.maturity === "expert" || s.maturity === "verified"
+    );
+    const practicing = sortedSkills.filter((s) => s.maturity === "practicing");
+    const seed = sortedSkills.filter((s) => s.maturity === "seed");
+
+    lines.push("");
+    lines.push("---");
+    lines.push("跨產業技能積累（核心資產盤點，使用者目前已掌握的能力）：");
+    lines.push("");
+    lines.push("用途說明：在評估任務難度與下一步建議時，請參考使用者已成熟的技能，");
+    lines.push("避免重複教基本功；對「練習中」的技能，覆核方向應給『可驗收的小任務』；");
+    lines.push("對僅『種子』狀態的技能，應只給方向、不冒進。");
+    lines.push("");
+
+    const renderGroup = (label: string, group: Skill[]) => {
+      lines.push(`【${label}】(${group.length} 項)`);
+      if (group.length === 0) {
+        lines.push("- 無");
+      } else {
+        group.forEach((s) => {
+          const targets = s.appliesToIndustryIds
+            .map((id) => industries.find((i) => i.id === id)?.shortLabel ?? id)
+            .join("、");
+          lines.push(`- [${MATURITY_LABEL[s.maturity]}] ${s.name}（${s.category}）— ${s.oneLiner}`);
+          lines.push(`    適用產業：${targets}`);
+        });
+      }
+      lines.push("");
+    };
+
+    renderGroup("複產業專家 / 已驗收", expertOrVerified);
+    renderGroup("練習中", practicing);
+    renderGroup("僅種子", seed);
+  }
+
+  if (focusIndustryId) {
+    const focus = industries.find((i) => i.id === focusIndustryId);
+    if (focus) {
+      const focusSkills = allSkills
+        .filter((s) => s.appliesToIndustryIds.includes(focusIndustryId))
+        .sort((a, b) => MATURITY_RANK[b.maturity] - MATURITY_RANK[a.maturity]);
+      if (focusSkills.length > 0) {
+        lines.push("");
+        lines.push(`目前聚焦產業（${focus.shortLabel}）已有的技能槓桿：`);
+        focusSkills.forEach((s) => {
+          lines.push(`- [${MATURITY_LABEL[s.maturity]}] ${s.name}：${s.oneLiner}`);
+        });
+        lines.push("");
+      }
+    }
+  }
 
   industries.forEach((industry) => {
     const project = workflows[industry.id];
@@ -328,11 +419,13 @@ function buildReviewPrompt({
   workflow,
   completedTasks,
   stats,
+  allSkills,
 }: {
   industry: Industry;
   workflow: WorkflowProject;
   completedTasks: Record<string, boolean>;
   stats: ReturnType<typeof buildStats>;
+  allSkills: Skill[];
 }) {
   const completedSummary: string[] = [];
   const incompleteSummary: string[] = [];
@@ -437,8 +530,25 @@ function buildReviewPrompt({
     "目前待補強 / 待執行任務摘要：",
     ...(incompleteSummary.length > 0 ? incompleteSummary : ["- 無"]),
     "",
-    "完整檢核表內容：",
   ];
+
+  // 跨產業技能槓桿段 — 讓覆核者知道使用者已掌握的能力，避免重複教基本功
+  const relevantSkills = allSkills
+    .filter((s) => s.appliesToIndustryIds.includes(industry.id))
+    .sort((a, b) => MATURITY_RANK[b.maturity] - MATURITY_RANK[a.maturity]);
+
+  if (relevantSkills.length > 0) {
+    lines.push("---");
+    lines.push("使用者在「此產業」已可槓桿的跨產業技能積累：");
+    lines.push("（這些是從其他產業驗收帶過來的能力；在評估此產業任務時請相應調降基本功教學）");
+    lines.push("");
+    relevantSkills.forEach((s) => {
+      lines.push(`- [${MATURITY_LABEL[s.maturity]}] ${s.name}（${s.category}）— ${s.oneLiner}`);
+    });
+    lines.push("");
+  }
+
+  lines.push("完整檢核表內容：");
 
   workflow.sections.forEach((section, index) => {
     lines.push("");
@@ -555,6 +665,7 @@ export function CareerPlannerApp() {
       workflow: selectedWorkflow,
       completedTasks,
       stats,
+      allSkills: skills,
     });
     void writeToClipboard(reviewPrompt, setCopyState);
   };
@@ -565,6 +676,8 @@ export function CareerPlannerApp() {
       workflows,
       completedTasks,
       projectProgress,
+      allSkills: skills,
+      focusIndustryId: selectedIndustryId,
     });
     void writeToClipboard(portfolioPrompt, setPortfolioCopyState);
   };

@@ -1,0 +1,94 @@
+{
+  "skills": [
+    {
+      "id": "modular-projects",
+      "name": "模組化專案管理",
+      "category": "operations",
+      "maturity": "practicing",
+      "oneLiner": "把接案工作拆成可重複使用的零件，避免每案從零開始",
+      "sourceTaskIds": ["arrive-studio/engineering/2-2-2"],
+      "appliesToIndustryIds": ["arrive-studio", "vanbase", "omnisonic"]
+    },
+    {
+      "id": "quote-deliverable-design",
+      "name": "報價與交付物設計",
+      "category": "operations",
+      "maturity": "practicing",
+      "oneLiner": "能在接案初期把『交付物、價金、變更條款』寫進提案，避免結案糾紛",
+      "sourceTaskIds": ["qingxi-design/proposal/1-1-1"],
+      "appliesToIndustryIds": ["qingxi-design", "arrive-studio", "vanbase"]
+    },
+    {
+      "id": "one-on-one-trust",
+      "name": "一對一信任建立",
+      "category": "communication",
+      "maturity": "practicing",
+      "oneLiner": "首次見面 / 第一次 DMs / 第一通電話能把陌生人變長期夥伴",
+      "sourceTaskIds": [],
+      "appliesToIndustryIds": ["qingxi-design", "vanbase", "omnisonic"]
+    },
+    {
+      "id": "long-form-content",
+      "name": "長文寫作",
+      "category": "content",
+      "maturity": "verified",
+      "oneLiner": "能寫 1500 字以上的深度文章（部落格、長文貼文、產品文件）",
+      "sourceTaskIds": ["vanbase/content/1-1-1", "omnisonic/product/1-2-1"],
+      "appliesToIndustryIds": ["vanbase", "omnisonic"]
+    },
+    {
+      "id": "short-form-content",
+      "name": "短文寫作（社群節奏）",
+      "category": "content",
+      "maturity": "verified",
+      "oneLiner": "能用高張力短文在 Threads / Instagram / Facebook 拉互動",
+      "sourceTaskIds": ["vanbase/content/1-2-1"],
+      "appliesToIndustryIds": ["vanbase", "omnisonic", "arrive-studio"]
+    },
+    {
+      "id": "mood-tagging",
+      "name": "情緒 / 標籤詞庫",
+      "category": "content",
+      "maturity": "seed",
+      "oneLiner": "為產品（音樂 / 文章 / 視覺）建立可重複使用的情緒 / 主題分類詞庫",
+      "sourceTaskIds": ["omnisonic/product/1-1-2"],
+      "appliesToIndustryIds": ["omnisonic"]
+    },
+    {
+      "id": "nextjs-tailwind",
+      "name": "Next.js + Tailwind 開發",
+      "category": "tech",
+      "maturity": "verified",
+      "oneLiner": "能用 Next.js App Router + Tailwind 在一天內交付中等複雜度的單頁 / 多頁站",
+      "sourceTaskIds": ["arrive-studio/engineering/1-1-1"],
+      "appliesToIndustryIds": ["arrive-studio", "vanbase", "omnisonic"]
+    },
+    {
+      "id": "json-data-architecture",
+      "name": "JSON 為資料來源的內容架構",
+      "category": "tech",
+      "maturity": "verified",
+      "oneLiner": "能設計 schema，讓內容（任務、FAQ、技能）走 JSON 而非硬編進元件",
+      "sourceTaskIds": ["arrive-studio/engineering/1-2-1"],
+      "appliesToIndustryIds": ["arrive-studio", "vanbase", "omnisonic", "qingxi-design"]
+    },
+    {
+      "id": "low-cost-stack",
+      "name": "零固定成本技術棧決策",
+      "category": "operations",
+      "maturity": "verified",
+      "oneLiner": "能選用 Vercel / Supabase / Suno 等免費額度跑 MVP，獲利前不投入月費工具",
+      "sourceTaskIds": [],
+      "appliesToIndustryIds": ["arrive-studio", "vanbase", "omnisonic"]
+    },
+    {
+      "id": "user-research-light",
+      "name": "輕量使用者訪談",
+      "category": "communication",
+      "maturity": "practicing",
+      "oneLiner": "能在 20~30 分鐘的對話中，從陌生人挖出真實痛點與付費意願",
+      "sourceTaskIds": [],
+      "appliesToIndustryIds": ["qingxi-design", "arrive-studio", "vanbase", "omnisonic"]
+    }
+  ]
+}
