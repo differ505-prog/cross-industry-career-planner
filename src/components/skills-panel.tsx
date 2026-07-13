@@ -13,6 +13,13 @@ export interface SkillsPanelSkill {
   appliesToIndustryIds: string[];
 }
 
+export interface SkillTaskRef {
+  industryId: string;
+  industryShortLabel: string;
+  taskId: string;
+  taskTitle: string;
+}
+
 interface IndustryLite {
   id: string;
   shortLabel: string;
@@ -57,9 +64,13 @@ const MATURITY_BAR: Record<SkillMaturity, number> = {
 export function SkillsPanel({
   skills,
   industries,
+  taskRefs,
+  onJumpToIndustry,
 }: {
   skills: SkillsPanelSkill[];
   industries: IndustryLite[];
+  taskRefs: SkillTaskRef[];
+  onJumpToIndustry: (industryId: string) => void;
 }) {
   const sorted = [...skills].sort(
     (a, b) => MATURITY_RANK[b.maturity] - MATURITY_RANK[a.maturity]
@@ -123,6 +134,9 @@ export function SkillsPanel({
                 const cells = [1, 2, 3, 4].map(
                   (n) => (n <= filled ? "bg-stone-700" : "bg-stone-200")
                 );
+                const linkedRefs = s.sourceTaskIds
+                  .map((tid) => taskRefs.find((r) => r.taskId === tid))
+                  .filter((r): r is SkillTaskRef => Boolean(r));
                 return (
                   <li key={s.id} className="space-y-1.5">
                     <div className="flex items-baseline justify-between gap-2">
@@ -140,7 +154,30 @@ export function SkillsPanel({
                       ))}
                     </div>
                     <p className="text-xs leading-6 text-stone-600">{s.oneLiner}</p>
-                    <p className="text-[11px] text-stone-500">↗ {targets}</p>
+                    <p className="text-[11px] text-stone-500">↗ 適用：{targets}</p>
+                    {linkedRefs.length > 0 && (
+                      <div className="flex flex-wrap gap-1 pt-0.5">
+                        {linkedRefs.map((ref) => (
+                          <button
+                            key={`${ref.industryId}/${ref.taskId}`}
+                            type="button"
+                            onClick={() => onJumpToIndustry(ref.industryId)}
+                            className="rounded-full border border-stone-200 bg-white/80 px-2 py-0.5 text-[10px] text-stone-600 transition hover:-translate-y-0.5 hover:border-stone-300 hover:bg-white"
+                            title={ref.taskTitle}
+                          >
+                            <span className="font-medium text-stone-700">
+                              {ref.industryShortLabel}
+                            </span>
+                            <span className="mx-1 text-stone-300">·</span>
+                            <span className="truncate">
+                              {ref.taskTitle.length > 18
+                                ? ref.taskTitle.slice(0, 18) + "…"
+                                : ref.taskTitle}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </li>
                 );
               })}

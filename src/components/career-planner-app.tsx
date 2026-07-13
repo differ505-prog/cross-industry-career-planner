@@ -886,7 +886,16 @@ export function CareerPlannerApp() {
                 </div>
               </section>
 
-              <SkillsPanel skills={skills} industries={industries} />
+              <SkillsPanel
+                skills={skills}
+                industries={industries}
+                onJumpToIndustry={(id) => {
+                  setSelectedIndustryId(id);
+                  if (typeof window !== "undefined") {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                }}
+              />
 
               <IndustryMaturityPanel
                 industries={industries}
@@ -1312,9 +1321,51 @@ function IndustryMaturityPanel({
 }
 
 
-function SkillsPanel({ skills, industries }: { skills: Skill[]; industries: Industry[] }) {
+function SkillsPanel({
+  skills,
+  industries,
+  onJumpToIndustry,
+}: {
+  skills: Skill[];
+  industries: Industry[];
+  onJumpToIndustry: (industryId: string) => void;
+}) {
   const lite = industries.map((i) => ({ id: i.id, shortLabel: i.shortLabel }));
-  return <SkillsPanelView skills={skills} industries={lite} />;
+
+  // 建立 sourceTaskIds → SkillTaskRef[] 對映
+  const idToTitle = new Map<string, { industryId: string; industryShortLabel: string; taskTitle: string }>();
+  industries.forEach((ind) => {
+    const proj = workflows[ind.id];
+    if (!proj) return;
+    const collect = (items: ChecklistItem[]) => {
+      items.forEach((it) => {
+        idToTitle.set(`${ind.id}/${it.id}`, {
+          industryId: ind.id,
+          industryShortLabel: ind.shortLabel,
+          taskTitle: it.title,
+        });
+        if (it.children) collect(it.children);
+      });
+    };
+    proj.sections.forEach((sec) => collect(sec.items));
+  });
+
+  const taskRefs: { industryId: string; industryShortLabel: string; taskId: string; taskTitle: string }[] = [];
+  skills.forEach((s) => {
+    s.sourceTaskIds.forEach((tid) => {
+      const info = idToTitle.get(tid);
+      if (info) {
+        taskRefs.push({
+          industryId: info.industryId,
+          industryShortLabel: info.industryShortLabel,
+          taskId: tid,
+          taskTitle: info.taskTitle,
+        });
+      }
+    });
+  });
+
+  return <SkillsPanelView skills={skills} industries={lite} taskRefs={taskRefs} onJumpToIndustry={onJumpToIndustry} />;
 }
 
 

@@ -6,7 +6,7 @@
       "category": "operations",
       "maturity": "practicing",
       "oneLiner": "把接案工作拆成可重複使用的零件，避免每案從零開始",
-      "sourceTaskIds": ["arrive-studio/engineering/2-2-2"],
+      "sourceTaskIds": ["arrive-studio/arrive-3-1"],
       "appliesToIndustryIds": ["arrive-studio", "vanbase", "omnisonic"]
     },
     {
@@ -15,7 +15,7 @@
       "category": "operations",
       "maturity": "practicing",
       "oneLiner": "能在接案初期把『交付物、價金、變更條款』寫進提案，避免結案糾紛",
-      "sourceTaskIds": ["qingxi-design/proposal/1-1-1"],
+      "sourceTaskIds": ["qingxi-design/qingxi-2-6-3", "qingxi-design/qingxi-2-6-3-5"],
       "appliesToIndustryIds": ["qingxi-design", "arrive-studio", "vanbase"]
     },
     {
@@ -33,7 +33,7 @@
       "category": "content",
       "maturity": "verified",
       "oneLiner": "能寫 1500 字以上的深度文章（部落格、長文貼文、產品文件）",
-      "sourceTaskIds": ["vanbase/content/1-1-1", "omnisonic/product/1-2-1"],
+      "sourceTaskIds": [],
       "appliesToIndustryIds": ["vanbase", "omnisonic"]
     },
     {
@@ -42,7 +42,7 @@
       "category": "content",
       "maturity": "verified",
       "oneLiner": "能用高張力短文在 Threads / Instagram / Facebook 拉互動",
-      "sourceTaskIds": ["vanbase/content/1-2-1"],
+      "sourceTaskIds": ["vanbase/vanbase-2-1-4"],
       "appliesToIndustryIds": ["vanbase", "omnisonic", "arrive-studio"]
     },
     {
@@ -51,7 +51,7 @@
       "category": "content",
       "maturity": "seed",
       "oneLiner": "為產品（音樂 / 文章 / 視覺）建立可重複使用的情緒 / 主題分類詞庫",
-      "sourceTaskIds": ["omnisonic/product/1-1-2"],
+      "sourceTaskIds": ["omnisonic/omnisonic-2-5-1", "omnisonic/omnisonic-2-3-1"],
       "appliesToIndustryIds": ["omnisonic"]
     },
     {
@@ -60,7 +60,7 @@
       "category": "tech",
       "maturity": "verified",
       "oneLiner": "能用 Next.js App Router + Tailwind 在一天內交付中等複雜度的單頁 / 多頁站",
-      "sourceTaskIds": ["arrive-studio/engineering/1-1-1"],
+      "sourceTaskIds": ["arrive-studio/arrive-1-3", "arrive-studio/arrive-2-5-1"],
       "appliesToIndustryIds": ["arrive-studio", "vanbase", "omnisonic"]
     },
     {
@@ -69,7 +69,7 @@
       "category": "tech",
       "maturity": "verified",
       "oneLiner": "能設計 schema，讓內容（任務、FAQ、技能）走 JSON 而非硬編進元件",
-      "sourceTaskIds": ["arrive-studio/engineering/1-2-1"],
+      "sourceTaskIds": [],
       "appliesToIndustryIds": ["arrive-studio", "vanbase", "omnisonic", "qingxi-design"]
     },
     {
@@ -96,7 +96,7 @@
       "category": "operations",
       "maturity": "practicing",
       "oneLiner": "知道怎麼辦商業登記、營業登記、稅籍、發票、露營區與民宿的法規邊界",
-      "sourceTaskIds": ["qingxi-design/launch/1-1-1", "vanbase/legal/1-1-1"],
+      "sourceTaskIds": ["qingxi-design/qingxi-3-4", "qingxi-design/qingxi-3-2"],
       "appliesToIndustryIds": ["qingxi-design", "vanbase"]
     },
     {
@@ -114,7 +114,7 @@
       "category": "design",
       "maturity": "practicing",
       "oneLiner": "能聽出 BPM、調性、情緒張力的差異；能在 30 秒內決定一段音樂是否合用",
-      "sourceTaskIds": ["omnisonic/product/2-1-1"],
+      "sourceTaskIds": ["omnisonic/omnisonic-2-5-1", "omnisonic/omnisonic-2-3-1", "omnisonic/omnisonic-1-1-1"],
       "appliesToIndustryIds": ["omnisonic", "vanbase"]
     },
     {
@@ -132,7 +132,7 @@
       "category": "content",
       "maturity": "seed",
       "oneLiner": "能用 Ahrefs / Ubersuggest 找出『長尾、在地、轉換率高』的關鍵字並落進內容",
-      "sourceTaskIds": ["qingxi-design/seo/1-1-1"],
+      "sourceTaskIds": ["qingxi-design/qingxi-2-6-6-2-a", "qingxi-design/qingxi-2-6-6-2-b"],
       "appliesToIndustryIds": ["qingxi-design", "arrive-studio", "vanbase", "omnisonic"]
     },
     {
