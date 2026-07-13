@@ -89,6 +89,78 @@
       "oneLiner": "能在 20~30 分鐘的對話中，從陌生人挖出真實痛點與付費意願",
       "sourceTaskIds": [],
       "appliesToIndustryIds": ["qingxi-design", "arrive-studio", "vanbase", "omnisonic"]
+    },
+    {
+      "id": "legal-compliance-basics",
+      "name": "商業登記與基礎法規",
+      "category": "operations",
+      "maturity": "practicing",
+      "oneLiner": "知道怎麼辦商業登記、營業登記、稅籍、發票、露營區與民宿的法規邊界",
+      "sourceTaskIds": ["qingxi-design/launch/1-1-1", "vanbase/legal/1-1-1"],
+      "appliesToIndustryIds": ["qingxi-design", "vanbase"]
+    },
+    {
+      "id": "visual-aesthetic-vocabulary",
+      "name": "視覺與美學語彙",
+      "category": "design",
+      "maturity": "verified",
+      "oneLiner": "能用北歐極簡 / 文青 / 公路感等美學關鍵字抓出對的色票、字型與留白節奏",
+      "sourceTaskIds": [],
+      "appliesToIndustryIds": ["qingxi-design", "arrive-studio", "vanbase", "omnisonic"]
+    },
+    {
+      "id": "sound-music-sensitivity",
+      "name": "聲音與音樂感受力",
+      "category": "design",
+      "maturity": "practicing",
+      "oneLiner": "能聽出 BPM、調性、情緒張力的差異；能在 30 秒內決定一段音樂是否合用",
+      "sourceTaskIds": ["omnisonic/product/2-1-1"],
+      "appliesToIndustryIds": ["omnisonic", "vanbase"]
+    },
+    {
+      "id": "multi-track-time-management",
+      "name": "多線任務時間管理",
+      "category": "operations",
+      "maturity": "practicing",
+      "oneLiner": "能在 4 條事業線中切換而不失焦；知道何時該暫緩、何時該 all-in",
+      "sourceTaskIds": [],
+      "appliesToIndustryIds": ["qingxi-design", "arrive-studio", "vanbase", "omnisonic"]
+    },
+    {
+      "id": "seo-keyword-research",
+      "name": "SEO 與關鍵字研究",
+      "category": "content",
+      "maturity": "seed",
+      "oneLiner": "能用 Ahrefs / Ubersuggest 找出『長尾、在地、轉換率高』的關鍵字並落進內容",
+      "sourceTaskIds": ["qingxi-design/seo/1-1-1"],
+      "appliesToIndustryIds": ["qingxi-design", "arrive-studio", "vanbase", "omnisonic"]
+    },
+    {
+      "id": "video-editing-shooting",
+      "name": "影音剪輯與拍攝",
+      "category": "content",
+      "maturity": "practicing",
+      "oneLiner": "能用 CapCut / Premiere 剪出 30~90 秒高張力短影音，並用手機拍出可用畫面",
+      "sourceTaskIds": [],
+      "appliesToIndustryIds": ["vanbase", "omnisonic"]
+    },
+    {
+      "id": "ai-prompt-engineering",
+      "name": "AI 提示詞工程",
+      "category": "tech",
+      "maturity": "verified",
+      "oneLiner": "能寫出結構化（角色、上下文、格式、驗收）的高階提示詞，並防堵 LLM 越界",
+      "sourceTaskIds": [],
+      "appliesToIndustryIds": ["arrive-studio", "vanbase", "omnisonic"]
+    },
+    {
+      "id": "data-driven-decision",
+      "name": "資料驅動決策",
+      "category": "operations",
+      "maturity": "seed",
+      "oneLiner": "能用 Notion / Sheets / 後台數據看出真實趨勢，不憑感覺做商業決定",
+      "sourceTaskIds": [],
+      "appliesToIndustryIds": ["qingxi-design", "arrive-studio", "vanbase", "omnisonic"]
     }
   ]
 }

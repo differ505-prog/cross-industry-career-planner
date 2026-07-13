@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import industriesData from "@/data/industries.json";
 import workflowsData from "@/data/workflows.json";
 import skillsData from "@/data/skills.json";
+import { SkillsPanel as SkillsPanelView } from "@/components/skills-panel";
 
 type ThemeName = "sage" | "dusty" | "terracotta" | "slate";
 type ItemStatus = "done" | "pending" | "recurring";
@@ -885,6 +886,8 @@ export function CareerPlannerApp() {
                 </div>
               </section>
 
+              <SkillsPanel skills={skills} industries={industries} />
+
               <IndustryMaturityPanel
                 industries={industries}
                 projectProgress={projectProgress}
@@ -1307,3 +1310,12 @@ function IndustryMaturityPanel({
     </section>
   );
 }
+
+
+function SkillsPanel({ skills, industries }: { skills: Skill[]; industries: Industry[] }) {
+  const lite = industries.map((i) => ({ id: i.id, shortLabel: i.shortLabel }));
+  return <SkillsPanelView skills={skills} industries={lite} />;
+}
+
+
+
