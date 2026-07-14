@@ -392,7 +392,7 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
 
         {/* 任務管理 SaaS 實戰破關指南 */}
         {gameGuide && (
-          <motion.section variants={itemVariants} className="mb-14">
+          <motion.section id="game-guide" variants={itemVariants} className="mb-14 scroll-mt-10">
             <SectionTitle>{gameGuide.title}</SectionTitle>
             <p className="mt-1 text-[11px] uppercase tracking-[0.24em] text-amber-700">
               {gameGuide.subtitle}

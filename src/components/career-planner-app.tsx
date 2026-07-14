@@ -719,6 +719,34 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
               </p>
             </Link>
 
+            {/* SaaS 破關指南入口：並排放在藍圖卡片下方 */}
+            <Link
+              href="/blueprint#game-guide"
+              className="block rounded-2xl border border-indigo-200/70 bg-gradient-to-br from-indigo-50/80 to-white p-4 transition hover:border-indigo-400 hover:shadow-soft"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-indigo-700">
+                  🚀 SaaS 破關指南
+                </span>
+                <span className="text-xs font-medium text-indigo-700">→</span>
+              </div>
+              <p className="mt-2 text-base font-semibold text-ink">任務管理 SaaS 商業化藍圖</p>
+              <p className="mt-1 text-[12px] leading-relaxed text-stone-600">
+                Level -1～8 共 9 階段 · 從市場定位 → MVP → 多用戶 → PLG → 病毒擴散 → B2B → 原生 App。未達破關檢核點前嚴禁進入下一階段。
+              </p>
+              <div className="mt-3 flex flex-wrap gap-1.5 text-[10px] font-medium">
+                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">定位</span>
+                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">MVP</span>
+                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">多用戶</span>
+                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">留存</span>
+                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">Pro</span>
+                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">PMF</span>
+                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">病毒</span>
+                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">B2B</span>
+                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">Native</span>
+              </div>
+            </Link>
+
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
               {industries.map((industry) => {
                 const theme = themeStyles[industry.theme];
