@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import industriesData from "@/data/industries.json";
 import workflowsData from "@/data/workflows.json";
@@ -951,6 +952,16 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
             </motion.div>
           </AnimatePresence>
         </section>
+
+        <footer className="mt-10 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-stone-200/60 bg-white/60 px-5 py-4 text-xs text-stone-500 backdrop-blur-sm">
+          <span>Cross-Industry Career Planner · 自用工作台</span>
+          <Link
+            href="/blueprint"
+            className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 font-medium text-amber-800 transition hover:bg-amber-100"
+          >
+            未來藍圖 →
+          </Link>
+        </footer>
       </div>
     </main>
   );
