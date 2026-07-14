@@ -109,9 +109,6 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
 
   return (
     <motion.main
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
       className="min-h-screen bg-[#fbf8f3] px-5 py-10 text-ink sm:px-8 sm:py-14"
     >
       <div className="mx-auto max-w-3xl">
