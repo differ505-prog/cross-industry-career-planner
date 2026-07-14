@@ -702,6 +702,23 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
               <p className="text-sm leading-7 text-stone-600">目前僅呈現你提供的兩份來源資料，未再額外生成其他任務內容。</p>
             </div>
 
+            {/* 藍圖入口：放在標題正下方，一進站就看到 */}
+            <Link
+              href="/blueprint"
+              className="block rounded-2xl border border-amber-300/70 bg-gradient-to-br from-amber-50 to-amber-100/50 p-4 transition hover:border-amber-400 hover:shadow-soft"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-amber-700">
+                  🗺 Roadmap
+                </span>
+                <span className="text-xs font-medium text-amber-700">→</span>
+              </div>
+              <p className="mt-2 text-base font-semibold text-ink">Nexus OS 未來藍圖</p>
+              <p className="mt-1 text-[12px] leading-relaxed text-stone-600">
+                6 個里程碑 · 4 已完成 · 2 待開發。技術架構、UI 規劃、子任務、量化驗收全在這裡。
+              </p>
+            </Link>
+
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
               {industries.map((industry) => {
                 const theme = themeStyles[industry.theme];
@@ -958,9 +975,11 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
           <span>Cross-Industry Career Planner · 自用工作台</span>
           <Link
             href="/blueprint"
-            className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 font-medium text-amber-800 transition hover:bg-amber-100"
+            className="inline-flex items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-800 shadow-sm transition hover:bg-amber-100 hover:shadow"
           >
-            未來藍圖 →
+            <span>🗺</span>
+            <span>未來藍圖：Nexus OS 6 個里程碑</span>
+            <span>→</span>
           </Link>
         </footer>
     </main>
