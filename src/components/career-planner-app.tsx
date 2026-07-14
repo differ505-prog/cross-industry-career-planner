@@ -952,8 +952,9 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
             </motion.div>
           </AnimatePresence>
         </section>
+      </div>
 
-        <footer className="mt-10 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-stone-200/60 bg-white/60 px-5 py-4 text-xs text-stone-500 backdrop-blur-sm">
+        <footer className="mx-auto mt-6 flex max-w-7xl flex-wrap items-center justify-between gap-3 rounded-2xl border border-stone-200/60 bg-white/60 px-5 py-4 text-xs text-stone-500 backdrop-blur-sm">
           <span>Cross-Industry Career Planner · 自用工作台</span>
           <Link
             href="/blueprint"
@@ -962,7 +963,6 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
             未來藍圖 →
           </Link>
         </footer>
-      </div>
     </main>
   );
 }
