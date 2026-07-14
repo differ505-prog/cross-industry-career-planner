@@ -5,17 +5,44 @@ import Link from "next/link";
 
 type MilestoneStatus = "done" | "deferred";
 
-interface UiColumn {
+interface StackRule {
+  axis: string;
+  rule: string;
+  why: string;
+}
+
+interface ExecutionTab {
+  tab: string;
+  name: string;
+  description: string;
+}
+
+interface ExecutionLane {
   slot: string;
   label: string;
   description: string;
+  tabs?: ExecutionTab[];
+}
+
+interface SchemaSpec {
+  label: string;
+  format: string;
+}
+
+interface MilestoneSubTask {
+  id: string;
+  name: string;
+  items: string[];
 }
 
 interface MilestoneItem {
   id: string;
   title: string;
+  executor?: string;
   status: MilestoneStatus;
   summary: string;
+  validation?: string;
+  tasks?: MilestoneSubTask[];
   proof?: string;
   deferredReason?: string;
 }
@@ -34,20 +61,25 @@ interface BlueprintPrinciple {
   paragraphs: string[];
 }
 
-interface BlueprintTable {
-  kind: "table_section";
-  id: string;
+interface BlueprintStackDeclaration {
+  kind: "stack_declaration";
   title: string;
   caption: string;
-  columns: string[];
-  rows: string[][];
+  rules: StackRule[];
 }
 
-interface BlueprintUiProgression {
-  kind: "ui_progression";
+interface BlueprintExecutionFlow {
+  kind: "execution_flow";
   title: string;
-  original: { heading: string; columns: UiColumn[] };
-  current: { heading: string; columns: UiColumn[]; footnote: string };
+  caption: string;
+  lanes: ExecutionLane[];
+}
+
+interface BlueprintSchema {
+  kind: "schema_block";
+  title: string;
+  caption: string;
+  schemas: SchemaSpec[];
 }
 
 interface BlueprintMilestones {
@@ -60,44 +92,44 @@ interface BlueprintMilestones {
 type BlueprintBlock =
   | BlueprintHero
   | BlueprintPrinciple
-  | BlueprintTable
-  | BlueprintUiProgression
+  | BlueprintStackDeclaration
+  | BlueprintExecutionFlow
+  | BlueprintSchema
   | BlueprintMilestones;
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.04 },
-  },
-};
 
 const itemVariants = {
   hidden: { opacity: 0, y: 16 },
   show: { opacity: 1, y: 0 },
 };
 
-const statusMeta: Record<MilestoneStatus, { label: string; chip: string; bar: string }> = {
+const statusMeta: Record<MilestoneStatus, { label: string; chip: string; bar: string; node: string }> = {
   done: {
     label: "已完成",
     chip: "border-emerald-200 bg-emerald-50 text-emerald-700",
     bar: "bg-emerald-500",
+    node: "bg-emerald-500",
   },
   deferred: {
     label: "待開發",
     chip: "border-amber-200 bg-amber-50 text-amber-700",
     bar: "bg-amber-400",
+    node: "bg-amber-400",
   },
 };
 
 export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
   const hero = blocks.find((b): b is BlueprintHero => b.kind === "hero");
   const principle = blocks.find((b): b is BlueprintPrinciple => b.kind === "principle_block");
-  const stack = blocks.find((b): b is BlueprintTable => b.kind === "table_section" && b.id === "stack");
-  const uiProgression = blocks.find((b): b is BlueprintUiProgression => b.kind === "ui_progression");
+  const stack = blocks.find(
+    (b): b is BlueprintStackDeclaration => b.kind === "stack_declaration",
+  );
+  const flow = blocks.find(
+    (b): b is BlueprintExecutionFlow => b.kind === "execution_flow",
+  );
+  const schema = blocks.find((b): b is BlueprintSchema => b.kind === "schema_block");
   const milestones = blocks.find((b): b is BlueprintMilestones => b.kind === "milestones");
 
-  if (!hero || !stack || !uiProgression || !milestones) {
+  if (!hero || !stack || !flow || !milestones) {
     return (
       <div className="min-h-screen bg-[#fbf8f3] p-8 text-ink">
         <p className="text-stone-500">blueprint.json 缺少必要區塊，請檢查資料檔。</p>
@@ -108,11 +140,8 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
   const doneCount = milestones.items.filter((m) => m.status === "done").length;
 
   return (
-    <motion.main
-      className="min-h-screen bg-[#fbf8f3] px-5 py-10 text-ink sm:px-8 sm:py-14"
-    >
+    <motion.main className="min-h-screen bg-[#fbf8f3] px-5 py-10 text-ink sm:px-8 sm:py-14">
       <div className="mx-auto max-w-3xl">
-        {/* 麵包屑 / 回首頁 */}
         <motion.div variants={itemVariants} className="mb-8 flex items-center gap-3 text-xs">
           <Link
             href="/"
@@ -123,7 +152,6 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
           <span className="uppercase tracking-[0.28em] text-stone-400">Roadmap</span>
         </motion.div>
 
-        {/* Hero */}
         <motion.section variants={itemVariants} className="mb-14">
           <p className="text-[11px] uppercase tracking-[0.36em] text-amber-700/80">
             {hero.subtitle}
@@ -140,7 +168,6 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
           </div>
         </motion.section>
 
-        {/* 整體定位 */}
         {principle && (
           <motion.section variants={itemVariants} className="mb-14">
             <SectionTitle>{principle.title}</SectionTitle>
@@ -152,7 +179,7 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
           </motion.section>
         )}
 
-        {/* 技術架構表 */}
+        {/* 技術架構宣告 */}
         <motion.section variants={itemVariants} className="mb-14">
           <SectionTitle>{stack.title}</SectionTitle>
           <p className="mt-3 text-sm text-stone-500">{stack.caption}</p>
@@ -160,21 +187,17 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
             <table className="w-full text-left text-sm">
               <thead className="bg-stone-50 text-[11px] uppercase tracking-[0.18em] text-stone-500">
                 <tr>
-                  {stack.columns.map((c) => (
-                    <th key={c} className="px-5 py-3 font-medium">
-                      {c}
-                    </th>
-                  ))}
+                  <th className="px-5 py-3 font-medium">面向</th>
+                  <th className="px-5 py-3 font-medium">規定</th>
+                  <th className="px-5 py-3 font-medium">為什麼這樣</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-stone-100">
-                {stack.rows.map((row, i) => (
+                {stack.rules.map((r, i) => (
                   <tr key={i} className="text-stone-700">
-                    {row.map((cell, j) => (
-                      <td key={j} className={`px-5 py-3 ${j === 0 ? "font-medium text-ink" : ""}`}>
-                        {cell}
-                      </td>
-                    ))}
+                    <td className="px-5 py-3 font-medium text-ink">{r.axis}</td>
+                    <td className="px-5 py-3">{r.rule}</td>
+                    <td className="px-5 py-3">{r.why}</td>
                   </tr>
                 ))}
               </tbody>
@@ -182,53 +205,76 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
           </div>
         </motion.section>
 
-        {/* UI 演進：早期藍圖 → 現在 */}
+        {/* UI 三欄 + Tabs */}
         <motion.section variants={itemVariants} className="mb-14">
-          <SectionTitle>{uiProgression.title}</SectionTitle>
-
-          {/* 早期 */}
-          <div className="mt-7 rounded-2xl border border-dashed border-stone-300 bg-stone-50/50 p-5">
-            <p className="text-[11px] uppercase tracking-[0.28em] text-stone-400">
-              {uiProgression.original.heading}
-            </p>
-            <div className="mt-4 grid gap-3 sm:grid-cols-3">
-              {uiProgression.original.columns.map((col) => (
-                <ColumnCard key={col.slot} col={col} variant="ghost" />
-              ))}
-            </div>
-          </div>
-
-          {/* 箭頭 */}
-          <div className="my-5 flex items-center justify-center gap-2 text-xs text-amber-700">
-            <span className="h-px flex-1 bg-amber-200" />
-            <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 font-medium">
-              實作後長成 ↓
-            </span>
-            <span className="h-px flex-1 bg-amber-200" />
-          </div>
-
-          {/* 現在 */}
-          <div className="rounded-2xl border border-amber-200/70 bg-gradient-to-br from-amber-50/40 to-white p-5">
-            <p className="text-[11px] uppercase tracking-[0.28em] text-amber-700">
-              {uiProgression.current.heading}
-            </p>
-            <div className="mt-4 grid gap-3 sm:grid-cols-3">
-              {uiProgression.current.columns.map((col) => (
-                <ColumnCard key={col.slot} col={col} variant="solid" />
-              ))}
-            </div>
-            <p className="mt-4 rounded-xl bg-white/70 p-3 text-[13px] leading-relaxed text-stone-600">
-              {uiProgression.current.footnote}
-            </p>
+          <SectionTitle>{flow.title}</SectionTitle>
+          <p className="mt-3 text-sm text-stone-500">{flow.caption}</p>
+          <div className="mt-6 space-y-4">
+            {flow.lanes.map((lane, i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-stone-200/70 bg-white p-5"
+              >
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[10px] uppercase tracking-[0.24em] text-stone-400">
+                    {lane.slot}
+                  </span>
+                  <h3 className="text-base font-semibold text-ink">{lane.label}</h3>
+                </div>
+                <p className="mt-2 text-sm leading-relaxed text-stone-600">
+                  {lane.description}
+                </p>
+                {lane.tabs && (
+                  <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                    {lane.tabs.map((t, j) => (
+                      <div
+                        key={j}
+                        className="rounded-xl border border-amber-200/60 bg-amber-50/40 p-3"
+                      >
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-amber-700">
+                          {t.tab}
+                        </p>
+                        <p className="mt-1 text-sm font-semibold text-ink">{t.name}</p>
+                        <p className="mt-1 text-[12px] leading-relaxed text-stone-600">
+                          {t.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </motion.section>
+
+        {/* JSON Schema */}
+        {schema && (
+          <motion.section variants={itemVariants} className="mb-14">
+            <SectionTitle>{schema.title}</SectionTitle>
+            <p className="mt-3 text-sm text-stone-500">{schema.caption}</p>
+            <div className="mt-5 space-y-3">
+              {schema.schemas.map((s, i) => (
+                <div
+                  key={i}
+                  className="rounded-xl border border-stone-200/70 bg-white p-4"
+                >
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-stone-500">
+                    {s.label}
+                  </p>
+                  <pre className="mt-2 overflow-x-auto rounded-lg bg-stone-900 px-3 py-2 text-[12px] leading-relaxed text-amber-100 sm:text-[13px]">
+                    <code>{s.format}</code>
+                  </pre>
+                </div>
+              ))}
+            </div>
+          </motion.section>
+        )}
 
         {/* 里程碑 */}
         <motion.section variants={itemVariants} className="mb-14">
           <SectionTitle>{milestones.title}</SectionTitle>
           <p className="mt-3 text-sm text-stone-500">{milestones.caption}</p>
 
-          {/* 進度小條 */}
           <div className="mt-5 flex items-center gap-3 text-sm text-stone-500">
             <div className="h-2 w-32 overflow-hidden rounded-full bg-stone-200">
               <motion.div
@@ -243,27 +289,20 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
             </span>
           </div>
 
-          {/* 時間軸 */}
           <ol className="relative mt-8 space-y-6 border-l border-stone-200 pl-6">
             {milestones.items.map((m, i) => {
               const meta = statusMeta[m.status];
               return (
-                <motion.li
-                  key={m.id}
-                  variants={itemVariants}
-                  className="relative"
-                >
-                  {/* 節點 */}
+                <motion.li key={m.id} variants={itemVariants} className="relative">
                   <span
-                    className={`absolute -left-[27px] top-1 flex h-3 w-3 items-center justify-center rounded-full ring-4 ring-[#fbf8f3] ${
-                      m.status === "done" ? "bg-emerald-500" : "bg-amber-400"
-                    }`}
+                    className={`absolute -left-[27px] top-1 flex h-3 w-3 items-center justify-center rounded-full ring-4 ring-[#fbf8f3] ${meta.node}`}
                   />
                   <div className="rounded-xl border border-stone-200/70 bg-white p-5 shadow-sm transition hover:shadow-soft">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <p className="text-[10px] uppercase tracking-[0.24em] text-stone-400">
                           {m.id}
+                          {m.executor && <span className="ml-2 text-stone-400">· {m.executor}</span>}
                         </p>
                         <h3 className="mt-1 text-base font-semibold text-ink sm:text-lg">
                           {m.title}
@@ -273,17 +312,57 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
                         {meta.label}
                       </span>
                     </div>
-                    <p className="mt-3 text-sm leading-relaxed text-stone-600">
-                      {m.summary}
-                    </p>
-                    {m.proof && (
-                      <p className="mt-2 text-[12px] leading-relaxed text-emerald-700">
-                        <span className="mr-1">▸</span>驗證：{m.proof}
+
+                    <p className="mt-3 text-sm leading-relaxed text-stone-600">{m.summary}</p>
+
+                    {m.validation && (
+                      <div className="mt-3 rounded-lg border border-emerald-200/60 bg-emerald-50/50 p-3">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-emerald-700">
+                          🎯 量化驗收目標
+                        </p>
+                        <p className="mt-1 text-[13px] leading-relaxed text-stone-700">
+                          {m.validation}
+                        </p>
+                      </div>
+                    )}
+
+                    {m.tasks && m.tasks.length > 0 && (
+                      <div className="mt-4 space-y-3">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-stone-500">
+                          子任務
+                        </p>
+                        {m.tasks.map((t) => (
+                          <div
+                            key={t.id}
+                            className="rounded-lg border border-stone-200/60 bg-stone-50/50 p-3"
+                          >
+                            <p className="text-[12px] font-semibold text-ink">
+                              {t.id}：{t.name}
+                            </p>
+                            <ul className="mt-2 space-y-1.5 text-[13px] leading-relaxed text-stone-700">
+                              {t.items.map((item, k) => (
+                                <li key={k} className="flex gap-2">
+                                  <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-amber-500" />
+                                  <span>{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {m.deferredReason && (
+                      <p className="mt-3 rounded-lg border border-amber-200/60 bg-amber-50/40 p-3 text-[13px] leading-relaxed text-amber-800">
+                        <span className="mr-1">⏸</span>
+                        <span className="font-semibold">為什麼延遲：</span>
+                        {m.deferredReason}
                       </p>
                     )}
-                    {m.deferredReason && (
-                      <p className="mt-2 text-[12px] leading-relaxed text-amber-700">
-                        <span className="mr-1">▸</span>為什麼暫緩：{m.deferredReason}
+
+                    {m.proof && (
+                      <p className="mt-3 text-[12px] leading-relaxed text-emerald-700">
+                        <span className="mr-1">▸</span>驗證：{m.proof}
                       </p>
                     )}
                   </div>
@@ -296,14 +375,11 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
           </ol>
         </motion.section>
 
-        {/* 頁尾 */}
         <motion.section
           variants={itemVariants}
           className="mt-16 border-t border-stone-200 pt-8 text-[13px] text-stone-500"
         >
-          <p>
-            這頁是這個專案的「未來地圖」，不是寫完就丟。每完成一個里程碑會回來更新狀態。
-          </p>
+          <p>這頁是這個專案的「未來地圖」，不是寫完就丟。每完成一個里程碑會回來更新狀態。</p>
           <p className="mt-2">
             <Link href="/" className="text-amber-700 underline-offset-2 hover:underline">
               → 回到主站看現況
@@ -321,38 +397,5 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
       <span className="inline-block h-5 w-1.5 rounded-full bg-amber-500" />
       {children}
     </h2>
-  );
-}
-
-function ColumnCard({
-  col,
-  variant,
-}: {
-  col: UiColumn;
-  variant: "ghost" | "solid";
-}) {
-  if (variant === "ghost") {
-    return (
-      <div className="rounded-xl border border-stone-200 bg-white/60 p-4">
-        <p className="text-[10px] uppercase tracking-[0.24em] text-stone-400">
-          {col.slot}
-        </p>
-        <p className="mt-1.5 text-sm font-medium text-stone-700">{col.label}</p>
-        <p className="mt-1 text-[12px] leading-relaxed text-stone-500">
-          {col.description}
-        </p>
-      </div>
-    );
-  }
-  return (
-    <div className="rounded-xl border border-amber-200/70 bg-white p-4">
-      <p className="text-[10px] uppercase tracking-[0.24em] text-amber-700">
-        {col.slot}
-      </p>
-      <p className="mt-1.5 text-sm font-semibold text-ink">{col.label}</p>
-      <p className="mt-1 text-[12px] leading-relaxed text-stone-600">
-        {col.description}
-      </p>
-    </div>
   );
 }

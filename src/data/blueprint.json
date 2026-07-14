@@ -8,118 +8,234 @@
   },
   {
     "kind": "principle_block",
-    "title": "整體定位",
+    "title": "最終系統定位（核心哲學）",
     "paragraphs": [
-      "這是一套不對外賣、只給自己用的個人工作台。",
-      "賺錢的不是這個系統本身，而是「被這個系統訓練出來的你」——把所有玩著玩著就會的事情，變成可以重複使用的技能模塊。",
+      "這是一套不對外販售、專屬自用的超級基礎建設。",
+      "盈利的不是系統本身，而是「被系統強化後的你」。",
+      "透過將所有無壓力的嗜好轉化為可重複使用的技能積木，打造具備「無限選擇權」的個人超級生態系。",
       "最後達到「什麼都能接、什麼都能選」的人生自由度，也就是所謂的「選擇權」。"
     ]
   },
   {
-    "kind": "table_section",
-    "id": "stack",
-    "title": "技術架構：先把規則講清楚",
-    "caption": "這些規定不是隨便訂的，是為了讓 Cursor AI 跟外部 LLM 都能穩定接手。",
-    "columns": ["面向", "規定", "為什麼這樣"],
-    "rows": [
-      ["寫程式", "Cursor 本地端", "AI 助理可以直接進來改檔案、跑指令、看錯誤"],
-      ["討論與覆核", "網頁版 LLM", "把草稿拿去給外部 AI 看，給意見、改錯字"],
-      ["前端", "Next.js + React + Tailwind", "從早期「單一 HTML」演化成正式專案，方便維護"],
-      ["資料", "全部 LocalStorage，無後端無資料庫", "不被任何服務綁架，重整網頁東西還在"],
-      ["跟外部 AI 合作", "系統產生 prompt → 手動複製 → 外部 AI 跑 → 手動貼回", "不接 API key，零依賴、零成本、可隨時換工具"]
+    "kind": "stack_declaration",
+    "title": "系統技術架構宣告（開發前置約定）",
+    "caption": "這些是 M0 階段定下的鐵則；隨專案演化有些會被放寬，但精神不變。",
+    "rules": [
+      {
+        "axis": "執行環境（IDE）",
+        "rule": "Cursor 本地端",
+        "why": "AI 助理可以直接進來改檔案、跑指令、看錯誤，迭代速度最快"
+      },
+      {
+        "axis": "覆核與策略（Reviewer）",
+        "rule": "網頁版 LLM",
+        "why": "把草稿拿去給外部 AI 看，給意見、改錯字、做跨界策略碰撞"
+      },
+      {
+        "axis": "前端架構（M0 規則）",
+        "rule": "單一 .html：所有 HTML、Tailwind CSS（CDN）、JavaScript 寫在同一檔",
+        "why": "Cursor 的 AI（Composer）能一次性掌控全局，避免檔案切分導致的上下文迷失"
+      },
+      {
+        "axis": "前端架構（實際演化，M1 調整）",
+        "rule": "Next.js + React + Tailwind 多檔案結構",
+        "why": "4 個產業 × 多分頁內容超出單檔可讀性，演化為正式專案；分頁與資料分離反而讓 AI 更好接手"
+      },
+      {
+        "axis": "資料儲存",
+        "rule": "完全依賴瀏覽器 LocalStorage",
+        "why": "不被任何服務綁架，重整網頁資料還在；無後端 = 零維運成本"
+      },
+      {
+        "axis": "非同步協作模式",
+        "rule": "系統生成 Prompt ➡️ 手動複製 ➡️ 網頁版 LLM ➡️ 貼回 JSON / 策略",
+        "why": "不接 API Key、零依賴、零成本、可隨時換工具；資料主權在自己手上"
+      }
     ]
   },
   {
-    "kind": "ui_progression",
-    "title": "介面規劃：從三欄變成兩欄 + 技能面板",
-    "original": {
-      "heading": "早期藍圖規劃：三欄式佈局",
-      "columns": [
-        {
-          "slot": "左欄",
-          "label": "活躍賽道",
-          "description": "列出進行中的專案，點擊快速切換"
-        },
-        {
-          "slot": "中欄",
-          "label": "任務與 CSO 樞紐",
-          "description": "用分頁切換「專案面板 / 新建立項 / 召喚 CSO」三個工作區，避免畫面塞爆"
-        },
-        {
-          "slot": "右欄",
-          "label": "天賦與資產",
-          "description": "雷達圖顯示大維度經驗值、技能標籤依經驗值變色（熱力雲）"
-        }
-      ]
-    },
-    "current": {
-      "heading": "實際長出來的樣子：兩欄 + 底部技能面板",
-      "columns": [
-        {
-          "slot": "左半",
-          "label": "產業切換器 + 主檢核表",
-          "description": "切產業、勾任務、即時算進度、看下一步建議"
-        },
-        {
-          "slot": "右半",
-          "label": "圓環儀表板",
-          "description": "整體完成率、四象限分佈、給 CSO 的 prompt 一鍵複製"
-        },
-        {
-          "slot": "底部",
-          "label": "技能面板",
-          "description": "18 項技能 × 成熟度 × 適用產業，可換排序、篩選、點技能看來源任務"
-        }
-      ],
-      "footnote": "為什麼變兩欄？實際做到一半發現 4 個產業 + 三欄會塞不下，拆成兩欄 + 底部技能面板更順手。但原始藍圖的「CSO 樞紐」精神還在，主面板下方的「一鍵複製給 LLM」按鈕就是它的實踐。"
-    }
+    "kind": "execution_flow",
+    "title": "系統前端 UI 規劃：三欄式佈局與 Tabs 切換",
+    "caption": "M1 的目標樣貌。實際實作後變形為兩欄 + 底部技能面板（見下方 UI 演進）。",
+    "lanes": [
+      {
+        "slot": "左側導覽",
+        "label": "活躍賽道",
+        "description": "列出進行中的專案，點擊可快速切換。"
+      },
+      {
+        "slot": "中央核心",
+        "label": "任務與 CSO 樞紐",
+        "description": "為避免畫面擁擠，中央區域以標籤頁（Tabs）切換三個工作區：",
+        "tabs": [
+          {
+            "tab": "Tab 1",
+            "name": "專案面板",
+            "description": "顯示當前嗜好的帶檢核框步驟表。"
+          },
+          {
+            "tab": "Tab 2",
+            "name": "新建立項",
+            "description": "供輸入新想法，並產生給 LLM 的 Prompt。"
+          },
+          {
+            "tab": "Tab 3",
+            "name": "召喚 CSO",
+            "description": "專屬的跨界策略顧問對話與建議輸入區。"
+          }
+        ]
+      },
+      {
+        "slot": "右側面板",
+        "label": "天賦與資產",
+        "description": "全局經驗值、Chart.js 跨領域技能雷達圖、技能標籤熱力雲（依經驗值改變顏色深淺）。（註：初期不實作 Node-Graph 技能樹）"
+      }
+    ]
+  },
+  {
+    "kind": "schema_block",
+    "title": "JSON Schema 宣告（M0 強制規格）",
+    "caption": "這是 M0 子任務 0.1 的鐵則，所有後續任務的資料都必須遵守這兩條結構。",
+    "schemas": [
+      {
+        "label": "skills 陣列格式",
+        "format": "{ \"id\": \"字串\", \"name\": \"技能名稱\", \"category\": \"大維度分類\", \"exp\": 數字 }"
+      },
+      {
+        "label": "projects 陣列格式",
+        "format": "{ \"id\": \"字串\", \"title\": \"專案名\", \"tasks\": [{ \"task\": \"任務\", \"linked_skill_id\": \"對應技能 id\", \"completed\": boolean }] }"
+      }
+    ]
   },
   {
     "kind": "milestones",
     "title": "里程碑：現在到哪、接下來走哪",
-    "caption": "未完成的兩項會等資料規模到一定程度再開發，避免過早投入。",
+    "caption": "已完成 4 項，2 項延遲開發（待資料規模到一定程度再開發，避免過早投入）。",
     "items": [
       {
         "id": "M0",
-        "title": "M0：藍圖定稿 + 資料結構",
+        "title": "里程碑零：既有賽道藍圖的初始匯入與 Schema 定義",
+        "executor": "由網頁版 LLM 執行",
         "status": "done",
-        "summary": "4 個產業 metadata、完整檢核表、18 項技能，全部寫進 JSON",
-        "proof": "src/data/industries.json 等 3 檔，看 src/data/README.md 與主頁切換四個產業可驗證"
+        "summary": "使用者提供 3 份舊嗜好藍圖，AI 依 JSON Schema 產出含至少 10 個共通技能標籤的初始資料庫。",
+        "validation": "產出的初始 database.json 可被系統讀取，skills 至少 10 項，projects 含 tasks 結構正確。",
+        "tasks": [
+          {
+            "id": "0.1",
+            "name": "定義核心 JSON Schema（供 Cursor 建立資料結構）",
+            "items": [
+              "強制規定 skills 陣列格式：{\"id\": \"字串\", \"name\": \"技能名稱\", \"category\": \"大維度分類\", \"exp\": 數字}",
+              "強制規定 projects 陣列格式：{\"id\": \"字串\", \"title\": \"專案名\", \"tasks\": [{\"task\": \"任務\", \"linked_skill_id\": \"對應技能 id\", \"completed\": boolean}]}"
+            ]
+          },
+          {
+            "id": "0.2",
+            "name": "網頁版 LLM 技能逆向工程",
+            "items": [
+              "將舊檔案餵給網頁版 LLM，加上上述 JSON Schema，要求 LLM 產出初始的 database.json 內容"
+            ]
+          }
+        ],
+        "proof": "src/data/industries.json 等 3 檔（skills + projects + industries），可由主頁切換 4 個產業驗證"
       },
       {
         "id": "M1",
-        "title": "M1：單頁 + 技能面板",
+        "title": "里程碑一：單檔 SPA 架構與「全局能力池」建置",
+        "executor": "由 Cursor 執行",
         "status": "done",
-        "summary": "主頁可切產業、技能面板可看技能 × 成熟度 × 適用產業",
-        "proof": "主頁 + 底部技能面板"
+        "summary": "產出單一 .html（M0 規則）。UI 切分為三欄，右側面板讀取假資料（LocalStorage）渲染 1 個雷達圖與 1 區熱力雲。",
+        "validation": "UI 成功切分為三欄，右側面板從 LocalStorage 讀取假資料後渲染雷達圖 + 熱力雲。",
+        "tasks": [
+          {
+            "id": "1.1",
+            "name": "前端組件與 Tabs 佈局",
+            "items": [
+              "實作左側 Sidebar、中央（帶有三個切換 Tabs）與右側 StatusPanel"
+            ]
+          },
+          {
+            "id": "1.2",
+            "name": "實作輕量級 RPG 能力面板",
+            "items": [
+              "引入 Chart.js CDN，讀取 LocalStorage 繪製大維度雷達圖",
+              "實作「技能標籤熱力雲」CSS 邏輯：經驗值越高顏色越深"
+            ]
+          }
+        ],
+        "proof": "主頁（Next.js 多檔演化版）可切換 4 個產業，底部技能面板有 18 項技能 × 成熟度 × 適用產業"
       },
       {
         "id": "M2",
-        "title": "M2：一鍵複製 prompt 工作流",
+        "title": "里程碑二：「一鍵複製」的無 API 立項工作流",
+        "executor": "由 Cursor 執行",
         "status": "done",
-        "summary": "主面板下方 + 圓環儀表板上方都有「複製給 LLM」按鈕",
-        "proof": "主面板下方與圓環儀表板上方各一個「一鍵複製」按鈕"
+        "summary": "輸入新嗜好 → 生成 Prompt 複製到剪貼簿 → 貼回網頁版 LLM 回傳的 JSON → 自動轉為帶 Checkbox 的 UI 列表。",
+        "validation": "系統內輸入新嗜好 → 點擊按鈕生成 Prompt 並複製；貼回 LLM JSON → 成功轉化為帶 Checkbox 的 UI 列表。",
+        "tasks": [
+          {
+            "id": "2.1",
+            "name": "實作 Prompt 生成器（Tab 2）",
+            "items": [
+              "建立輸入框（嗜好名稱、初步構想）",
+              "建立「生成並複製 Prompt」按鈕，系統自動打包成提示詞"
+            ]
+          },
+          {
+            "id": "2.2",
+            "name": "實作 JSON 解析樞紐",
+            "items": [
+              "建立文本框，供貼上網頁版 LLM 產出的 JSON",
+              "實作「載入專案」按鈕，驗證並寫入 LocalStorage，切換至 Tab 1 更新畫面"
+            ]
+          }
+        ],
+        "proof": "主面板下方與圓環儀表板上方各有一個「一鍵複製」按鈕，可打包當前狀態給外部 LLM"
       },
       {
         "id": "M3",
-        "title": "M3：勾選即時連動 + CSO 模組",
+        "title": "里程碑三：策略長（CSO）跨界碰撞與經驗連動",
+        "executor": "由 Cursor 執行",
         "status": "done",
-        "summary": "勾任務 → 進度更新 → 可打包整體狀態給外部 CSO 分析",
-        "proof": "勾任何任務，主頁進度條、圓環儀表板、技能面板連動更新"
+        "summary": "勾選任務後雷達圖 / 熱力雲對應數值立刻 +1；Tab 3 可生成含當前所有狀態的 Prompt 供網頁版 LLM（CSO）分析。",
+        "validation": "勾選任務後雷達圖 / 熱力雲對應數值立刻 +1；Tab 3 可生成包含當前所有狀態的 Prompt 供 CSO 分析。",
+        "tasks": [
+          {
+            "id": "3.1",
+            "name": "跨領域經驗值即時連動",
+            "items": [
+              "綁定 Checkbox，勾選後對應 skill_id 的 EXP +1",
+              "儲存至 LocalStorage 並觸發 Chart.js 重繪"
+            ]
+          },
+          {
+            "id": "3.2",
+            "name": "實作「召喚 CSO」模組（Tab 3）",
+            "items": [
+              "實作一鍵按鈕，抓取 LocalStorage 打包成「請求跨界槓桿建議」Prompt 複製"
+            ]
+          }
+        ],
+        "proof": "勾任何任務，主頁進度條、圓環儀表板、技能面板連動更新；點一鍵複製可直接帶整體狀態給外部 CSO"
       },
       {
         "id": "M4",
-        "title": "M4：模組化資產庫",
+        "title": "里程碑四：模組化資產庫",
+        "executor": "由 Cursor 執行（延遲開發）",
         "status": "deferred",
-        "summary": "封裝可重複使用的素材（簡報模板、合約範本、報價模板、內容回收流程）",
-        "deferredReason": "等專案累積到一定數量再做，避免過早抽象"
+        "summary": "封裝可重複使用的素材（簡報模板、合約範本、報價模板、內容回收流程）。",
+        "deferredReason": "等專案累積到一定數量再做，避免過早抽象；先讓資料長出來再談模組化。",
+        "tasks": [],
+        "proof": "（尚未實作）"
       },
       {
         "id": "M5",
-        "title": "M5：技能 Node-Graph",
+        "title": "里程碑五：進階視覺化 Node-Graph",
+        "executor": "由 Cursor 執行（延遲開發）",
         "status": "deferred",
-        "summary": "互動式節點圖：點技能看上游來源任務、看下游被哪些產業複用",
-        "deferredReason": "等底層技能超過 20 項再做，否則節點太少看不出關係"
+        "summary": "互動式節點圖：點技能看上游來源任務、看下游被哪些產業複用。",
+        "deferredReason": "等底層技能超過 20 項再做，否則節點太少看不出關係，視覺化也失去意義。",
+        "tasks": [],
+        "proof": "（尚未實作）"
       }
     ]
   }
