@@ -132,9 +132,9 @@ npm run lint
 
 ---
 
-## 資料架構（Single Source of Truth）
+## 資料模型細節（給要改 JSON 的人）
 
-本專案的核心鐵律：**任何新增任務都必須先寫進 JSON，再由 React 渲染**。絕不允許把任務硬編進元件。
+> 不知道為什麼這樣切？回頭看上面的「這個專案的架構（一句話版）」。
 
 ### `src/data/industries.json`
 
