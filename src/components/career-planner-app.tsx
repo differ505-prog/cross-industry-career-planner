@@ -571,7 +571,8 @@ function buildReviewPrompt({
   return lines.join("\n");
 }
 
-export function CareerPlannerApp() {
+export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = {}) {
+  // 嵌入模式：可由 query string ?embedded=1 觸發（從 page.tsx 傳入）
   const [selectedIndustryId, setSelectedIndustryId] = useState(industries[0]?.id ?? "");
   const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>(defaultCompletionMap);
   const [copyState, setCopyState] = useState<CopyState>("idle");
@@ -685,7 +686,13 @@ export function CareerPlannerApp() {
 
   return (
     <main className="min-h-screen px-4 py-4 text-ink sm:px-6 lg:px-8">
-      <div className="mx-auto flex min-h-[calc(100vh-2rem)] max-w-7xl flex-col overflow-hidden rounded-shell border border-white/70 bg-white/55 shadow-float backdrop-blur-xl lg:flex-row">
+      <div
+        className={[
+          "mx-auto flex min-h-[calc(100vh-2rem)] max-w-7xl flex-col overflow-hidden rounded-shell border border-white/70 bg-white/55 shadow-float backdrop-blur-xl",
+          embedded ? "" : "lg:flex-row",
+        ].join(" ")}
+      >
+        {!embedded && (
         <aside className="border-b border-stone-200/70 bg-[#f7f2ea]/90 p-5 lg:w-[320px] lg:border-b-0 lg:border-r lg:p-8">
           <div className="space-y-6">
             <div className="space-y-2">
@@ -736,6 +743,7 @@ export function CareerPlannerApp() {
             </div>
           </div>
         </aside>
+        )}
 
         <section className="flex-1 bg-gradient-to-b from-white/80 via-[#fbf8f3]/70 to-[#f5efe6]/70 p-5 sm:p-8 lg:p-10">
           <AnimatePresence mode="wait">
