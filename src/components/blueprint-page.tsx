@@ -89,13 +89,36 @@ interface BlueprintMilestones {
   items: MilestoneItem[];
 }
 
+interface GameMilestone {
+  title: string;
+  metric: string;
+  condition: string;
+}
+
+interface GameLevel {
+  level: string;
+  title: string;
+  summary: string;
+  tasks: string[];
+  milestone: GameMilestone | null;
+}
+
+interface BlueprintGameGuide {
+  kind: "game_guide";
+  title: string;
+  subtitle: string;
+  intro: string;
+  levels: GameLevel[];
+}
+
 type BlueprintBlock =
   | BlueprintHero
   | BlueprintPrinciple
   | BlueprintStackDeclaration
   | BlueprintExecutionFlow
   | BlueprintSchema
-  | BlueprintMilestones;
+  | BlueprintMilestones
+  | BlueprintGameGuide;
 
 const itemVariants = {
   hidden: { opacity: 0, y: 16 },
@@ -118,25 +141,17 @@ const statusMeta: Record<MilestoneStatus, { label: string; chip: string; bar: st
 };
 
 export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
-  const hero = blocks.find((b): b is BlueprintHero => b.kind === "hero");
+  const hero = blocks.find((b): b is BlueprintHero => b.kind === "hero")!;
   const principle = blocks.find((b): b is BlueprintPrinciple => b.kind === "principle_block");
   const stack = blocks.find(
     (b): b is BlueprintStackDeclaration => b.kind === "stack_declaration",
-  );
+  )!;
   const flow = blocks.find(
     (b): b is BlueprintExecutionFlow => b.kind === "execution_flow",
-  );
+  )!;
   const schema = blocks.find((b): b is BlueprintSchema => b.kind === "schema_block");
-  const milestones = blocks.find((b): b is BlueprintMilestones => b.kind === "milestones");
-
-  if (!hero || !stack || !flow || !milestones) {
-    return (
-      <div className="min-h-screen bg-[#fbf8f3] p-8 text-ink">
-        <p className="text-stone-500">blueprint.json 缺少必要區塊，請檢查資料檔。</p>
-      </div>
-    );
-  }
-
+  const milestones = blocks.find((b): b is BlueprintMilestones => b.kind === "milestones")!;
+  const gameGuide = blocks.find((b): b is BlueprintGameGuide => b.kind === "game_guide");
   const doneCount = milestones.items.filter((m) => m.status === "done").length;
 
   return (
@@ -374,6 +389,99 @@ export function BlueprintPage({ blocks }: { blocks: BlueprintBlock[] }) {
             })}
           </ol>
         </motion.section>
+
+        {/* 任務管理 SaaS 實戰破關指南 */}
+        {gameGuide && (
+          <motion.section variants={itemVariants} className="mb-14">
+            <SectionTitle>{gameGuide.title}</SectionTitle>
+            <p className="mt-1 text-[11px] uppercase tracking-[0.24em] text-amber-700">
+              {gameGuide.subtitle}
+            </p>
+            <div className="mt-5 rounded-2xl border border-amber-200/60 bg-gradient-to-br from-amber-50/70 to-white p-5 text-sm leading-relaxed text-stone-700">
+              {gameGuide.intro}
+            </div>
+
+            <ol className="relative mt-8 space-y-8 border-l border-stone-200 pl-6">
+              {gameGuide.levels.map((level, i) => (
+                <motion.li key={level.level} variants={itemVariants} className="relative">
+                  <span
+                    className={`absolute -left-[27px] top-1 flex h-3 w-3 items-center justify-center rounded-full ring-4 ring-[#fbf8f3] bg-amber-500`}
+                  />
+                  <div className="rounded-xl border border-stone-200/70 bg-white p-5 shadow-sm transition hover:shadow-soft">
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-[0.24em] text-stone-400">
+                          {level.level}
+                        </p>
+                        <h3 className="mt-1 text-base font-semibold text-ink sm:text-lg">
+                          {level.title}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <p className="mt-2 text-sm leading-relaxed text-stone-600">{level.summary}</p>
+
+                    <div className="mt-4 space-y-2">
+                      {level.tasks.map((task, j) => {
+                        if (task.startsWith("[ ]")) {
+                          return (
+                            <div key={j} className="flex gap-2 rounded-lg border border-stone-200/60 bg-stone-50/50 p-3">
+                              <span className="mt-1 h-4 w-4 shrink-0 rounded border border-stone-300 bg-white" />
+                              <span className="text-[13px] leading-relaxed text-stone-700">{task.slice(4)}</span>
+                            </div>
+                          );
+                        }
+                        if (task.startsWith("(🎯")) {
+                          return (
+                            <div key={j} className="rounded-lg border border-blue-200/60 bg-blue-50/40 p-3">
+                              <span className="text-[12px] leading-relaxed text-stone-600">{task}</span>
+                            </div>
+                          );
+                        }
+                        if (task.startsWith("⚠️") || task.startsWith("🛡️") || task.startsWith("👑") || task.startsWith("🧽") || task.startsWith("🧪") || task.startsWith("🚀") || task.startsWith("🕸️") || task.startsWith("📈") || task.startsWith("⚡") || task.startsWith("🤝") || task.startsWith("🦅") || task.startsWith("📱") || task.startsWith("💻")) {
+                          return (
+                            <div key={j} className="rounded-lg border border-amber-200/60 bg-amber-50/40 p-3">
+                              <span className="text-[12px] font-semibold text-amber-800">{task.split("\n")[0]}</span>
+                              {task.includes("\n") && (
+                                <div className="mt-1.5 space-y-1">
+                                  {task.split("\n").slice(1).map((line, k) => (
+                                    <p key={k} className="text-[12px] leading-relaxed text-stone-700">
+                                      {line}
+                                    </p>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        }
+                        return (
+                          <div key={j} className="text-[13px] leading-relaxed text-stone-700">
+                            {task}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {level.milestone && (
+                      <div className="mt-4 rounded-xl border border-emerald-200/60 bg-gradient-to-br from-emerald-50/80 to-white p-4">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-emerald-700">
+                          {level.milestone.title}
+                        </p>
+                        <p className="mt-1.5 text-[12px] font-semibold text-ink">{level.milestone.metric}</p>
+                        <p className="mt-1 text-[13px] leading-relaxed text-stone-700">
+                          {level.milestone.condition}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  {i === gameGuide.levels.length - 1 && (
+                    <span className="absolute -left-[26px] top-3 h-3 w-3 rounded-full bg-[#fbf8f3]" />
+                  )}
+                </motion.li>
+              ))}
+            </ol>
+          </motion.section>
+        )}
 
         <motion.section
           variants={itemVariants}
