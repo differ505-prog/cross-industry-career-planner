@@ -6,9 +6,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import industriesData from "@/data/industries.json";
 import workflowsData from "@/data/workflows.json";
 import skillsData from "@/data/skills.json";
+import vibelistDataRaw from "@/data/vibelist.json";
 import { SkillsPanel as SkillsPanelView } from "@/components/skills-panel";
+import type { VibeListData } from "@/data/types";
+import { collectCheckableIds } from "@/lib/progress";
 
-type ThemeName = "sage" | "dusty" | "terracotta" | "slate";
+type ThemeName = "sage" | "dusty" | "terracotta" | "slate" | "indigo";
 type ItemStatus = "done" | "pending" | "recurring";
 
 interface ResourceLink {
@@ -75,6 +78,7 @@ type CompletionState = {
 const industries = industriesData as Industry[];
 const workflows = workflowsData as WorkflowMap;
 const skills = skillsData.skills as Skill[];
+const vibelistData = vibelistDataRaw as VibeListData;
 
 const MATURITY_RANK: Record<SkillMaturity, number> = {
   seed: 0,
@@ -89,7 +93,8 @@ const MATURITY_LABEL: Record<SkillMaturity, string> = {
   verified: "已驗收",
   expert: "複產業專家",
 };
-const STORAGE_KEY = "cross-industry-career-planner-progress-v3";
+const STORAGE_KEY = "cross-industry-career-planner-progress-v4";
+const STORAGE_KEY_LEGACY = "cross-industry-career-planner-progress-v3";
 
 const themeStyles: Record<
   ThemeName,
@@ -133,6 +138,14 @@ const themeStyles: Record<
     progress: "from-slate-300 to-slate-500",
     solid: "bg-slate-500",
     text: "text-slate-600",
+  },
+  indigo: {
+    chip: "bg-indigo-100 text-indigo-700",
+    soft: "bg-indigo-50",
+    border: "border-indigo-200",
+    progress: "from-indigo-300 to-indigo-500",
+    solid: "bg-indigo-500",
+    text: "text-indigo-700",
   },
 };
 
@@ -581,13 +594,31 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
-    if (!saved) return;
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as Record<string, boolean>;
+        setCompletedTasks({ ...defaultCompletionMap, ...parsed });
+        return;
+      } catch {
+        window.localStorage.removeItem(STORAGE_KEY);
+      }
+    }
 
-    try {
-      const parsed = JSON.parse(saved) as Record<string, boolean>;
-      setCompletedTasks({ ...defaultCompletionMap, ...parsed });
-    } catch {
-      window.localStorage.removeItem(STORAGE_KEY);
+    // 第一次 v4 啟用：嘗試從 legacy v3 migrate（只搬遷非 l- 前綴的 key）
+    const legacy = window.localStorage.getItem(STORAGE_KEY_LEGACY);
+    if (legacy) {
+      try {
+        const parsed = JSON.parse(legacy) as Record<string, boolean>;
+        const migrated: Record<string, boolean> = {};
+        for (const [k, v] of Object.entries(parsed)) {
+          if (!k.startsWith("l-") && v === true) migrated[k] = true;
+        }
+        setCompletedTasks({ ...defaultCompletionMap, ...migrated });
+        window.localStorage.removeItem(STORAGE_KEY_LEGACY);
+        return;
+      } catch {
+        window.localStorage.removeItem(STORAGE_KEY_LEGACY);
+      }
     }
   }, []);
 
@@ -609,12 +640,7 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
   }, [completedTasks, selectedWorkflow.sections]);
 
   const projectProgress = useMemo(() => {
-    return Object.fromEntries(
-      industries.map((industry) => {
-        const allItems = workflows[industry.id].sections.flatMap((section) => collectItems(section.items));
-        return [industry.id, buildStats(allItems, completedTasks)];
-      })
-    ) as Record<
+    const map: Record<
       string,
       {
         oneTimeTotal: number;
@@ -623,7 +649,26 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
         recurringTotal: number;
         recurringDone: number;
       }
-    >;
+    > = {};
+
+    for (const industry of industries) {
+      const allItems = workflows[industry.id].sections.flatMap((section) => collectItems(section.items));
+      map[industry.id] = buildStats(allItems, completedTasks);
+    }
+
+    // VibeList：用「可勾 task id 集合」對照 completedTasks
+    const vlCheckable = collectCheckableIds(vibelistData.levels);
+    const vlTotal = vlCheckable.length;
+    const vlDone = vlCheckable.filter((id) => completedTasks[id]).length;
+    map.vibelist = {
+      oneTimeTotal: vlTotal,
+      oneTimeDone: vlDone,
+      oneTimeRate: percentage(vlDone, vlTotal),
+      recurringTotal: 0,
+      recurringDone: 0,
+    };
+
+    return map;
   }, [completedTasks]);
 
   const toggleTask = (item: ChecklistItem) => {
@@ -702,7 +747,7 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
               <p className="text-sm leading-7 text-stone-600">目前僅呈現你提供的兩份來源資料，未再額外生成其他任務內容。</p>
             </div>
 
-            {/* 藍圖入口：放在標題正下方，一進站就看到 */}
+            {/* 藍圖入口 */}
             <Link
               href="/blueprint"
               className="block rounded-2xl border border-amber-300/70 bg-gradient-to-br from-amber-50 to-amber-100/50 p-4 transition hover:border-amber-400 hover:shadow-soft"
@@ -717,34 +762,6 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
               <p className="mt-1 text-[12px] leading-relaxed text-stone-600">
                 6 個里程碑 · 4 已完成 · 2 待開發。技術架構、UI 規劃、子任務、量化驗收全在這裡。
               </p>
-            </Link>
-
-            {/* SaaS 破關指南入口：並排放在藍圖卡片下方 */}
-            <Link
-              href="/blueprint#game-guide"
-              className="block rounded-2xl border border-indigo-200/70 bg-gradient-to-br from-indigo-50/80 to-white p-4 transition hover:border-indigo-400 hover:shadow-soft"
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-[10px] font-semibold uppercase tracking-[0.28em] text-indigo-700">
-                  🚀 SaaS 破關指南
-                </span>
-                <span className="text-xs font-medium text-indigo-700">→</span>
-              </div>
-              <p className="mt-2 text-base font-semibold text-ink">任務管理 SaaS 商業化藍圖</p>
-              <p className="mt-1 text-[12px] leading-relaxed text-stone-600">
-                Level -1～8 共 9 階段 · 從市場定位 → MVP → 多用戶 → PLG → 病毒擴散 → B2B → 原生 App。未達破關檢核點前嚴禁進入下一階段。
-              </p>
-              <div className="mt-3 flex flex-wrap gap-1.5 text-[10px] font-medium">
-                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">定位</span>
-                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">MVP</span>
-                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">多用戶</span>
-                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">留存</span>
-                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">Pro</span>
-                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">PMF</span>
-                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">病毒</span>
-                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">B2B</span>
-                <span className="rounded-full border border-stone-200 bg-white px-2 py-0.5 text-stone-600">Native</span>
-              </div>
             </Link>
 
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
@@ -786,6 +803,39 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
                   </button>
                 );
               })}
+
+              {/* VibeList：與 4 個產業同等位階，獨立 Link */}
+              {(() => {
+                const vlProgress = projectProgress.vibelist;
+                const vlTheme = themeStyles.indigo;
+                return (
+                  <Link
+                    href="/vibelist"
+                    className="block rounded-[20px] border border-stone-200/70 bg-white/60 p-4 text-left transition-all duration-300 hover:border-indigo-300 hover:bg-indigo-50/40 hover:shadow-soft"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <span className={["rounded-full px-3 py-1 text-xs font-medium", vlTheme.chip].join(" ")}>
+                        VibeList
+                      </span>
+                      <span className="text-sm font-medium text-stone-500">{vlProgress.oneTimeRate}%</span>
+                    </div>
+                    <p className="mt-3 text-base font-medium text-ink">任務管理 SaaS 商業化藍圖</p>
+                    <p className="mt-2 text-sm leading-6 text-stone-600">
+                      Level -1～8 共 11 階段 · 從市場定位 → MVP → 多用戶 → PLG → 病毒擴散 → B2B → 原生 App。逐項可勾選、可一鍵複製整份藍圖給 LLM 優化。
+                    </p>
+                    <div className="mt-3 flex items-center justify-between text-xs text-stone-500">
+                      <span>任務 {vlProgress.oneTimeDone}/{vlProgress.oneTimeTotal}</span>
+                      <span className="text-indigo-700">→ 前往</span>
+                    </div>
+                    <div className="mt-4 h-2 rounded-full bg-white/80">
+                      <div
+                        className={["h-2 rounded-full bg-gradient-to-r transition-all duration-500", vlTheme.progress].join(" ")}
+                        style={{ width: `${vlProgress.oneTimeRate}%` }}
+                      />
+                    </div>
+                  </Link>
+                );
+              })()}
             </div>
           </div>
         </aside>
@@ -1339,12 +1389,14 @@ function IndustryMaturityPanel({
     dusty: "stroke-dusty-500",
     terracotta: "stroke-terracotta-500",
     slate: "stroke-slate-500",
+    indigo: "stroke-indigo-500",
   };
   const themeTextClass: Record<ThemeName, string> = {
     sage: "text-sage-600",
     dusty: "text-dusty-600",
     terracotta: "text-terracotta-600",
     slate: "text-slate-600",
+    indigo: "text-indigo-700",
   };
 
   return (

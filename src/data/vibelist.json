@@ -1,0 +1,461 @@
+{
+  "id": "vibelist",
+  "name": "VibeList — 任務管理 SaaS 商業化藍圖",
+  "shortLabel": "VibeList",
+  "theme": "indigo",
+  "overview": "從 Vibe Coding 到百萬營收的 9 階段商業化藍圖",
+  "intro": "將一個 Vibe Coding 產出的 Side Project 轉變為能賺錢的 SaaS 產品，是一場從「感性寫扣」轉向「理性工程與商業營運」的修煉。這份指南融合了 2026 年最新的 SaaS 增長策略 (PLG)、行動端極致體驗 (Mobile-First)、心理學機制與分階段發布策略 (Lean Startup)。請務必遵守各階段的「🛑 破關檢核點」，未達標前嚴禁進入下一階段。",
+  "legend": [
+    "[x] = 已完成",
+    "[ ] = 待辦事項（單次任務 / 里程碑建置）",
+    "理論基石（藍色塊）與 emoji 重點（琥珀色塊）為說明文字，不需勾選"
+  ],
+  "resourceLinks": [],
+  "levels": [
+    {
+      "id": "level-neg1",
+      "label": "Level -1",
+      "title": "市場定位與競爭策略 (Write Code 前的必修課)",
+      "summary": "在寫任何一行 code 之前，先確認你不是在做一個「沒有人需要的 TickTick 複製品」。",
+      "tasks": [
+        {
+          "id": "l-neg1-t-0",
+          "kind": "single",
+          "content": "鎖定利基市場 (Niche Down)：你的目標受眾是誰？(例如：專為 ADHD 設計的視覺化看板、專屬工程師的鍵盤流清單、週末海釣狂熱者)。"
+        },
+        {
+          "id": "l-neg1-t-1",
+          "kind": "single",
+          "content": "競品弱點分析：TickTick、Todoist、Notion 的痛點是什麼？找到他們無法輕易轉身的盲區。"
+        },
+        {
+          "id": "l-neg1-t-2",
+          "kind": "single",
+          "content": "定義你的「價值主張」：用一句話說明：「我的產品幫助 $特定受眾$ 解決 $具體痛點$ ，讓他們達到 $理想結果$ 。」"
+        },
+        {
+          "id": "l-neg1-t-3",
+          "kind": "single",
+          "content": "🛡️ 確立你的「不公平優勢 (Unfair Advantage)」：微軟如果抄了你的功能，也偷不走什麼？(例如：你本身就是特定社團版主，掌握核心發言權與第一手名單)。"
+        }
+      ],
+      "milestone": {
+        "title": "🛑 破關檢核點 (Milestone)",
+        "metric": "指標：電梯簡報 (Elevator Pitch) 測試。",
+        "condition": "達標條件：你能否在 10 秒內，對一個完全不懂軟體的朋友講出你的價值主張，且對方能立刻聽懂並說出「聽起來很酷」？如果對方滿頭問號，請重新定義。"
+      }
+    },
+    {
+      "id": "level-0",
+      "label": "Level 0",
+      "title": "核心功能與輕量串接 (MVP 基礎建設)",
+      "summary": "確保產品能滿足「生產力工具」的及格線，並透過低成本串接建立初步黏著度。",
+      "tasks": [
+        {
+          "id": "l-0-t-0",
+          "kind": "single",
+          "content": "任務管理基礎 (CRUD)：快速新增、修改、刪除、標記完成、封存。(初期僅支援文字描述與外部連結，不碰實體檔案上傳)"
+        },
+        {
+          "id": "l-0-t-1",
+          "kind": "single",
+          "content": "清單、輕量標籤與優先級：支援資料夾/清單分類，以及高低優先級的視覺化標示。"
+        },
+        {
+          "id": "l-0-t-2",
+          "kind": "single-with-lines",
+          "title": "⚠️ 標籤初期防禦策略 (Freemium 邊界)：",
+          "lines": [
+            "智能聯想 Hashtag (防呆與流暢的折衷)：保留用戶輸入 # 的極速體驗。但在輸入瞬間，必須彈出「自動聯想選單 (Auto-complete)」顯示舊標籤供選擇。找不到時才顯示「建立新標籤」，藉此優雅地防止用戶產生錯字垃圾標籤。",
+            "免費用戶限制：無總覽列表、系統鎖定預設顏色（不可自訂），無全域重新命名權限。點擊標籤僅提供基礎過濾功能。",
+            "嚴禁實作「子標籤 (Nested Tags)」：避免技術災難。請堅守「清單負責階層，標籤負責扁平關聯」的架構。"
+          ],
+          "content": "⚠️ 標籤初期防禦策略 (Freemium 邊界)："
+        },
+        {
+          "id": "l-0-t-3",
+          "kind": "theory",
+          "lines": [
+            "(🎯 理論基石：艾森豪矩陣 Eisenhower Matrix - 協助大腦快速區分「重要」與「緊急」，減少決策疲勞。)"
+          ]
+        },
+        {
+          "id": "l-0-t-4",
+          "kind": "single",
+          "content": "時間與智能視圖：設定到期日，內建「收集箱」、「今天」、「未來 7 天」等預設視圖。"
+        },
+        {
+          "id": "l-0-t-5",
+          "kind": "theory",
+          "lines": [
+            "(🎯 理論基石：GTD 時間管理法 Getting Things Done - 利用「收集箱」清空大腦的工作記憶區，降低認知負載 Cognitive Load。)"
+          ]
+        },
+        {
+          "id": "l-0-t-6",
+          "kind": "single",
+          "content": "生態 iCal 單向訂閱：提供 Webcal 網址，讓 Google Calendar 能直接顯示任務。"
+        }
+      ],
+      "milestone": {
+        "title": "🛑 破關檢核點 (Milestone)",
+        "metric": "指標：吃自己的狗糧 (Dogfooding)。",
+        "condition": "達標條件：你自己必須連續 3 天只使用這個產品來管理日常待辦。無資料遺失或致命 Bug，才可進入 Level 1。"
+      }
+    },
+    {
+      "id": "level-1",
+      "label": "Level 1",
+      "title": "脫離玩具期 (多用戶安全、技術債與離線架構)",
+      "summary": "從單機版玩具走向真正的 SaaS 服務。",
+      "tasks": [
+        {
+          "id": "l-1-t-0",
+          "kind": "single",
+          "content": "基礎帳號註冊與安全登入：實作 Email/密碼或 OAuth 機制，使用 HttpOnly Cookie。"
+        },
+        {
+          "id": "l-1-t-1",
+          "kind": "single",
+          "content": "📊 資料庫活躍度追蹤基石：在 Users 表格中加入 last_login_at 與 last_active_at (完成任務時更新) 欄位。"
+        },
+        {
+          "id": "l-1-t-2",
+          "kind": "single-with-lines",
+          "title": "👑 創業者特權與防禦性配額 (Role-Based Access Control)：放棄簡單的 is_pro，建立三級防禦，為未來的測試與收費打底：",
+          "lines": [
+            "role: 'admin' (上帝模式)：你與太太的帳號。前端略過所有容量限制，無限上傳。(解決建置期的自用需求)",
+            "role: 'beta' (VIP 朋友/早期大使)：手動開通給早期測試者。開啟上傳功能，但在前端強制設定 5MB/單檔 封頂配額，保護伺服器成本。",
+            "role: 'free' (預設平民)：上傳按鈕直接隱藏或變灰，避免產生任何成本。"
+          ],
+          "content": "👑 創業者特權與防禦性配額 (Role-Based Access Control)：放棄簡單的 is_pro，建立三級防禦，為未來的測試與收費打底："
+        },
+        {
+          "id": "l-1-t-3",
+          "kind": "single",
+          "content": "💬 輕量評論與日誌 (基礎版)：建立獨立的 Comments 資料表 (task_id, content, created_at)，初期僅支援純文字回報進度，在 UI 上採用「側邊欄滑出」保持清單乾淨。"
+        },
+        {
+          "id": "l-1-t-4",
+          "kind": "single",
+          "content": "資料庫多用戶隔離與 RLS 安全機制：啟用 Row-Level Security，保證 A 絕對無法讀取 B 的資料。"
+        }
+      ],
+      "milestone": {
+        "title": "🛑 破關檢核點 (Milestone)",
+        "metric": "指標：基礎穩定度與安全性。",
+        "condition": "達標條件：切換兩個不同測試帳號，資料無互相污染。Admin 帳號可上傳照片，Free 帳號無法上傳。"
+      }
+    },
+    {
+      "id": "level-2",
+      "label": "Level 2",
+      "title": "留存率保衛戰與行動端極致體驗 (PLG 核心)",
+      "summary": "這階段決定了使用者會不會在第二天把你的網站關掉。",
+      "tasks": [
+        {
+          "id": "l-2-t-0",
+          "kind": "single",
+          "content": "⏱️ 極限壓縮 TTV (Time-to-Value)：確保新用戶在接觸產品的 3 分鐘內，就能立刻體驗到「Aha Moment」。"
+        },
+        {
+          "id": "l-2-t-1",
+          "kind": "theory",
+          "lines": [
+            "(🎯 理論基石：福格行為模型 Fogg Behavior Model - 動機、能力與提示完美交匯。)"
+          ]
+        },
+        {
+          "id": "l-2-t-2",
+          "kind": "single-with-lines",
+          "title": "🎭 殺手級體驗：角色化動態註冊 (Dynamic Onboarding)：",
+          "lines": [
+            "極低摩擦力單選題：註冊後僅顯示 1 個問題：「主要想用來解決什麼問題？」",
+            "確立主力戰場 + 防守選項，秒載入情境 UI 主題 (Theming) 與預設任務範本 (JSON)："
+          ],
+          "content": "🎭 殺手級體驗：角色化動態註冊 (Dynamic Onboarding)："
+        },
+        {
+          "id": "l-2-t-3",
+          "kind": "single",
+          "content": "💻 拯救混亂的接案與專案死線 (極客暗黑 / 發票與請款範本 - 高含金量，為未來記帳功能鋪路)"
+        },
+        {
+          "id": "l-2-t-4",
+          "kind": "single",
+          "content": "🎣 規劃完美的週末戶外海釣行程 (深海藍 / 裝備檢查範本 - 極致利基，高黏著度與社群病毒傳播潛力)"
+        },
+        {
+          "id": "l-2-t-5",
+          "kind": "single",
+          "content": "🍼 減輕育兒焦慮，無腦照做清單 (溫暖橘 / 疫苗與奶粉範本 - 情緒價值高，防疲勞大按鈕，未來主打家庭協作)"
+        },
+        {
+          "id": "l-2-t-6",
+          "kind": "single",
+          "content": "🧘 健康自律與習慣重塑 (禪意綠 / 兼歇性斷食與吃藥提醒範本 - 需實作「每日循環任務」，高頻率互動，為 Level 4 心靈還債鋪路)"
+        },
+        {
+          "id": "l-2-t-7",
+          "kind": "single",
+          "content": "📄 這不是我，我想從空白開始 (極簡白 / 空白狀態 - 重要的市場風向球與防守網)"
+        },
+        {
+          "id": "l-2-t-8",
+          "kind": "single",
+          "content": "🛒 範本市集 (Template Gallery)：主打「長尾需求 (Long-tail needs)」。將「毛孩管家 (寵物驅蟲/健檢)」、「長照/銀髮照護 (血壓紀錄/回診)」、「觀葉植物照顧」等模組收錄於此，供任何身分的用戶日後隨時一鍵套用擴充。"
+        },
+        {
+          "id": "l-2-t-9",
+          "kind": "single",
+          "content": "🎸 殺手級差異化：心流音樂聯動：嵌入專屬心流音樂，打造獨家專注體驗。"
+        },
+        {
+          "id": "l-2-t-10",
+          "kind": "theory",
+          "lines": [
+            "(🎯 理論基石：心流理論 Flow State - 屏蔽外界干擾，進入最優體驗區。)"
+          ]
+        }
+      ],
+      "milestone": {
+        "title": "🛑 破關檢核點 (Milestone) ⚠️ 關鍵生死線",
+        "metric": "指標：第七天留存率 (Day 7 Retention)。",
+        "condition": "達標條件：一週後，必須至少有 30% 的測試者還在主動使用。若未達標，退回優化核心體驗！"
+      }
+    },
+    {
+      "id": "level-3",
+      "label": "Level 3",
+      "title": "企業級基石（信任、安全與合規）",
+      "summary": "建立讓使用者願意把生活與金錢交給你的信任感。",
+      "tasks": [
+        {
+          "id": "l-3-t-0",
+          "kind": "single",
+          "content": "第三方多帳號快速登入 (SSO)：Google/Apple 一鍵登入。"
+        },
+        {
+          "id": "l-3-t-1",
+          "kind": "single",
+          "content": "自動化資料備份與災難還原：設定每日備份。"
+        },
+        {
+          "id": "l-3-t-2",
+          "kind": "single",
+          "content": "完善的法務文件：服務條款與隱私權政策 (公開上線前必備)。"
+        }
+      ],
+      "milestone": null
+    },
+    {
+      "id": "level-3_5",
+      "label": "Level 3.5",
+      "title": "免費版公測與「幽靈按鈕」預熱 (Lean Startup Launch)",
+      "summary": "不要默默把 Pro 功能做完才上線！先把 Level 0-3 的免費版推出去，無成本獲取種子用戶並驗證需求。",
+      "tasks": [
+        {
+          "id": "l-3_5-t-0",
+          "kind": "single",
+          "content": "大方公開免費版：將產品發布到 Threads、PTT、精準社團。開始累積免費的活躍用戶。"
+        },
+        {
+          "id": "l-3_5-t-1",
+          "kind": "single-with-lines",
+          "title": "👻 幽靈按鈕測試 (Painted Door Test)：",
+          "lines": [
+            "在免費版的 UI 上，把未來 Level 4 才要做的殺手級功能 (如：標籤管理模組、雲端上傳、心靈還債模式) 的按鈕做出來，加上 👑 皇冠圖示。",
+            "當用戶點擊時，彈出一個精美的視窗：「Pro 專屬功能 - 即將推出 (Coming Soon)！ 留下 Email，上線時第一時間通知你。」",
+            "後台追蹤：利用 PostHog 記錄哪個幽靈按鈕被點擊最多次。這將決定你下週要先寫哪一個功能的 Code！"
+          ],
+          "content": "👻 幽靈按鈕測試 (Painted Door Test)："
+        },
+        {
+          "id": "l-3_5-t-2",
+          "kind": "single",
+          "content": "絕對防禦確認：再次確認 role: 'free' 的用戶絕對無法消耗你的伺服器儲存成本。"
+        }
+      ],
+      "milestone": null
+    },
+    {
+      "id": "level-4",
+      "label": "Level 4",
+      "title": "資本主義啟動 (Pro 建置與金流上線)",
+      "summary": "根據 Level 3.5 收集到的數據，開始打造印鈔機。採用「單一 Pro 方案 + 擴充包」策略。",
+      "tasks": [
+        {
+          "id": "l-4-t-0",
+          "kind": "single",
+          "content": "無縫串接金流服務：整合 Stripe，將付款流程壓縮到極致。"
+        },
+        {
+          "id": "l-4-t-1",
+          "kind": "single",
+          "content": "👑 Pro 殺手級：進階標籤管理後台 (Advanced Tags)：解鎖「標籤管理模組」。允許 Pro 用戶全域重新命名、自訂標籤 HEX 顏色、查看任務計數統計與合併標籤。讓整理強迫症患者心甘情願買單。"
+        },
+        {
+          "id": "l-4-t-2",
+          "kind": "single",
+          "content": "👑 Pro 殺手級：雲端檔案與富文本評論：實作真正的 S3 / Supabase Storage 拖曳上傳，並允許在任務備註/評論中使用富文本編輯器。"
+        },
+        {
+          "id": "l-4-t-3",
+          "kind": "single-with-lines",
+          "title": "🧽 優雅洩壓策略 (防止退訂)：",
+          "lines": [
+            "空間清理器：列出大檔案供一鍵刪除。",
+            "🎁 ZIP 輕量備份：允許打包舊專案為 ZIP 下載回本機。",
+            "擴充包：滿載時才跳出「+$2/月 增加 10GB」選項。"
+          ],
+          "content": "🧽 優雅洩壓策略 (防止退訂)："
+        },
+        {
+          "id": "l-4-t-4",
+          "kind": "single",
+          "content": "👑 Pro 殺手級：心靈還債引擎 (Karma Mode)：結合記帳概念，設定虧損與渴望獎勵，靠打勾好習慣填平赤字。"
+        },
+        {
+          "id": "l-4-t-5",
+          "kind": "theory",
+          "lines": [
+            "(🎯 理論基石：心理帳戶 Mental Accounting、損失規避 Loss Aversion、原子習慣 Atomic Habits。)"
+          ]
+        },
+        {
+          "id": "l-4-t-6",
+          "kind": "single",
+          "content": "👑 Pro 殺手級：漸進式專案解鎖模組 (Task Dependency)：前置任務打勾，後置任務動態解鎖彈出。"
+        },
+        {
+          "id": "l-4-t-7",
+          "kind": "theory",
+          "lines": [
+            "(🎯 理論基石：蔡加尼克效應 Zeigarnik Effect - 創造「未完成」的懸念驅動行動。)"
+          ]
+        }
+      ],
+      "milestone": {
+        "title": "🛑 破關檢核點 (Milestone)",
+        "metric": "指標：購買摩擦力測試。",
+        "condition": "達標條件：看見誘因 -> 點擊升級 -> 刷卡 -> 權限瞬間開通，流程無阻礙。"
+      }
+    },
+    {
+      "id": "level-5",
+      "label": "Level 5",
+      "title": "封閉測試與數據賦能 (PMF 驗證)",
+      "summary": "確保這套 Pro 商業模式真的有人買單。",
+      "tasks": [
+        {
+          "id": "l-5-t-0",
+          "kind": "single",
+          "content": "精準發放特權：對 Level 3.5 中留下 Email 的高意願用戶，發放 14 天 Pro 試用權限。"
+        },
+        {
+          "id": "l-5-t-1",
+          "kind": "single",
+          "content": "📊 埋設進階營運指標 (Event Tracking)：導入 PostHog 或 Mixpanel。追蹤核心價值行為：task_completed (而非單純登入)、Pro 升級點擊率。"
+        }
+      ],
+      "milestone": {
+        "title": "🛑 破關檢核點 (Milestone) ⚠️ 終極檢驗",
+        "metric": "指標：Sean Ellis 測試 (PMF 40% 基準線)。",
+        "condition": "達標條件：對持續使用 2 週以上的活躍用戶發送問卷：「如果明天不能再使用這個產品，你會有多失望？」回答「非常失望」的比例必須大於 40%。"
+      }
+    },
+    {
+      "id": "level-6",
+      "label": "Level 6",
+      "title": "病毒擴散與規模化 (Scale & PLG)",
+      "summary": "當 PMF 大於 40% 且 Pro 版完善後，踩下行銷油門。",
+      "tasks": [
+        {
+          "id": "l-6-t-0",
+          "kind": "single-with-lines",
+          "title": "🕸️ 病毒迴圈 PLG (價值前置與無痛獲客)：",
+          "lines": [
+            "大方給看 (免登入唯讀)：訪客點擊分享網址 -> 直接看到精美實用的唯讀清單。",
+            "引誘互動：訪客試圖點擊 Checkbox 打勾時，跳出「一鍵 Google 登入以複製/編輯」。",
+            "🔧 資料庫實作 (Deep Clone 架構)：採用 JSONB 深度拷貝架構。確保訪客複製過來的清單是全新且獨立的。"
+          ],
+          "content": "🕸️ 病毒迴圈 PLG (價值前置與無痛獲客)："
+        },
+        {
+          "id": "l-6-t-1",
+          "kind": "single",
+          "content": "📈 追蹤病毒健康度指標：K-Factor (病毒係數)：追蹤平均 1 個現有用戶能帶來多少個新註冊用戶。大於 1 代表產品正在自然裂變。"
+        }
+      ],
+      "milestone": null
+    },
+    {
+      "id": "level-7",
+      "label": "Level 7",
+      "title": "團隊協作與 B2B 擴張 (Multi-player)",
+      "summary": "將單打獨鬥的工具，升級為多人即時協作的專案引擎。這是 SaaS 營收真正迎來爆發性成長的關鍵階段。",
+      "tasks": [
+        {
+          "id": "l-7-t-0",
+          "kind": "single-with-lines",
+          "title": "⚡ 即時同步與角色權限 (Real-time & RBAC)：",
+          "lines": [
+            "資料庫重構：捨棄整包 JSONB，改用獨立的 shared_tasks 資料表，確保多人同時編輯同一份清單時不會互相覆蓋 (Concurrency control)。",
+            "精細化權限控制：實作 Owner (擁有者)、Editor (編輯者)、Viewer (唯讀者) 三種角色。",
+            "堅若磐石的安全性 (RLS)：在 Supabase 層級綁定 Firebase UID，嚴格限制只有狀態為 active 的受邀成員能讀取或寫入該清單資料。"
+          ],
+          "content": "⚡ 即時同步與角色權限 (Real-time & RBAC)："
+        },
+        {
+          "id": "l-7-t-1",
+          "kind": "single-with-lines",
+          "title": "🤝 協作面板與無縫邀請 (Collaboration UX)：",
+          "lines": [
+            "成員管理 Modal：視覺化呈現成員名單與狀態 (Pending/Active)，支援一鍵移除/降級權限，且被移除者畫面即時中斷 (Real-time kick)。",
+            "權限降級體驗：Viewer 進入清單時，自動隱藏新增按鈕與編輯圖示，並顯示清晰的「唯讀提示 Banner」。"
+          ],
+          "content": "🤝 協作面板與無縫邀請 (Collaboration UX)："
+        }
+      ],
+      "milestone": {
+        "title": "🛑 破關檢核點 (Milestone)",
+        "metric": "指標：多端即時衝突測試。",
+        "condition": "達標條件：在兩台不同裝置上，A 與 B 同時快速點擊不同的任務完成，無資料遺失、無延遲互相覆蓋。"
+      }
+    },
+    {
+      "id": "level-8",
+      "label": "Level 8",
+      "title": "原生生態系與極致生產力 (Native App & Desktop)",
+      "summary": "當網頁版已經產生穩定營收 (例如 MRR 突破 $5,000 美金)，且使用者開始抱怨瀏覽器限制時，才正式啟動跨平台開發，將產品深深釘入使用者的作業系統中。",
+      "tasks": [
+        {
+          "id": "l-8-t-0",
+          "kind": "single-with-lines",
+          "title": "💻 桌面端原生武裝 (Tauri 或 Electron)：",
+          "lines": [
+            "全域快捷鍵 (Global Shortcuts)：不論在使用什麼軟體，按下 Cmd+Shift+Space 瞬間彈出全域輸入框，1 秒捕捉任務。",
+            "常駐系統列 (Menu Bar / System Tray)：讓 App 永遠活在右上角/右下角，隨時點開檢視「下一步行動」。"
+          ],
+          "content": "💻 桌面端原生武裝 (Tauri 或 Electron)："
+        },
+        {
+          "id": "l-8-t-1",
+          "kind": "single-with-lines",
+          "title": "📱 行動端原生武裝 (React Native 或 Capacitor)：",
+          "lines": [
+            "桌面小工具 (iOS/Android Widgets)：不用打開 App，在手機桌面就能直接打勾任務 (極大提升活躍度)。",
+            "深度系統分享 (Share Extension)：在 Safari 或 YouTube 看到一半，可以直接透過系統的「分享」按鈕，丟進你的任務收集箱。",
+            "智慧手錶整合 (Apple Watch)：針對「吃藥/斷食」場景，提供手錶震動推播與快速打勾。"
+          ],
+          "content": "📱 行動端原生武裝 (React Native 或 Capacitor)："
+        }
+      ],
+      "milestone": {
+        "title": "🛑 破關檢核點 (Milestone)",
+        "metric": "指標：現金流與技術頻寬評估。",
+        "condition": "達標條件：網頁版營收足以支撐你（或外包）維護多個平台的程式碼，且 PWA (Level 2) 已無法滿足重度用戶的需求。"
+      }
+    }
+  ]
+}
