@@ -53,61 +53,111 @@
       "tasks": [
         {
           "id": "l-0-t-0",
-          "kind": "single",
-          "content": "任務管理基礎 (CRUD)：快速新增、修改、刪除、標記完成、封存。(初期僅支援文字描述與外部連結，不碰實體檔案上傳)"
+          "kind": "single-with-lines",
+          "title": "任務管理基礎 (CRUD)：",
+          "lines": [
+            "快速新增、修改、刪除、標記完成、封存。",
+            "(初期僅支援文字描述與外部連結)"
+          ],
+          "content": "任務管理基礎 (CRUD)："
         },
         {
           "id": "l-0-t-1",
-          "kind": "single",
-          "content": "清單、輕量標籤與優先級：支援資料夾/清單分類，以及高低優先級的視覺化標示。"
+          "kind": "warning",
+          "content": "🛑 UI 佈局鐵律：詳情面板資訊層級。必須將「高頻操作屬性」（優先級、標籤、日期）放置於面板最頂部，緊接在標題下方。長度不可控的「任務描述」與「子任務」必須放置於下方，徹底消除滑鼠滾輪疲勞。"
         },
         {
           "id": "l-0-t-2",
           "kind": "single-with-lines",
-          "title": "⚠️ 標籤初期防禦策略 (Freemium 邊界)：",
+          "title": "⚠️ 標籤與優先級防禦策略 (Freemium 邊界)：",
           "lines": [
-            "智能聯想 Hashtag (防呆與流暢的折衷)：保留用戶輸入 # 的極速體驗。但在輸入瞬間，必須彈出「自動聯想選單 (Auto-complete)」顯示舊標籤供選擇。找不到時才顯示「建立新標籤」，藉此優雅地防止用戶產生錯字垃圾標籤。",
-            "免費用戶限制：無總覽列表、系統鎖定預設顏色（不可自訂），無全域重新命名權限。點擊標籤僅提供基礎過濾功能。",
-            "嚴禁實作「子標籤 (Nested Tags)」：避免技術災難。請堅守「清單負責階層，標籤負責扁平關聯」的架構。"
+            "智能聯想 Hashtag。免費用戶無總覽列表、不可自訂顏色。",
+            "嚴禁實作「子標籤 (Nested Tags)」，堅守扁平關聯。"
           ],
-          "content": "⚠️ 標籤初期防禦策略 (Freemium 邊界)："
+          "content": "⚠️ 標籤與優先級防禦策略 (Freemium 邊界)："
         },
         {
           "id": "l-0-t-3",
           "kind": "theory",
           "lines": [
-            "(🎯 理論基石：艾森豪矩陣 Eisenhower Matrix - 協助大腦快速區分「重要」與「緊急」，減少決策疲勞。)"
+            "(🎯 理論基石：艾森豪矩陣 Eisenhower Matrix - 減少決策疲勞)"
           ]
         },
         {
           "id": "l-0-t-4",
-          "kind": "single",
-          "content": "時間與智能視圖：設定到期日，內建「收集箱」、「今天」、「未來 7 天」等預設視圖。"
+          "kind": "single-with-lines",
+          "title": "優先級採用強烈色彩暗示：",
+          "lines": [
+            "清單頂部提供按鈕，可切換成 2x2 卡片視圖。",
+            "游標懸停 (i) 顯示詳細中文解釋彩蛋。"
+          ],
+          "content": "優先級採用強烈色彩暗示："
         },
         {
           "id": "l-0-t-5",
-          "kind": "theory",
+          "kind": "single-with-lines",
+          "title": "時間與智能視圖：",
           "lines": [
-            "(🎯 理論基石：GTD 時間管理法 Getting Things Done - 利用「收集箱」清空大腦的工作記憶區，降低認知負載 Cognitive Load。)"
-          ]
+            "設定到期日，內建預設視圖。",
+            "功能命名為「大腦清空區」。極度醒目、帶微動效的全局新增輸入框。"
+          ],
+          "content": "時間與智能視圖："
         },
         {
           "id": "l-0-t-6",
+          "kind": "theory",
+          "lines": [
+            "(🎯 理論基石：GTD 時間管理法 - 降低認知負載)"
+          ]
+        },
+        {
+          "id": "l-0-t-7",
+          "kind": "warning",
+          "content": "🛑 UI 降壓鐵律：大膽移除頂部導航列冗餘的「+ 新增」按鈕！全域 100% 依賴中央唯一的萬能輸入框，消除「該點按鈕還是直接打字」的選擇摩擦。"
+        },
+        {
+          "id": "l-0-t-8",
+          "kind": "warning",
+          "content": "🛑 UI 降壓鐵律：整併時間選擇器！嚴禁將「開始/截止/具體時間」拆分為巨大區塊，必須收斂為單一緊湊的日期按鈕。"
+        },
+        {
+          "id": "l-0-t-9",
+          "kind": "single-with-lines",
+          "title": "帕金森定律實作 — 死線引擎：",
+          "lines": [
+            "將日期轉換為「動態壓迫感標籤」（如：⚠️ 剩餘 4 小時）。"
+          ],
+          "content": "帕金森定律實作 — 死線引擎："
+        },
+        {
+          "id": "l-0-t-10",
+          "kind": "theory",
+          "lines": [
+            "(🎯 理論基石：帕金森定律 Parkinson's Law - 工作會膨脹直到用完時間)"
+          ]
+        },
+        {
+          "id": "l-0-t-11",
           "kind": "single",
-          "content": "生態 iCal 單向訂閱：提供 Webcal 網址，讓 Google Calendar 能直接顯示任務。"
+          "content": "工作流輕量綁定：提供 Webhook URL (Zapier/Make 整合)。"
+        },
+        {
+          "id": "l-0-t-12",
+          "kind": "single",
+          "content": "生態 iCal 單向訂閱：提供 Webcal 網址供 Google Calendar 顯示。"
         }
       ],
       "milestone": {
         "title": "🛑 破關檢核點 (Milestone)",
         "metric": "指標：吃自己的狗糧 (Dogfooding)。",
-        "condition": "達標條件：你自己必須連續 3 天只使用這個產品來管理日常待辦。無資料遺失或致命 Bug，才可進入 Level 1。"
+        "condition": "達標條件：你自己必須連續 7 天只使用這個產品來管理日常待辦。期間發生 0 次資料遺失或致命 Bug。"
       }
     },
     {
       "id": "level-1",
       "label": "Level 1",
-      "title": "脫離玩具期 (多用戶安全、技術債與離線架構)",
-      "summary": "從單機版玩具走向真正的 SaaS 服務。",
+      "title": "脫離玩具期 (多用戶安全、技術債與早期數據)",
+      "summary": "從單機版玩具走向真正的 SaaS 服務，並建立最基礎的指標追蹤防護網。",
       "tasks": [
         {
           "id": "l-1-t-0",
@@ -116,35 +166,53 @@
         },
         {
           "id": "l-1-t-1",
-          "kind": "single",
-          "content": "📊 資料庫活躍度追蹤基石：在 Users 表格中加入 last_login_at 與 last_active_at (完成任務時更新) 欄位。"
+          "kind": "single-with-lines",
+          "title": "👑 防禦性配額 (RBAC)：",
+          "lines": [
+            "建立 admin (無限), beta (5MB封頂), free (隱藏上傳按鈕) 三級防禦。"
+          ],
+          "content": "👑 防禦性配額 (RBAC)："
         },
         {
           "id": "l-1-t-2",
-          "kind": "single-with-lines",
-          "title": "👑 創業者特權與防禦性配額 (Role-Based Access Control)：放棄簡單的 is_pro，建立三級防禦，為未來的測試與收費打底：",
-          "lines": [
-            "role: 'admin' (上帝模式)：你與太太的帳號。前端略過所有容量限制，無限上傳。(解決建置期的自用需求)",
-            "role: 'beta' (VIP 朋友/早期大使)：手動開通給早期測試者。開啟上傳功能，但在前端強制設定 5MB/單檔 封頂配額，保護伺服器成本。",
-            "role: 'free' (預設平民)：上傳按鈕直接隱藏或變灰，避免產生任何成本。"
-          ],
-          "content": "👑 創業者特權與防禦性配額 (Role-Based Access Control)：放棄簡單的 is_pro，建立三級防禦，為未來的測試與收費打底："
+          "kind": "single",
+          "content": "💬 輕量評論與日誌：建立 Comments 資料表，UI 採「側邊欄滑出」。"
         },
         {
           "id": "l-1-t-3",
           "kind": "single",
-          "content": "💬 輕量評論與日誌 (基礎版)：建立獨立的 Comments 資料表 (task_id, content, created_at)，初期僅支援純文字回報進度，在 UI 上採用「側邊欄滑出」保持清單乾淨。"
+          "content": "資料庫多用戶隔離 (RLS)：啟用 Row-Level Security 絕對隔離。"
         },
         {
           "id": "l-1-t-4",
-          "kind": "single",
-          "content": "資料庫多用戶隔離與 RLS 安全機制：啟用 Row-Level Security，保證 A 絕對無法讀取 B 的資料。"
+          "kind": "warning",
+          "content": "⛔ 鐵律：絕對不要自己「刻」數據後台！初期看數據，僅允許使用資料庫直接下 SQL 或第三方工具。"
+        },
+        {
+          "id": "l-1-t-5",
+          "kind": "single-with-lines",
+          "title": "📊 資料庫活躍度基石 (方案 A)：",
+          "lines": [
+            "在 Users 表格中加入 last_login_at 與 last_active_at 欄位。",
+            "未來可直接用 SQL 查詢「註冊 1 小時內完成任務的用戶數」。"
+          ],
+          "content": "📊 資料庫活躍度基石 (方案 A)："
+        },
+        {
+          "id": "l-1-t-6",
+          "kind": "single-with-lines",
+          "title": "🔔 創業者多巴胺 (方案 C - 預防疲乏機制)：",
+          "lines": [
+            "透過 Webhook 串接 Discord 通知新用戶註冊與首個任務完成。",
+            "加入防疲乏邏輯：當累積用戶達 50 人後，自動停止實時推播，切換為「每日晚間 10 點發送一次總結報表」。"
+          ],
+          "content": "🔔 創業者多巴胺 (方案 C - 預防疲乏機制)："
         }
       ],
       "milestone": {
         "title": "🛑 破關檢核點 (Milestone)",
         "metric": "指標：基礎穩定度與安全性。",
-        "condition": "達標條件：切換兩個不同測試帳號，資料無互相污染。Admin 帳號可上傳照片，Free 帳號無法上傳。"
+        "condition": "達標條件：邀請 15 位測試者，發生 0 次資料越權讀取。Admin 帳號可順利上傳照片，Free 帳號絕對無法上傳。"
       }
     },
     {
@@ -155,73 +223,79 @@
       "tasks": [
         {
           "id": "l-2-t-0",
-          "kind": "single",
-          "content": "⏱️ 極限壓縮 TTV (Time-to-Value)：確保新用戶在接觸產品的 3 分鐘內，就能立刻體驗到「Aha Moment」。"
+          "kind": "single-with-lines",
+          "title": "⏱️ 極限壓縮 TTV (Time-to-Value)：",
+          "lines": [
+            "確保新用戶在接觸產品的 3 分鐘內，就能立刻體驗到「Aha Moment」。"
+          ],
+          "content": "⏱️ 極限壓縮 TTV (Time-to-Value)："
         },
         {
           "id": "l-2-t-1",
           "kind": "theory",
           "lines": [
-            "(🎯 理論基石：福格行為模型 Fogg Behavior Model - 動機、能力與提示完美交匯。)"
+            "(🎯 理論基石：福格行為模型 Fogg Behavior Model)"
           ]
         },
         {
           "id": "l-2-t-2",
           "kind": "single-with-lines",
-          "title": "🎭 殺手級體驗：角色化動態註冊 (Dynamic Onboarding)：",
+          "title": "🎨 UI 落地實作：",
           "lines": [
-            "極低摩擦力單選題：註冊後僅顯示 1 個問題：「主要想用來解決什麼問題？」",
-            "確立主力戰場 + 防守選項，秒載入情境 UI 主題 (Theming) 與預設任務範本 (JSON)："
+            "完成第一個任務時，觸發全螢幕 Confetti (五彩紙屑) 動畫與清脆音效。"
           ],
-          "content": "🎭 殺手級體驗：角色化動態註冊 (Dynamic Onboarding)："
+          "content": "🎨 UI 落地實作："
         },
         {
           "id": "l-2-t-3",
-          "kind": "single",
-          "content": "💻 拯救混亂的接案與專案死線 (極客暗黑 / 發票與請款範本 - 高含金量，為未來記帳功能鋪路)"
+          "kind": "single-with-lines",
+          "title": "🎭 角色化動態註冊 (Dynamic Onboarding)：",
+          "lines": [
+            "理論基石：席克定律 Hick's Law (決策時間與選項數量成正比)",
+            "UI 落地實作：註冊後隱藏所有選單，全螢幕只給 3 個巨大插圖卡片（選項精簡化）。點擊秒載入情境 UI 範本。"
+          ],
+          "content": "🎭 角色化動態註冊 (Dynamic Onboarding)："
         },
         {
           "id": "l-2-t-4",
-          "kind": "single",
-          "content": "🎣 規劃完美的週末戶外海釣行程 (深海藍 / 裝備檢查範本 - 極致利基，高黏著度與社群病毒傳播潛力)"
+          "kind": "single-with-lines",
+          "title": "🛒 專家範本市集 MVP (對免費用戶全面開放，作為留存武器)：",
+          "lines": [
+            "靜態資料層 (席克定律防護網)：嚴守「最多 5 組」的數量上限，避免引發選擇障礙與浪費開發時間。在前端建立 templates.json 寫死資料。每個範本內含 4 個任務 的黃金數量，只展示結構不展示繁瑣細節。",
+            "無摩擦一鍵匯入 (One-Click Import)：點擊「套用」按鈕後，前端解析 JSON，批次寫入 Task 列表，不須跳轉頁面即刻呈現。"
+          ],
+          "content": "🛒 專家範本市集 MVP (對免費用戶全面開放，作為留存武器)："
         },
         {
           "id": "l-2-t-5",
-          "kind": "single",
-          "content": "🍼 減輕育兒焦慮，無腦照做清單 (溫暖橘 / 疫苗與奶粉範本 - 情緒價值高，防疲勞大按鈕，未來主打家庭協作)"
+          "kind": "single-with-lines",
+          "title": "🎸 殺手級差異化：專注模式與心流音樂聯動：",
+          "lines": [
+            "理論基石：心流理論 Flow State (屏蔽干擾，摒棄與任務無關的選項)",
+            "UI 落地與命名：頂部導航列按鈕與面板總標題嚴格正名為「專注模式」（捨棄沒有感情的「番茄鐘」字眼）。內部的音樂按鈕命名為「專注心流」。"
+          ],
+          "content": "🎸 殺手級差異化：專注模式與心流音樂聯動："
         },
         {
           "id": "l-2-t-6",
-          "kind": "single",
-          "content": "🧘 健康自律與習慣重塑 (禪意綠 / 兼歇性斷食與吃藥提醒範本 - 需實作「每日循環任務」，高頻率互動，為 Level 4 心靈還債鋪路)"
+          "kind": "warning",
+          "content": "🛑 獨立開關邏輯：在這個面板底下，讓「計時器」與「音樂」成為兩個可以獨立開關的功能，避免番茄鐘響起時強制中斷音樂而引發煩躁感。"
         },
         {
           "id": "l-2-t-7",
-          "kind": "single",
-          "content": "📄 這不是我，我想從空白開始 (極簡白 / 空白狀態 - 重要的市場風向球與防守網)"
+          "kind": "warning",
+          "content": "🛑 唯一選項實作 (全面免費)：為了極致降低決策疲勞，全面捨棄其他音樂頻道，系統僅提供唯一的「85 BPM 深度專注心流」頻道，作為免費用戶的留存誘因。"
         },
         {
           "id": "l-2-t-8",
-          "kind": "single",
-          "content": "🛒 範本市集 (Template Gallery)：主打「長尾需求 (Long-tail needs)」。將「毛孩管家 (寵物驅蟲/健檢)」、「長照/銀髮照護 (血壓紀錄/回診)」、「觀葉植物照顧」等模組收錄於此，供任何身分的用戶日後隨時一鍵套用擴充。"
-        },
-        {
-          "id": "l-2-t-9",
-          "kind": "single",
-          "content": "🎸 殺手級差異化：心流音樂聯動：嵌入專屬心流音樂，打造獨家專注體驗。"
-        },
-        {
-          "id": "l-2-t-10",
-          "kind": "theory",
-          "lines": [
-            "(🎯 理論基石：心流理論 Flow State - 屏蔽外界干擾，進入最優體驗區。)"
-          ]
+          "kind": "warning",
+          "content": "🛑 技術實作底線 (Native Feel)：透過隱藏的 <iframe> 搭配 postMessage 控制外部網站音訊，在 VibeList UI 內建極簡的播放面板。"
         }
       ],
       "milestone": {
         "title": "🛑 破關檢核點 (Milestone) ⚠️ 關鍵生死線",
-        "metric": "指標：第七天留存率 (Day 7 Retention)。",
-        "condition": "達標條件：一週後，必須至少有 30% 的測試者還在主動使用。若未達標，退回優化核心體驗！"
+        "metric": "指標：短期留存率與 Onboarding 成功率。",
+        "condition": "達標條件：首批 100 位新用戶中，必須有 60 人在註冊當下完成他們的第一個任務。七天後，必須有 30 人主動登入並完成至少一項任務。"
       }
     },
     {
@@ -252,31 +326,42 @@
       "id": "level-3_5",
       "label": "Level 3.5",
       "title": "免費版公測與「幽靈按鈕」預熱 (Lean Startup Launch)",
-      "summary": "不要默默把 Pro 功能做完才上線！先把 Level 0-3 的免費版推出去，無成本獲取種子用戶並驗證需求。",
+      "summary": "不要默默把 Pro 功能做完才上線！先推免費版驗證需求。",
       "tasks": [
         {
           "id": "l-3_5-t-0",
-          "kind": "single",
-          "content": "大方公開免費版：將產品發布到 Threads、PTT、精準社團。開始累積免費的活躍用戶。"
-        },
-        {
-          "id": "l-3_5-t-1",
           "kind": "single-with-lines",
-          "title": "👻 幽靈按鈕測試 (Painted Door Test)：",
+          "title": "🚀 免費版公開上線前：Must-Have 致命檢核清單",
           "lines": [
-            "在免費版的 UI 上，把未來 Level 4 才要做的殺手級功能 (如：標籤管理模組、雲端上傳、心靈還債模式) 的按鈕做出來，加上 👑 皇冠圖示。",
-            "當用戶點擊時，彈出一個精美的視窗：「Pro 專屬功能 - 即將推出 (Coming Soon)！ 留下 Email，上線時第一時間通知你。」",
-            "後台追蹤：利用 PostHog 記錄哪個幽靈按鈕被點擊最多次。這將決定你下週要先寫哪一個功能的 Code！"
+            "1. 核心任務引擎 (Core Engine)：",
+            "   - 壓力測試：連續快速新增 30 個任務，UI 畫面不卡頓。",
+            "   - 跨時區準確度：「今天」到期日不發生跨日偏移。",
+            "",
+            "2. 資安與成本防禦 (Security & Cost Control)：",
+            "   - RLS 絕對隔離：API 嚴格阻擋跨帳號讀取。",
+            "   - 免費仔防禦：後端中介層嚴格攔截 role: 'free' 呼叫會消耗儲存空間的 API。",
+            "",
+            "3. 打造「成熟產品」的極致 UX/UI (Micro-interactions)：",
+            "   - 📲 雙平台 PWA 桌面化引導 (App-like Installation)：",
+            "     • iOS (Safari)：在畫面底部實作精美的 Tooltip 動畫，引導點擊 Safari 底部的「分享 -> 加入主畫面」。",
+            "     • Android (Chrome)：攔截原生 beforeinstallprompt 事件，包裝成產品內的一鍵「安裝 App」按鈕。",
+            "   - 🛑 觸發時機防呆：嚴禁一進站彈出！必須在使用者「完成人生第一個任務」後才滑出安裝引導。",
+            "   - 無摩擦連擊輸入：按下 Enter 建立任務後，允許連續盲打。",
+            "   - 防閃爍與骨架屏 (Skeleton)：API 處於 Pending 時渲染灰色骨架屏。",
+            "   - 破壞性行為補救 (Soft Delete)：點擊刪除改用 5 秒 Toast 提供「↩️ 復原 (Undo)」按鈕。",
+            "   - 行動端原生觸控感 (Swipe Actions)：手機版網頁實作「左滑刪除 / 右滑封存」，搭配 navigator.vibrate() 實體震動。",
+            "",
+            "4. 營運與數據追蹤 (Ops & Data)：",
+            "   - 👻 幽靈按鈕埋點：免費版 UI 放置 Pro 功能按鈕，點擊後觸發事件至數據後台。"
           ],
-          "content": "👻 幽靈按鈕測試 (Painted Door Test)："
-        },
-        {
-          "id": "l-3_5-t-2",
-          "kind": "single",
-          "content": "絕對防禦確認：再次確認 role: 'free' 的用戶絕對無法消耗你的伺服器儲存成本。"
+          "content": "🚀 免費版公開上線前：Must-Have 致命檢核清單"
         }
       ],
-      "milestone": null
+      "milestone": {
+        "title": "🛑 破關檢核點 (Milestone)",
+        "metric": "指標：進階需求驗證與潛在 Pro 用戶池。",
+        "condition": "達標條件：累積 500 位免費用戶。其中至少要有 75 人點擊過「幽靈按鈕」並留下 Email。"
+      }
     },
     {
       "id": "level-4",
