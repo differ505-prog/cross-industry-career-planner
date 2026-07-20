@@ -285,6 +285,16 @@ function TaskRow({ task, completed, onToggle }: TaskRowProps) {
     );
   }
 
+  if (task.kind === "warning") {
+    return (
+      <div className="rounded-lg border border-red-200/60 bg-red-50/40 p-3">
+        <p className="text-[12px] leading-relaxed text-red-700">
+          {task.content}
+        </p>
+      </div>
+    );
+  }
+
   // single 或 single-with-lines — 可勾選
   const content = task.kind === "single" ? task.content : task.content;
   const subLines = task.kind === "single-with-lines" ? task.lines : null;

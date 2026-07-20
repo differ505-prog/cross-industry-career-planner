@@ -10,7 +10,8 @@ export type VibeListTask =
   | { id: string; kind: "single"; content: string }
   | { id: string; kind: "single-with-lines"; content: string; lines: string[] }
   | { id: string; kind: "highlight"; title: string; lines: string[] }
-  | { id: string; kind: "theory"; lines: string[] };
+  | { id: string; kind: "theory"; lines: string[] }
+  | { id: string; kind: "warning"; content: string };
 
 export interface VibeListLevel {
   id: string;

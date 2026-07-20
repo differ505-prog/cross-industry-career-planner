@@ -28,6 +28,9 @@ function renderLevel(level: VibeListLevel, completedSet: Set<string>, opts: { ch
     } else if (task.kind === "theory") {
       lines.push("");
       for (const l of task.lines) lines.push(`> ${l}`);
+    } else if (task.kind === "warning") {
+      lines.push("");
+      lines.push(`> ⚠️ **${task.content}**`);
     } else {
       // highlight
       lines.push("");
