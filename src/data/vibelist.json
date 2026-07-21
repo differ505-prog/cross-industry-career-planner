@@ -910,6 +910,222 @@
           "milestone": null
         }
       ]
+    },
+    {
+      "id": "ultimate",
+      "name": "VibeList — ADHD 專注引擎與神經多樣性 SaaS 商業化藍圖 (終極版)",
+      "tagline": "從行為療法到企業 DEI 預算的降維打擊",
+      "overview": "從行為療法到企業 DEI 預算的降維打擊",
+      "intro": "核心戰略：零阻力輸入、無罪惡感留存、社交問責、B2B 企業採購\n\n本藍圖徹底解決 ADHD 族群「容易忘記使用、因累積任務而產生羞愧感並流失」的死穴。我們引入 AI 語音降噪輸入、溫和喚醒機制，並在最終階段將產品定位從「個人生產力工具」昇華為「企業神經多樣性 (Neurodiversity) 友善的基礎設施」，直接切入高價值的 B2B 市場。",
+      "levels": [
+        {
+          "id": "v3-neg1",
+          "label": "Level -1",
+          "title": "市場定位與戰略 (高價值利基)",
+          "summary": "將劣勢轉為優勢，把「工具」包裝成「數位處方籤」。",
+          "tasks": [
+            {
+              "id": "v3-neg1-t-0",
+              "kind": "single",
+              "content": "精準受眾與延伸：核心為 ADHD 患者、易焦慮者。延伸客群為「管理這些員工的企業主管」與「心理諮商師」。"
+            },
+            {
+              "id": "v3-neg1-t-1",
+              "kind": "single",
+              "content": "價值主張 2.0：「VibeList 是唯一不會讓你感到內疚的待辦清單。透過零阻力捕捉與多巴胺回饋，幫助你奪回大腦主導權。」"
+            },
+            {
+              "id": "v3-neg1-t-2",
+              "kind": "single",
+              "content": "🛡️ 不公平優勢 (Unfair Advantage)：我們將建立「最懂 ADHD 心理學」的品牌護城河，這讓 Notion 或微軟等強調「高效、菁英」的巨頭難以放下身段來抄襲。"
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone)",
+            "metric": "指標：價值驗證與社群共鳴。",
+            "condition": "達標條件：在社群發布「為什麼現有 To-Do List 對 ADHD 是一種傷害」的短文，並獲得超過 100 次轉發與 Email 訂閱。"
+          }
+        },
+        {
+          "id": "v3-0",
+          "label": "Level 0",
+          "title": "核心功能 — 零阻力捕捉與單一焦點 (MVP)",
+          "summary": "大腦一片混亂時，打字是一種負擔。必須讓「倒出大腦」的阻力降為零。",
+          "tasks": [
+            {
+              "id": "v3-0-t-0",
+              "kind": "single",
+              "content": "⚠️ 絕對單一焦點 UI：「現在要做」畫面永遠只顯示 1 個任務。完成或放棄才能看下一個。"
+            },
+            {
+              "id": "v3-0-t-1",
+              "kind": "single-with-lines",
+              "title": "🎙️ AI 語音大腦傾印 (Brain Dump)：",
+              "lines": [
+                "核心痛點：ADHD 者靈感或焦慮爆發時，打字太慢會中斷思緒。",
+                "實作：整合 Whisper API，提供一個佔據螢幕一半的「按住說話」大按鈕。",
+                "使用者可隨意碎碎念，AI 自動解析成無壓力的短任務。"
+              ],
+              "content": "🎙️ AI 語音大腦傾印 (Brain Dump)："
+            },
+            {
+              "id": "v3-0-t-2",
+              "kind": "single-with-lines",
+              "title": "👑 Karma 引擎與無罪惡感設計：",
+              "lines": [
+                "完成任務獲得 Karma。",
+                "嚴格禁止任何「紅色過期警告」或「未完成計數」。",
+                "沒有截止日期，只有「準備好要做了嗎？」"
+              ],
+              "content": "👑 Karma 引擎與無罪惡感設計："
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone)",
+            "metric": "指標：極端用戶測試。",
+            "condition": "達標條件：邀請 5 位確診 ADHD 的測試者，他們能在焦慮發作或思緒混亂時，成功透過「語音功能」記錄下至少 3 件任務。"
+          }
+        },
+        {
+          "id": "v3-1",
+          "label": "Level 1",
+          "title": "脫離玩具期與「溫和喚醒 (Gentle Nudge)」防護網",
+          "summary": "解決 ADHD 族群最大的流失風險——「忘記打開 App，想起來時又不敢面對」。",
+          "tasks": [
+            {
+              "id": "v3-1-t-0",
+              "kind": "single",
+              "content": "無密碼與社群登入：絕對不要求設定與記憶密碼。"
+            },
+            {
+              "id": "v3-1-t-1",
+              "kind": "single-with-lines",
+              "title": "🧽 防破窗與自動封存 (Auto-Archive)：",
+              "lines": [
+                "只要任務超過 48 小時未被點擊，自動移入「歷史塵埃 (Vault)」並套用模糊視覺效果，絕不擋在使用者面前。",
+                "取代傳統的警告推播，改為發送：「嘿，我幫你把桌面清理乾淨了，隨時可以重新開始 ☕️」。"
+              ],
+              "content": "🧽 防破窗與自動封存 (Auto-Archive)："
+            },
+            {
+              "id": "v3-1-t-2",
+              "kind": "single",
+              "content": "📊 資料庫與留存追蹤：實作 RLS，精準追蹤 D1、D3、D7 留存率。"
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone)",
+            "metric": "指標：流失挽回率。",
+            "condition": "達標條件：針對 3 天未登入的用戶發送「無罪惡感喚醒」通知，必須有超過 25% 的人願意點擊回流，且無人退訂通知。"
+          }
+        },
+        {
+          "id": "v3-2",
+          "label": "Level 2",
+          "title": "行動端極致體驗與儀式感",
+          "summary": "在手機上建立最快的多巴胺獲取路徑。",
+          "tasks": [
+            {
+              "id": "v3-2-t-0",
+              "kind": "single",
+              "content": "🎨 多巴胺視覺與聽覺 (ASMR)：打勾時的震動反饋 (Haptic)、清脆硬幣聲與微小的 Confetti。"
+            },
+            {
+              "id": "v3-2-t-1",
+              "kind": "single",
+              "content": "📱 Lock-Screen Widget (鎖定畫面小工具)：不需要解鎖手機，點一下直接進入語音輸入模式。"
+            },
+            {
+              "id": "v3-2-t-2",
+              "kind": "single",
+              "content": "🎸 一鍵心流結界：內建單一 85 BPM 白噪音/Lo-Fi 音樂，一鍵播放並暗化 UI。"
+            }
+          ],
+          "milestone": null
+        },
+        {
+          "id": "v3-3",
+          "label": "Level 3",
+          "title": "「替身協作 (Body Doubling)」與社群問責",
+          "summary": "引入 ADHD 圈最有效的「外部約束力」，並帶來自然裂變。",
+          "tasks": [
+            {
+              "id": "v3-3-t-0",
+              "kind": "single-with-lines",
+              "title": "🤝 專注夥伴 (Cheerleader Mode)：",
+              "lines": [
+                "允許綁定一位伴侶或朋友。",
+                "當使用者長時間卡關，夥伴可發送一鍵「微光鼓勵」貼圖到使用者的畫面上。",
+                "使用者打勾任務時，夥伴會收到即時捷報通知。"
+              ],
+              "content": "🤝 專注夥伴 (Cheerleader Mode)："
+            },
+            {
+              "id": "v3-3-t-1",
+              "kind": "single",
+              "content": "⚡ 即時同步架構 (Real-time)：為雙向互動建立堅實的 WebSocket/Supabase Realtime 基礎。"
+            }
+          ],
+          "milestone": null
+        },
+        {
+          "id": "v3-4",
+          "label": "Level 4",
+          "title": "資本主義啟動 (B2C Pro 方案)",
+          "summary": "針對使用者的進階「自我覺察」與「客製化療癒」收費。",
+          "tasks": [
+            {
+              "id": "v3-4-t-0",
+              "kind": "single",
+              "content": "👑 Pro 功能：多巴胺音效包與視覺主題：解鎖如「8-Bit 遊戲風」、「禪意水滴」等客製化反饋。"
+            },
+            {
+              "id": "v3-4-t-1",
+              "kind": "single",
+              "content": "👑 Pro 功能：情緒與癱瘓週期洞察：透過 AI 分析使用者完成任務的頻率與時間，給出每週報告：「你通常在週二下午最容易陷入啟動癱瘓，建議將困難任務避開此時段。」"
+            },
+            {
+              "id": "v3-4-t-2",
+              "kind": "single",
+              "content": "👑 Pro 功能：進階問責小隊：解鎖多人互相監督的專注房間。"
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone)",
+            "metric": "指標：C 端付費驗證。",
+            "condition": "達標條件：活躍用戶轉化率達到 5%，且 MRR (每月經常性收入) 突破 $1,000 美金。"
+          }
+        },
+        {
+          "id": "v3-5",
+          "label": "Level 5",
+          "title": "終極護城河 — B2B 企業神經多樣性 (DEI) 解決方案",
+          "summary": "從賺使用者的零用錢，轉向賺取企業的「員工福利與多元共融 (DEI)」預算。大幅提高 LTV。",
+          "tasks": [
+            {
+              "id": "v3-5-t-0",
+              "kind": "single-with-lines",
+              "title": "🏢 VibeList for Teams (B2B 方案)：",
+              "lines": [
+                "價值主張：「幫助企業釋放神經多樣性員工的潛力，降低因工具不適應導致的倦怠與離職率。」",
+                "主管儀表板：不是監控員工「做了多少事」，而是監控團隊的「認知負荷健康度」。",
+                "企業單一登入 (SAML SSO) 與合規性 (SOC2 準備)。"
+              ],
+              "content": "🏢 VibeList for Teams (B2B 方案)："
+            },
+            {
+              "id": "v3-5-t-1",
+              "kind": "single",
+              "content": "🩺 專家串接模組：允許企業特約的心理諮商師或教練，透過特殊權限檢視員工的任務阻力報告，並給予輔導。"
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone)",
+            "metric": "指標：B2B 銷售驗證。",
+            "condition": "達標條件：成功向 3 家重視 DEI 的企業 (如科技新創、設計代理商) 售出 Team 方案，客單價為 C 端的 10 倍以上。"
+          }
+        }
+      ]
     }
   ]
 }
