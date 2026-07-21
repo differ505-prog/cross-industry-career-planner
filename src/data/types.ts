@@ -22,6 +22,15 @@ export interface VibeListLevel {
   milestone: VibeListMilestone | null;
 }
 
+export interface VibeListVersion {
+  id: string;
+  name: string;
+  tagline: string;
+  overview: string;
+  intro: string;
+  levels: VibeListLevel[];
+}
+
 export interface VibeListData {
   id: string;
   name: string;
@@ -32,4 +41,5 @@ export interface VibeListData {
   legend: string[];
   resourceLinks: { label: string; url: string }[];
   levels: VibeListLevel[];
+  versions?: VibeListVersion[];
 }

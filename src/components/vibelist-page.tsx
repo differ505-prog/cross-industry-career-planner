@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import type { VibeListData, VibeListLevel, VibeListTask } from "@/data/types";
+import type { VibeListData, VibeListLevel, VibeListTask, VibeListVersion } from "@/data/types";
 import { writeToClipboard, type CopyStatus } from "@/lib/clipboard";
 import { buildVibeListStats } from "@/lib/progress";
 import { serializeVibeList, serializeVibeListLevel } from "@/lib/blueprint-copy";
@@ -23,6 +23,47 @@ export function VibeListPage({ data }: VibeListPageProps) {
   const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({});
   const [hydrated, setHydrated] = useState(false);
   const [wholeStatus, setWholeStatus] = useState<CopyStatus>("idle");
+  const [selectedVersion, setSelectedVersion] = useState<string>("main");
+
+  // 取得目前顯示的版本資料
+  const currentVersion: { name: string; tagline?: string; overview: string; intro: string; levels: VibeListLevel[] } = useMemo(() => {
+    if (selectedVersion === "main") {
+      return {
+        name: data.name,
+        overview: data.overview,
+        intro: data.intro,
+        levels: data.levels,
+      };
+    }
+    const version = data.versions?.find((v) => v.id === selectedVersion);
+    if (version) {
+      return {
+        name: version.name,
+        tagline: version.tagline,
+        overview: version.overview,
+        intro: version.intro,
+        levels: version.levels,
+      };
+    }
+    return {
+      name: data.name,
+      overview: data.overview,
+      intro: data.intro,
+      levels: data.levels,
+    };
+  }, [data, selectedVersion]);
+
+  const versions = useMemo(() => {
+    const list: { id: string; name: string; tagline?: string }[] = [
+      { id: "main", name: data.name }
+    ];
+    if (data.versions) {
+      for (const v of data.versions) {
+        list.push({ id: v.id, name: v.name, tagline: v.tagline });
+      }
+    }
+    return list;
+  }, [data]);
 
   // mount 時從 localStorage 讀
   useEffect(() => {
@@ -31,10 +72,10 @@ export function VibeListPage({ data }: VibeListPageProps) {
       if (raw) {
         const parsed = JSON.parse(raw);
         if (parsed && typeof parsed === "object") {
-          // 只挑出 vibelist task id (l-*) 的 key
+          // 只挑出 vibelist task id (l-*, v2-*) 的 key
           const filtered: Record<string, boolean> = {};
           for (const [k, v] of Object.entries(parsed)) {
-            if (k.startsWith("l-") && v === true) filtered[k] = true;
+            if ((k.startsWith("l-") || k.startsWith("v2-")) && v === true) filtered[k] = true;
           }
           setCompletedTasks(filtered);
         }
@@ -51,10 +92,10 @@ export function VibeListPage({ data }: VibeListPageProps) {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       const existing = raw ? (JSON.parse(raw) as Record<string, unknown>) : {};
-      // 移除所有舊的 l- key
+      // 移除所有舊的 l- 和 v2- key
       const stripped: Record<string, unknown> = {};
       for (const [k, v] of Object.entries(existing)) {
-        if (!k.startsWith("l-")) stripped[k] = v;
+        if (!k.startsWith("l-") && !k.startsWith("v2-")) stripped[k] = v;
       }
       // 合併這次的
       const merged = { ...stripped, ...completedTasks };
@@ -65,8 +106,8 @@ export function VibeListPage({ data }: VibeListPageProps) {
   }, [completedTasks, hydrated]);
 
   const stats = useMemo(
-    () => buildVibeListStats(data.levels, completedTasks),
-    [data.levels, completedTasks],
+    () => buildVibeListStats(currentVersion.levels, completedTasks),
+    [currentVersion.levels, completedTasks],
   );
 
   const toggle = (taskId: string) => {
@@ -74,7 +115,7 @@ export function VibeListPage({ data }: VibeListPageProps) {
   };
 
   const handleCopyWhole = () => {
-    const md = serializeVibeList(data, {
+    const md = serializeVibeList({ ...data, levels: currentVersion.levels, intro: currentVersion.intro, overview: currentVersion.overview, name: currentVersion.name }, {
       completedTasks,
       includeCheckedState: true,
     });
@@ -109,11 +150,32 @@ export function VibeListPage({ data }: VibeListPageProps) {
             {data.shortLabel}
           </p>
           <h1 className="mt-2 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            {data.name}
+            {currentVersion.name}
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-stone-600">
-            {data.overview}
+            {currentVersion.overview}
           </p>
+
+          {/* Version Selector */}
+          {versions.length > 1 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {versions.map((v) => (
+                <button
+                  key={v.id}
+                  type="button"
+                  onClick={() => setSelectedVersion(v.id)}
+                  className={`rounded-full border px-3 py-1 text-[11px] font-medium transition ${
+                    selectedVersion === v.id
+                      ? "border-indigo-300 bg-indigo-100 text-indigo-700"
+                      : "border-stone-200 bg-white text-stone-500 hover:border-indigo-200 hover:text-indigo-600"
+                  }`}
+                >
+                  {v.tagline ? `${v.name.split(" — ")[1] || v.name}` : "原始版"}
+                </button>
+              ))}
+            </div>
+          )}
+
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <button
               type="button"
@@ -140,7 +202,9 @@ export function VibeListPage({ data }: VibeListPageProps) {
           variants={itemVariants}
           className="mt-10 rounded-2xl border border-indigo-200/50 bg-indigo-50/30 p-5 text-sm leading-relaxed text-stone-700"
         >
-          {data.intro}
+          {currentVersion.intro.split("\n").map((line, i) => (
+            <p key={i} className={i > 0 ? "mt-2" : ""}>{line}</p>
+          ))}
         </motion.section>
 
         {/* Legend */}
@@ -157,11 +221,11 @@ export function VibeListPage({ data }: VibeListPageProps) {
 
         {/* Levels */}
         <ol className="relative mt-10 space-y-8 border-l border-stone-200 pl-6">
-          {data.levels.map((level, i) => (
+          {currentVersion.levels.map((level, i) => (
             <LevelNode
               key={level.id}
               level={level}
-              isLast={i === data.levels.length - 1}
+              isLast={i === currentVersion.levels.length - 1}
               completedTasks={completedTasks}
               onToggle={toggle}
             />

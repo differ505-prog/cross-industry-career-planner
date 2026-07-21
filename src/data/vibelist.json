@@ -542,5 +542,390 @@
         "condition": "達標條件：網頁版營收足以支撐你（或外包）維護多個平台的程式碼，且 PWA (Level 2) 已無法滿足重度用戶的需求。"
       }
     }
+  ],
+  "versions": [
+    {
+      "id": "preseed",
+      "name": "VibeList — 任務管理 SaaS 商業化藍圖 (Pre-Seed 募資終極版)",
+      "tagline": "Solo Founder Edition",
+      "overview": "從 Vibe Coding 到百萬營收的 10 階段商業化藍圖",
+      "intro": "目標受眾：多專案並行的獨立接案者 (Freelancers) 與微型代理商\n核心願景：接案者的「AI 營運大腦」、「利潤防護網」與「自動化客服」\n開發模式：一人公司 + IDE Vibe Coding (AI-Assisted)\n\n將一個 Vibe Coding 產出的 Side Project 轉變為能賺錢的 SaaS 產品，是一場從「感性寫扣」轉向「理性工程與商業營運」的修煉。這份指南融合了 2026 年最新的 SaaS 增長策略 (PLG)、AI 輔助決策 (AI-Copilot)、嵌入式金融 (Embedded Finance)、預售驗證機制與分階段發布策略 (Lean Startup)。請務必遵守各階段的「🛑 破關檢核點」，未達標前嚴禁進入下一階段。",
+      "levels": [
+        {
+          "id": "v2-neg1",
+          "label": "Level -1",
+          "title": "市場定位、預售驗證與「創始者俱樂部」",
+          "summary": "在寫任何一行 code 之前，先確認你不是在做一個「沒有人需要的 TickTick 複製品」。本階段導入「先賣後做」的進階版：終身授權 (LTD) 微型募資，直接獲取你的第一筆營運資金。",
+          "tasks": [
+            {
+              "id": "v2-neg1-t-0",
+              "kind": "single",
+              "content": "鎖定利基市場 (Niche Down)：多專案並行的獨立接案者與微型代理商。(解決他們「跨專案切換導致時間碎片」以及「估價失準導致做白工」的痛點)。"
+            },
+            {
+              "id": "v2-neg1-t-1",
+              "kind": "single",
+              "content": "競品弱點分析：TickTick/Todoist 只是清單，Trello/Asana 缺乏個人財務視角。他們的盲區是：只管任務進度，卻無法預測專案真實利潤與時薪。"
+            },
+            {
+              "id": "v2-neg1-t-2",
+              "kind": "single",
+              "content": "定義你的「價值主張」：「VibeList 幫助『獨立接案者』解決『瞎忙卻算不出真實利潤』的痛點，透過 AI 任務拆解與隱形計時，確保你的每個專案都維持在理想高時薪。」"
+            },
+            {
+              "id": "v2-neg1-t-3",
+              "kind": "single",
+              "content": "🛡️ 確立你的「不公平優勢 (Unfair Advantage)」：你本身就是接案社團版主，掌握核心發言權與第一手名單。"
+            },
+            {
+              "id": "v2-neg1-t-4",
+              "kind": "single-with-lines",
+              "title": "🎯 進階預售：Founder's Club (LTD 微募資)：",
+              "lines": [
+                "在寫 code 前，製作精美的 Figma 概念圖與 Notion Landing Page。",
+                "推出 $49 美金終身買斷 (Lifetime Deal, LTD)，限量 50 名。",
+                "目的：這不僅是驗證，更能在 Day 1 為你籌集 $2,450 美金的營運資金，用來支付早期的 LLM API 與伺服器費用，讓你毫無財務壓力地開發。"
+              ],
+              "content": "🎯 進階預售：Founder's Club (LTD 微募資)："
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone)",
+            "metric": "指標：盲測預購測試 (Validation) 與早期現金流。",
+            "condition": "達標條件：成功售出至少 15 個 Founder's Club 名額（獲得 $735 美金）。若達不到，代表痛點不夠痛，全額退款並重新構思。"
+          }
+        },
+        {
+          "id": "v2-0",
+          "label": "Level 0",
+          "title": "核心功能與輕量串接 (MVP 基礎建設)",
+          "summary": "確保產品能滿足「生產力工具」的及格線。這階段你將大量使用 Vibe Coding，請務必將以下指令 (Prompts) 作為系統上下文餵給 AI，避免架構崩壞。",
+          "tasks": [
+            {
+              "id": "v2-0-t-0",
+              "kind": "single",
+              "content": "🤖 Vibe Coding 架構指令 (提供給 Cursor/AI 的 Context)：💡 Solo 開發者備註：將以下區塊複製貼上給你的 AI，作為開啟新專案的 rules 或 system prompt。"
+            },
+            {
+              "id": "v2-0-t-1",
+              "kind": "single-with-lines",
+              "title": "Prompt 1: 資料庫與後端架構 (Database & Schema)",
+              "lines": [
+                "\"我們正在構建一個 SaaS 任務管理工具。請使用 Next.js App Router + Supabase。任務 tasks 表格必須包含以下欄位：id, user_id, title, status, priority, due_date。關鍵護城河欄位：請預留 estimated_minutes (預估工時) 與 logged_minutes (實際工時) 欄位，預設為 0，這對後續的時薪計算至關重要。\""
+              ],
+              "content": "Prompt 1: 資料庫與後端架構 (Database & Schema)"
+            },
+            {
+              "id": "v2-0-t-2",
+              "kind": "single-with-lines",
+              "title": "Prompt 2: 安全性與權限 (Row-Level Security)",
+              "lines": [
+                "\"請幫我在 Supabase / 資料庫層級實作 RLS (Row-Level Security)。嚴格規則：使用者只能對 tasks 進行 CRUD 操作，且前提是 auth.uid() == user_id。請生成相應的 SQL 政策代碼。\""
+              ],
+              "content": "Prompt 2: 安全性與權限 (Row-Level Security)"
+            },
+            {
+              "id": "v2-0-t-3",
+              "kind": "single-with-lines",
+              "title": "Prompt 3: 極致流暢的前端體驗 (Optimistic UI)",
+              "lines": [
+                "\"在實作任務列表時，必須使用 Optimistic UI (樂觀更新)。當點擊完成，前端 state 必須瞬間切換為完成並加上刪除線，背景執行 API 請求，失敗才回滾。\""
+              ],
+              "content": "Prompt 3: 極致流暢的前端體驗 (Optimistic UI)"
+            },
+            {
+              "id": "v2-0-t-4",
+              "kind": "single-with-lines",
+              "title": "Prompt 4: 為未來的「微收購 (Micro-Acquisition)」做準備",
+              "lines": [
+                "\"請保持程式碼極度模組化，所有業務邏輯 (Business Logic) 必須與 UI 元件分離。撰寫清晰的 JSDoc，並確保沒有 Hardcode 的環境變數。這份 codebase 未來可能被轉售，必須讓其他工程師能在一小時內看懂。\""
+              ],
+              "content": "Prompt 4: 為未來的「微收購 (Micro-Acquisition)」做準備"
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone)",
+            "metric": "指標：吃自己的狗糧 (Dogfooding)。",
+            "condition": "達標條件：你自己必須連續 7 天只使用這個產品來管理日常待辦。期間發生 0 次資料遺失或卡頓。"
+          }
+        },
+        {
+          "id": "v2-1",
+          "label": "Level 1",
+          "title": "脫離玩具期 (多用戶安全、技術債與早期數據)",
+          "summary": "從單機版玩具走向真正的 SaaS 服務，建立防護網。",
+          "tasks": [
+            {
+              "id": "v2-1-t-0",
+              "kind": "single",
+              "content": "基礎帳號註冊：實作 Magic Link 或 Google OAuth 登入。"
+            },
+            {
+              "id": "v2-1-t-1",
+              "kind": "single-with-lines",
+              "title": "👑 防禦性配額 (RBAC 角色控管)：",
+              "lines": [
+                "建立 free, pro, 與 founder 角色。",
+                "免費用戶限制建立 100 個任務。"
+              ],
+              "content": "👑 防禦性配額 (RBAC 角色控管)："
+            },
+            {
+              "id": "v2-1-t-2",
+              "kind": "single-with-lines",
+              "title": "📊 資料庫活躍度基石：",
+              "lines": [
+                "追蹤 tasks_completed_with_time_logged (帶有工時紀錄的完成任務數)。",
+                "這是本產品真正產生商業價值的「北極星指標」。"
+              ],
+              "content": "📊 資料庫活躍度基石："
+            },
+            {
+              "id": "v2-1-t-3",
+              "kind": "single",
+              "content": "🔔 創業者多巴胺 (預防疲乏機制)：透過 Webhook 串接 Discord 通知新用戶註冊與首個任務完成。累積 50 人後自動切換為每日總結。"
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone)",
+            "metric": "指標：基礎穩定度與安全性。",
+            "condition": "達標條件：邀請 15 位測試者，發生 0 次資料越權讀取。"
+          }
+        },
+        {
+          "id": "v2-2",
+          "label": "Level 2",
+          "title": "留存率保衛戰、AI 賦能與防流失機制 (Anti-Churn PLG)",
+          "summary": "這階段決定了使用者會不會在第二天把網站關掉，以及如何降低未來的流失率。",
+          "tasks": [
+            {
+              "id": "v2-2-t-0",
+              "kind": "single",
+              "content": "⏱️ 極限壓縮 TTV (Time-to-Value)：確保新用戶 3 分鐘內體驗到 Aha Moment。"
+            },
+            {
+              "id": "v2-2-t-1",
+              "kind": "single-with-lines",
+              "title": "🤖 AI 專案估價助理與成本防禦 (Freemium 策略)：",
+              "lines": [
+                "Freemium 額度設計：在 Users 表格新增 ai_estimation_credits (預設為 3)。",
+                "給予 3 次免費估價體驗，用盡後引導升級 Pro。這將高昂的 API 成本轉化為精準的獲客成本 (CAC)。",
+                "技術實作：嚴格限制使用高 C/P 值模型 (gpt-4o-mini 或 claude-3-haiku)。",
+                "風險提示 Prompt：要求 AI 不僅估價，還要能辨識「高風險任務」(例如：客戶需求不明確的項目，自動加上 50% 緩衝時間)，這會讓接案者覺得這套系統「懂行」。"
+              ],
+              "content": "🤖 AI 專案估價助理與成本防禦 (Freemium 策略)："
+            },
+            {
+              "id": "v2-2-t-2",
+              "kind": "single-with-lines",
+              "title": "📧 全自動化客戶成功 (Automated Customer Success)：",
+              "lines": [
+                "這是一人公司的保命符。使用 Resend 串接自動化郵件：",
+                "Day 3 未完成任何任務：發送「需要幫忙嗎？這裡有 3 個接案專案範本一鍵匯入」。",
+                "Day 14 活躍度下降：發送「別忘了，記錄真實時薪能幫你避開雷包客戶」。"
+              ],
+              "content": "📧 全自動化客戶成功 (Automated Customer Success)："
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone) ⚠️ 關鍵生死線",
+            "metric": "指標：短期留存率與 Onboarding 成功率。",
+            "condition": "達標條件：首批 100 位新用戶中，有 60 人在註冊當下完成任務。七天後，有 30 人主動登入。"
+          }
+        },
+        {
+          "id": "v2-3",
+          "label": "Level 3",
+          "title": "企業級基石（信任、安全與合規）",
+          "summary": "建立讓使用者願意把生活與金錢交給你的信任感。",
+          "tasks": [
+            {
+              "id": "v2-3-t-0",
+              "kind": "single",
+              "content": "第三方多帳號快速登入 (SSO)：Apple/Google 一鍵登入。"
+            },
+            {
+              "id": "v2-3-t-1",
+              "kind": "single",
+              "content": "自動化資料備份與災難還原機制。"
+            },
+            {
+              "id": "v2-3-t-2",
+              "kind": "single",
+              "content": "完善的法務文件：服務條款與隱私權政策。"
+            }
+          ],
+          "milestone": null
+        },
+        {
+          "id": "v2-3_5",
+          "label": "Level 3.5",
+          "title": "免費版公測與「幽靈按鈕」預熱 (Lean Startup Launch)",
+          "summary": "推免費版驗證需求，不默默憋大招。",
+          "tasks": [
+            {
+              "id": "v2-3_5-t-0",
+              "kind": "single-with-lines",
+              "title": "🚀 免費版公開上線前：致命檢核清單",
+              "lines": [
+                "免費仔防禦：後端嚴格攔截會消耗高成本的 API 呼叫。",
+                "📲 PWA 桌面化引導：在使用者完成首個任務後，彈出精美的「加入主畫面/安裝 App」引導。",
+                "防閃爍骨架屏 (Skeleton UI) 與行動端原生觸控感。"
+              ],
+              "content": "🚀 免費版公開上線前：致命檢核清單"
+            },
+            {
+              "id": "v2-3_5-t-1",
+              "kind": "single",
+              "content": "👻 幽靈按鈕埋點：免費版 UI 放置 Pro 功能按鈕 (如：財務報表)，點擊後跳出「即將推出，留 Email 排隊」，藉此驗證付費意願。"
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone)",
+            "metric": "指標：進階需求驗證與潛在 Pro 用戶池。",
+            "condition": "達標條件：累積 500 位免費用戶，其中 75 人點擊幽靈按鈕並留下 Email。"
+          }
+        },
+        {
+          "id": "v2-4",
+          "label": "Level 4",
+          "title": "資本主義啟動 (嵌入式金融與 Data Gravity 護城河)",
+          "summary": "打造雙重營收引擎（訂閱制 + Fintech 抽成），並建立讓用戶「痛到無法離開」的資料引力。",
+          "tasks": [
+            {
+              "id": "v2-4-t-0",
+              "kind": "single",
+              "content": "💳 無縫串接 SaaS 訂閱金流：整合 Stripe Checkout 開通 Pro 版。"
+            },
+            {
+              "id": "v2-4-t-1",
+              "kind": "single",
+              "content": "👑 Pro 殺手級 1：專案時薪透視鏡 (Profitability Tracker)：視覺化呈現真實時薪，抓出賠錢專案。"
+            },
+            {
+              "id": "v2-4-t-2",
+              "kind": "single-with-lines",
+              "title": "👑 Pro 殺手級 2：一鍵生成請款單與收款 (Fintech 護城河)：",
+              "lines": [
+                "串接 Stripe Connect。",
+                "使用者一鍵生成精美 Invoice 連結發給客戶。",
+                "客戶刷卡付款後，平台抽成 1%~2%。"
+              ],
+              "content": "👑 Pro 殺手級 2：一鍵生成請款單與收款 (Fintech 護城河)："
+            },
+            {
+              "id": "v2-4-t-3",
+              "kind": "single-with-lines",
+              "title": "🧱 終極護城河：Data Gravity (自動生成接案履歷)：",
+              "lines": [
+                "當用戶透過 VibeList 完成專案並成功收款後，系統自動將該專案（隱藏敏感資訊後）匯出為「精美的個人 Portfolio 網頁」。",
+                "邏輯：如果用戶退訂 VibeList，他們辛苦累積的「接案真實績效與作品集網頁」就會消失。這會將留存率 (Retention) 鎖死在極高水平。"
+              ],
+              "content": "🧱 終極護城河：Data Gravity (自動生成接案履歷)："
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone)",
+            "metric": "指標：購買摩擦力測試。",
+            "condition": "達標條件：看見誘因 -> 點擊升級 -> 刷卡 -> 權限瞬間開通，流程無阻礙。"
+          }
+        },
+        {
+          "id": "v2-5",
+          "label": "Level 5",
+          "title": "封閉測試與數據賦能 (PMF 驗證)",
+          "summary": "確保這套 Pro 商業模式真的有人買單。",
+          "tasks": [
+            {
+              "id": "v2-5-t-0",
+              "kind": "single",
+              "content": "精準發放特權：對 Level 3.5 的高意願用戶發放 14 天 Pro 試用。"
+            },
+            {
+              "id": "v2-5-t-1",
+              "kind": "single",
+              "content": "📊 埋設進階營運指標：導入 PostHog。追蹤核心價值行為 (如：AI 估價使用次數、Invoice 發送數)。"
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone) ⚠️ 終極檢驗",
+            "metric": "指標：Sean Ellis 測試 (PMF 40% 基準線)。",
+            "condition": "達標條件：活躍用戶回答「如果明天不能再用這產品，你會有多失望？」回答「非常失望」比例大於 40%。"
+          }
+        },
+        {
+          "id": "v2-6",
+          "label": "Level 6",
+          "title": "病毒擴散與規模化 (Scale & PLG)",
+          "summary": "當 PMF 達標後，啟動低成本的增長迴圈，徹底打破「行銷獲客困難」的存活魔咒。",
+          "tasks": [
+            {
+              "id": "v2-6-t-0",
+              "kind": "single-with-lines",
+              "title": "🕸️ 病毒迴圈 PLG (Client Portal + 推薦返利)：",
+              "lines": [
+                "接案者將任務進度或請款單發給客戶時，頁面帶有 \"Powered by VibeList\" 浮水印與一鍵註冊按鈕 (B2B2C 獲客)。",
+                "訪客免登入唯讀，點擊打勾時誘導註冊。"
+              ],
+              "content": "🕸️ 病毒迴圈 PLG (Client Portal + 推薦返利)："
+            },
+            {
+              "id": "v2-6-t-1",
+              "kind": "single",
+              "content": "📈 追蹤病毒健康度指標：K-Factor (病毒係數) 大於 1。"
+            }
+          ],
+          "milestone": null
+        },
+        {
+          "id": "v2-7",
+          "label": "Level 7",
+          "title": "團隊協作與 B2B 擴張 (Agency Mode)",
+          "summary": "打入微型代理商市場，提升 LTV (用戶終身價值)。",
+          "tasks": [
+            {
+              "id": "v2-7-t-0",
+              "kind": "single",
+              "content": "⚡ 即時同步與角色權限 (Real-time & RBAC)：支援多人同時編輯同一份清單。"
+            },
+            {
+              "id": "v2-7-t-1",
+              "kind": "single",
+              "content": "🤝 團隊毛利追蹤：將「個人時薪透視」升級為「團隊成員成本核算」，幫助老闆抓出哪個員工/專案在賠錢。"
+            }
+          ],
+          "milestone": {
+            "title": "🛑 破關檢核點 (Milestone)",
+            "metric": "指標：多端即時衝突測試。",
+            "condition": "達標條件：兩台裝置同時完成任務，無資料遺失覆蓋。"
+          }
+        },
+        {
+          "id": "v2-8",
+          "label": "Level 8",
+          "title": "原生生態系與退場機制 (Ecosystem & Micro-Acquisition)",
+          "summary": "現金流穩定後，將產品釘入作業系統。同時，做好隨時能將產品高價賣出的準備。",
+          "tasks": [
+            {
+              "id": "v2-8-t-0",
+              "kind": "single",
+              "content": "💻 桌面/行動端原生武裝 (Tauri / React Native)：全域快捷鍵與桌面小工具 (Widgets)。"
+            },
+            {
+              "id": "v2-8-t-1",
+              "kind": "single-with-lines",
+              "title": "🚪 退場準備 (Acquire.com 備戰狀態)：",
+              "lines": [
+                "作為 Solo Founder，你的終極目標可能是被大公司收購或在平台上賣出（例如以 4x ARR 的倍數出售）。",
+                "建立標準作業流程 (SOP)：將客服、行銷發文、伺服器維護全部寫成 Notion 文件。",
+                "確保「即使創辦人離開，這台機器也能自動運轉」，這將極大提升估值。"
+              ],
+              "content": "🚪 退場準備 (Acquire.com 備戰狀態)："
+            }
+          ],
+          "milestone": null
+        }
+      ]
+    }
   ]
 }
