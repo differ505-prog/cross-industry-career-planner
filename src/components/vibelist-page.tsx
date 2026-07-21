@@ -159,7 +159,7 @@ export function VibeListPage({ data }: VibeListPageProps) {
           {/* Version Selector */}
           {versions.length > 1 && (
             <div className="mt-4 flex flex-wrap gap-2">
-              {versions.map((v) => (
+              {versions.map((v, index) => (
                 <button
                   key={v.id}
                   type="button"
@@ -170,7 +170,7 @@ export function VibeListPage({ data }: VibeListPageProps) {
                       : "border-stone-200 bg-white text-stone-500 hover:border-indigo-200 hover:text-indigo-600"
                   }`}
                 >
-                  {v.tagline ? `${v.name.split(" — ")[1] || v.name}` : "原始版"}
+                  藍圖 {index + 1}
                 </button>
               ))}
             </div>
