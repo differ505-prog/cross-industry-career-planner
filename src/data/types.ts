@@ -1,9 +1,15 @@
 // 共用：藍圖/任務相關資料型別
 
+export interface InvestorRating {
+  score: number;
+  verdict: string;
+}
+
 export interface VibeListMilestone {
   title: string;
   metric: string;
   condition: string;
+  fallbackPlan?: string;
 }
 
 export type VibeListTask =
@@ -37,6 +43,7 @@ export interface VibeListData {
   shortLabel: string;
   theme: string;
   overview: string;
+  investorRating?: InvestorRating;
   intro: string;
   legend: string[];
   resourceLinks: { label: string; url: string }[];

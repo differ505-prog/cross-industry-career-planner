@@ -26,13 +26,14 @@ export function VibeListPage({ data }: VibeListPageProps) {
   const [selectedVersion, setSelectedVersion] = useState<string>("main");
 
   // 取得目前顯示的版本資料
-  const currentVersion: { name: string; tagline?: string; overview: string; intro: string; levels: VibeListLevel[] } = useMemo(() => {
+  const currentVersion: { name: string; tagline?: string; overview: string; intro: string; levels: VibeListLevel[]; investorRating?: { score: number; verdict: string } } = useMemo(() => {
     if (selectedVersion === "main") {
       return {
         name: data.name,
         overview: data.overview,
         intro: data.intro,
         levels: data.levels,
+        investorRating: data.investorRating,
       };
     }
     const version = data.versions?.find((v) => v.id === selectedVersion);
@@ -43,6 +44,7 @@ export function VibeListPage({ data }: VibeListPageProps) {
         overview: version.overview,
         intro: version.intro,
         levels: version.levels,
+        investorRating: undefined,
       };
     }
     return {
@@ -50,6 +52,7 @@ export function VibeListPage({ data }: VibeListPageProps) {
       overview: data.overview,
       intro: data.intro,
       levels: data.levels,
+      investorRating: data.investorRating,
     };
   }, [data, selectedVersion]);
 
@@ -153,8 +156,33 @@ export function VibeListPage({ data }: VibeListPageProps) {
             {currentVersion.name}
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-stone-600">
-            {currentVersion.overview}
+            {currentVersion.overview.split('\n').map((line, i) => (
+              line.startsWith('💰') ? (
+                <span key={i} />
+              ) : (
+                <span key={i}>{line}</span>
+              )
+            ))}
           </p>
+
+          {/* Investor Rating */}
+          {currentVersion.investorRating && (
+            <div className="mt-4 rounded-xl border border-amber-200/60 bg-gradient-to-br from-amber-50/60 to-white p-4">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.24em] text-amber-700">天使投資人評級</span>
+                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-sm font-bold text-amber-800">
+                  {currentVersion.investorRating.score}/10
+                </span>
+              </div>
+              <div className="mt-2 space-y-1 text-[12px] leading-relaxed text-stone-700 whitespace-pre-line">
+                {currentVersion.investorRating.verdict.split('\n').map((line, i) => (
+                  <p key={i} className={line.startsWith('優') || line.startsWith('疑') || line.startsWith('結') ? 'mt-2 font-medium' : ''}>
+                    {line}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Version Selector */}
           {versions.length > 1 && (
@@ -303,6 +331,13 @@ function LevelNode({ level, isLast, completedTasks, onToggle }: LevelNodeProps) 
             <p className="mt-1 text-[13px] leading-relaxed text-stone-700">
               {level.milestone.condition}
             </p>
+            {level.milestone.fallbackPlan && (
+              <div className="mt-3 rounded-lg border border-amber-200/60 bg-amber-50/40 p-3">
+                <p className="text-[11px] leading-relaxed text-amber-800 whitespace-pre-line">
+                  {level.milestone.fallbackPlan}
+                </p>
+              </div>
+            )}
           </div>
         )}
       </div>
