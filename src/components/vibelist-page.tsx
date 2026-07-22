@@ -27,32 +27,34 @@ export function VibeListPage({ data }: VibeListPageProps) {
 
   // 取得目前顯示的版本資料
   const currentVersion: { name: string; tagline?: string; overview: string; intro: string; levels: VibeListLevel[]; investorRating?: { score: number; verdict: string } } = useMemo(() => {
+    let rawOverview = '';
+    let rating: { score: number; verdict: string } | undefined;
+
     if (selectedVersion === "main") {
-      return {
-        name: data.name,
-        overview: data.overview,
-        intro: data.intro,
-        levels: data.levels,
-        investorRating: data.investorRating,
-      };
+      rawOverview = data.overview;
+      rating = data.investorRating;
+    } else {
+      const version = data.versions?.find((v) => v.id === selectedVersion);
+      if (version) {
+        rawOverview = version.overview;
+        // 從 overview 中解析評級
+        const match = version.overview.match(/天使投資人評級：(\d+)\/10\n([\s\S]*)/);
+        if (match) {
+          rating = { score: parseInt(match[1]), verdict: match[2].trim() };
+        }
+      }
     }
-    const version = data.versions?.find((v) => v.id === selectedVersion);
-    if (version) {
-      return {
-        name: version.name,
-        tagline: version.tagline,
-        overview: version.overview,
-        intro: version.intro,
-        levels: version.levels,
-        investorRating: undefined,
-      };
-    }
+
+    // 從 overview 中移除評級文字，僅保留描述
+    const overview = rawOverview.replace(/💰 天使投資人評級：\d+\/10\n[\s\S]*$/, '').trim();
+
     return {
-      name: data.name,
-      overview: data.overview,
-      intro: data.intro,
-      levels: data.levels,
-      investorRating: data.investorRating,
+      name: selectedVersion === "main" ? data.name : data.versions?.find((v) => v.id === selectedVersion)?.name ?? data.name,
+      tagline: selectedVersion !== "main" ? data.versions?.find((v) => v.id === selectedVersion)?.tagline : undefined,
+      overview,
+      intro: selectedVersion === "main" ? data.intro : data.versions?.find((v) => v.id === selectedVersion)?.intro ?? '',
+      levels: selectedVersion === "main" ? data.levels : data.versions?.find((v) => v.id === selectedVersion)?.levels ?? [],
+      investorRating: rating,
     };
   }, [data, selectedVersion]);
 
