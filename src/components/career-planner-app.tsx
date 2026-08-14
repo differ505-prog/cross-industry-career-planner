@@ -255,6 +255,59 @@ function formatChecklistItems(items: ChecklistItem[], completedTasks: Record<str
   });
 }
 
+/** 純任務清單序列化（無覆核指令），供外部 LLM 分析 */
+function serializeWorkflowTasks(
+  industry: Industry,
+  workflow: WorkflowProject,
+  completedTasks: Record<string, boolean>,
+): string {
+  const lines: string[] = [
+    `# ${industry.name}`,
+    "",
+    `概述：${industry.overview}`,
+    "",
+    "---",
+    "",
+    "## 階段與任務清單",
+    "",
+  ];
+
+  workflow.sections.forEach((section, index) => {
+    lines.push(`### ${index + 1}. ${section.title}`);
+    if (section.summary) {
+      lines.push(`> ${section.summary}`);
+    }
+    lines.push("");
+
+    const renderItem = (item: ChecklistItem, depth: number) => {
+      const indent = "  ".repeat(depth);
+      const statusIcon =
+        item.status === "recurring"
+          ? "[⟳]"
+          : completedTasks[item.id]
+            ? "[x]"
+            : "[ ]";
+      lines.push(`${indent}- ${statusIcon} ${item.title}`);
+      if (item.children?.length) {
+        item.children.forEach((child) => renderItem(child, depth + 1));
+      }
+    };
+
+    section.items.forEach((item) => renderItem(item, 0));
+    lines.push("");
+  });
+
+  if (workflow.faq.length > 0) {
+    lines.push("---", "", "## FAQ", "");
+    workflow.faq.forEach((faq) => {
+      lines.push(`**Q：** ${faq.question}`);
+      lines.push(`**A：** ${faq.answer}`, "");
+    });
+  }
+
+  return lines.join("\n");
+}
+
 function groupChecklistItemsByState(
   items: ChecklistItem[],
   completedTasks: Record<string, boolean>,
@@ -591,6 +644,7 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
   const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>(defaultCompletionMap);
   const [copyState, setCopyState] = useState<CopyState>("idle");
   const [portfolioCopyState, setPortfolioCopyState] = useState<CopyState>("idle");
+  const [extractState, setExtractState] = useState<CopyState>("idle");
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY);
@@ -728,6 +782,11 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
       focusIndustryId: selectedIndustryId,
     });
     void writeToClipboard(portfolioPrompt, setPortfolioCopyState);
+  };
+
+  const handleExtractTasks = () => {
+    const plain = serializeWorkflowTasks(selectedIndustry, selectedWorkflow, completedTasks);
+    void writeToClipboard(plain, setExtractState);
   };
 
   return (
@@ -904,6 +963,24 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
                     ))}
                     <button
                       type="button"
+                      onClick={handleExtractTasks}
+                      className={[
+                        "rounded-full px-4 py-2 text-sm transition",
+                        extractState === "success"
+                          ? `${selectedTheme.soft} ${selectedTheme.text} border ${selectedTheme.border}`
+                          : extractState === "error"
+                            ? "border border-red-200 bg-red-50 text-red-600"
+                            : "border border-stone-200 bg-white/80 text-stone-700 hover:-translate-y-0.5 hover:border-stone-300 hover:bg-white",
+                      ].join(" ")}
+                    >
+                      {extractState === "success"
+                        ? "已複製任務清單"
+                        : extractState === "error"
+                          ? "複製失敗"
+                          : "提取任務清單"}
+                    </button>
+                    <button
+                      type="button"
                       onClick={handleCopyForReview}
                       className={[
                         "rounded-full px-4 py-2 text-sm transition",
@@ -922,7 +999,7 @@ export function CareerPlannerApp({ embedded = false }: { embedded?: boolean } = 
                     </button>
                   </div>
                   <p className="mt-3 text-xs leading-6 text-stone-500">
-                    複製內容會包含目前整張檢核表、已完成與待補強摘要、FAQ，以及要求高階 LLM 先做採納判定，再分別回傳「內容調整」與「結構設計」兩類 IDE 提示詞。
+                    「提取任務清單」僅輸出純資料，方便餵給外部 LLM 做架構分析或重新排序。「一鍵複製給高階 LLM 覆核」則包含審查指令與角色提示。
                   </p>
                 </div>
 
