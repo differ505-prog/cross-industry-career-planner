@@ -470,27 +470,39 @@
           {
             "id": "arrive-1-4",
             "title": "建立專業聯絡管道與防護網",
-            "status": "pending",
+            "status": "done",
             "children": [
               {
                 "id": "arrive-1-4-1",
                 "title": "註冊專業信箱 (hello.arrivestudio@gmail.com 或專屬網域信箱)。",
-                "status": "pending"
+                "status": "done"
               },
               {
                 "id": "arrive-1-4-2",
                 "title": "申請 LINE 官方帳號 (LINE OA)，並設定基本營業時間與自動回覆，切開公私領域。",
-                "status": "pending"
+                "status": "done"
               },
               {
                 "id": "arrive-1-4-3",
                 "title": "串接 Landing Page 上的 Formspree 表單。",
-                "status": "pending"
+                "status": "done"
               },
               {
                 "id": "arrive-1-4-4",
                 "title": "利用 AI 擬定「保護自己的接案合約」（包含修改次數限制、分期收款防禦條款）。",
-                "status": "pending"
+                "status": "done"
+              },
+              {
+                "id": "arrive-1-4-5",
+                "title": "【優化任務】打造「Hero Demo (英雄案例)」補足初期信任",
+                "status": "pending",
+                "children": [
+                  {
+                    "id": "arrive-1-4-5-1",
+                    "title": "虛構一個高端品牌（例如極簡風私廚或精品香氛），花 2 天做出一個令人驚豔的完整示範站，作為初期最核心的展示武器。",
+                    "status": "pending"
+                  }
+                ]
               }
             ]
           }
@@ -525,18 +537,35 @@
           },
           {
             "id": "arrive-2-2",
-            "title": "執行「POC 視覺誘餌」開發法 (每週循環任務)",
-            "status": "pending",
+            "title": "執行「POC 視覺誘餌」開發法",
+            "status": "recurring",
             "children": [
               {
                 "id": "arrive-2-2-1",
                 "title": "每週 2 次：挑選名單，用 AI 花 15 分鐘幫他們生成一張「品牌專屬雜誌風」網頁 Mockup。",
-                "status": "pending"
+                "status": "recurring"
               },
               {
                 "id": "arrive-2-2-2",
                 "title": "每週 5 次：透過 Instagram DM 或 Threads 發送具備溫度、不帶壓迫感的破冰訊息與 Mockup。",
-                "status": "pending"
+                "status": "recurring"
+              },
+              {
+                "id": "arrive-2-2-3",
+                "title": "【優化任務】建立「無情 Follow-up」與數據測試系統",
+                "status": "pending",
+                "children": [
+                  {
+                    "id": "arrive-2-2-3-1",
+                    "title": "設定 A/B 兩套私訊話術，記錄並觀察哪一種回覆率較高。",
+                    "status": "pending"
+                  },
+                  {
+                    "id": "arrive-2-2-3-2",
+                    "title": "建立「3 天後追蹤一次，無回覆即放生」的標準作業程序，停止無效的情緒與時間消耗。",
+                    "status": "pending"
+                  }
+                ]
               }
             ]
           },
@@ -653,7 +682,7 @@
             "children": [
               {
                 "id": "arrive-4-1-1",
-                "title": "調升起步方案價格（例如從 9,900 升至 14,900）。",
+                "title": "隨著作品集豐富，調升起步方案價格（例如從 9,900 升至 14,900 或 19,900）。",
                 "status": "pending"
               }
             ]
@@ -665,8 +694,15 @@
             "children": [
               {
                 "id": "arrive-4-2-1",
-                "title": "為先前的接案客戶提供「年度主機與輕量維護合約」。",
-                "status": "pending"
+                "title": "【優化任務】建立「有感」的維護費 (MRR) 循環",
+                "status": "pending",
+                "children": [
+                  {
+                    "id": "arrive-4-2-1-1",
+                    "title": "捨棄單純的「主機代管費」名目，改包裝為「每月 1 次圖文替換服務 + 輕量級網站健檢報表」，讓實體店家深刻感受到持續付費的價值，確保被動收入不斷鏈。",
+                    "status": "pending"
+                  }
+                ]
               }
             ]
           },
@@ -681,6 +717,47 @@
                 "status": "pending"
               }
             ]
+          }
+        ]
+      },
+      {
+        "id": "arrive-5",
+        "title": "里程碑五：規模化與高客單價藍海 (第 25 週起)",
+        "summary": "目標：在確認市場需求與銷售話術皆成功運轉後，利用 AI 技術放大規模與探索高客單價藍海。",
+        "items": [
+          {
+            "id": "arrive-5-1",
+            "title": "建立 AI 自動化獲客引擎 (規模化階段)",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-5-1-1",
+                "title": "【前置條件】手動測試出具備 15% 以上回覆率的黃金開發腳本。",
+                "status": "pending"
+              },
+              {
+                "id": "arrive-5-1-2",
+                "title": "利用爬蟲工具結合 AI (例如 Make + ChatGPT)，針對鎖定的特定產業自動搜集名單並自動生成客製化開發信/訊息，擴大漏斗開口。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "arrive-5-2",
+            "title": "探索「特定痛點」的內部管理 AI 解決方案",
+            "status": "pending",
+            "children": [
+              {
+                "id": "arrive-5-2-1",
+                "title": "避免陷入「一般 App 外包」的無底洞，只針對舊客戶極度渴望的特定流程開發（例如：結合 AI 辨識的私廚食材庫存預測、或高端美甲店的 AI 風格推薦預約系統）。",
+                "status": "pending"
+              }
+            ]
+          },
+          {
+            "id": "arrive-5-3",
+            "title": "嚴格控制 Scope，朝高客單價的「企業級微型 AI 顧問與導入」轉型",
+            "status": "pending"
           }
         ]
       }
